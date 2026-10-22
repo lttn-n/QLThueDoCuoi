@@ -1,25 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using QLThueDoCuoi.Models;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
-namespace QLThueDoCuoi.Controllers
+namespace QLThueDoCuoi.Controllers;
+
+// Layout mẫu. Bổ sung service/repository trước khi xử lý dữ liệu thật.
+public class HomeController : Controller
 {
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
+    [HttpGet]
+    public IActionResult Index() => View();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+    [HttpGet]
+    public IActionResult Guide() => View();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+    [HttpGet]
+    public IActionResult About() => View();
+
+    [HttpGet]
+    public IActionResult Error() => View(new QLThueDoCuoi.Models.ErrorViewModel
+    { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
 }

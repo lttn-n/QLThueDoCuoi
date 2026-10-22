@@ -1,0 +1,5 @@
+@* Dùng cùng một thẻ sản phẩm với trang danh sách để nhóm chỉ sửa một nơi. *@
+<section class="dragneel-section dragneel-featured container"><div class="dragneel-section-head"><div><span class="dragneel-kicker">02 / TUYỂN CHỌN TỪ DRAGNEEL</span><h2>Sản phẩm nổi bật</h2></div><a class="dragneel-text-link" href="@Url.Action("Index", "SanPham", new { area = "" })">Xem tất cả sản phẩm ↗</a></div><div class="dragneel-product-grid">
+@foreach (var sanPham in QLThueDoCuoi.Data.DuLieuGiaoDien.SanPham)
+{ @await Html.PartialAsync("_TheSanPham", sanPham) }
+</div></section>

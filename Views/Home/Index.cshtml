@@ -1,8 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@{ ViewBag.Title = "Trang chủ"; ViewBag.PageKey = "home"; }
+@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /> }
+@await Html.PartialAsync("_Banner")
+@await Html.PartialAsync("_DiemNoiBat")
+@await Html.PartialAsync("_DanhMuc")
+@await Html.PartialAsync("_SanPhamNoiBat")
+@await Html.PartialAsync("_GioiThieu")
+@await Html.PartialAsync("_HuongDanThue")
+@await Html.PartialAsync("_GocChuanBi")
+@await Html.PartialAsync("_DatLich")

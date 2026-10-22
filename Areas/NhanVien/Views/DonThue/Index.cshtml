@@ -1,0 +1,74 @@
+@{ ViewBag.Title = "Đơn thuê"; ViewBag.PageKey = "admin_orders"; Layout = "~/Areas/NhanVien/Views/Shared/_LayoutNhanVien.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / NHÂN VIÊN</span>
+<h1>Quản lý đơn thuê</h1>
+<p>Xác nhận lịch, giao/nhận đồ và theo dõi quá trình xử lý.</p>
+</div>
+</div>
+<div class="toolbar">
+<input type="search" data-table-search="#orders-table" placeholder="Tìm mã đơn hoặc khách hàng..." aria-label="Tìm đơn"/>
+</div>
+<div class="table-wrap">
+<table id="orders-table">
+<thead>
+<tr>
+<th>Mã đơn / khách</th>
+<th>Trang phục</th>
+<th>Lịch thuê</th>
+<th>Tiền thuê</th>
+<th>Trạng thái</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>
+<b>DH001</b>
+<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Váy cưới Élodie</td>
+<td>25/10 → 28/10/2026</td>
+<td>2.800.000₫</td>
+<td>
+<span class="status blue">Đang thuê</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
+</td>
+</tr>
+<tr >
+<td>
+<b>DH002</b>
+<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Vest nam Modern Fit</td>
+<td>30/10 → 02/11/2026</td>
+<td>1.600.000₫</td>
+<td>
+<span class="status amber">Chờ xác nhận</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
+</td>
+</tr>
+<tr >
+<td>
+<b>DH003</b>
+<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Áo dài Minh Châu</td>
+<td>12/10 → 15/10/2026</td>
+<td>1.800.000₫</td>
+<td>
+<span class="status green">Hoàn tất</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>

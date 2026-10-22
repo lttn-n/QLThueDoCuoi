@@ -1,0 +1,69 @@
+@{ ViewBag.Title = "Giỏ thuê"; ViewBag.PageKey = "cart"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Giỏ thuê</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">NHỮNG MẪU BẠN ĐÃ CHỌN</span>
+<h1>Giỏ thuê của bạn</h1>
+<p>
+</p>
+</div>
+</div>
+<div class="cart-layout">
+<div class="card">
+<div class="cart-line">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
+<div>
+<h3>Váy cưới Élodie</h3>
+<p>Size M · Trắng</p>
+<p>25/10/2026 → 28/10/2026 · 3 ngày</p>
+<label>Số lượng <input aria-label="Số lượng" type="number" min="1" value="1" disabled/>
+</label>
+<div>
+<button type="button" class="btn ghost small" disabled aria-disabled="true">Chỉnh sửa</button>
+<button type="button" class="btn ghost small" disabled aria-disabled="true">Xóa</button>
+</div>
+</div>
+<strong class="line-price">2.800.000₫</strong>
+</div>
+<form class="button-row" data-ui-only>
+<label class="field">
+<span>Mã ưu đãi</span>
+<input name="MaUuDai" placeholder="Nhập mã ưu đãi"/>
+</label>
+<button type="button" class="btn small" disabled aria-disabled="true">Áp dụng</button>
+</form>
+</div>
+<div class="card">
+<h2>Tóm tắt đơn thuê</h2>
+<div class="summary-list">
+<div>
+<span>Tiền thuê</span>
+<b>2.800.000₫</b>
+</div>
+<div>
+<span>Phí giao nhận</span>
+<b>Nhận tại showroom</b>
+</div>
+<div>
+<span>Tiền cọc</span>
+<b>2.000.000₫</b>
+</div>
+<div>
+<span>Giảm giá</span>
+<b>0₫</b>
+</div>
+<div class="total">
+<span>Tổng ban đầu</span>
+<span>4.800.000₫</span>
+</div>
+</div>
+<small>Tiền cọc được theo dõi và hoàn riêng theo tình trạng đồ.</small>
+<div class="form-actions">
+<a class="btn primary" href="@Url.Action("Checkout", "GioThue", new { area = "" })">Tiến hành đặt thuê →</a>
+</div>
+</div>
+</div>
+</div>

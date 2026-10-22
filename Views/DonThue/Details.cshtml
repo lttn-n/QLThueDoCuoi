@@ -1,0 +1,79 @@
+@{ ViewBag.Title = "Chi tiết đơn thuê"; ViewBag.PageKey = "order_detail"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
+<div class="account-layout">@await Html.PartialAsync("_MenuTaiKhoan")<section class="account-content">
+<div class="page-head">
+<div>
+<span class="eyebrow">ĐƠN THUÊ DH001</span>
+<h1>Chi tiết đơn thuê</h1>
+<p>Theo dõi trang phục, thanh toán và lịch nhận/trả.</p>
+</div>
+<span class="status blue">Đang thuê</span>
+</div>
+<div class="split">
+<div>
+<div class="card">
+<h2>Trang phục trong đơn</h2>
+<div class="list-row">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
+<div>
+<h3>Váy cưới Élodie</h3>
+<small>Size M · Trắng · 1 bộ</small>
+<strong>25/10/2026 → 28/10/2026</strong>
+</div>
+</div>
+<div class="summary-list">
+<div>
+<span>Người nhận</span>
+<b>Lâm Thị Thanh Nhi</b>
+</div>
+<div>
+<span>Nhận tại</span>
+<b>Showroom DRAGNEEL</b>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Lịch sử xử lý</h2>
+<ol class="timeline">
+<li>
+<b>Đã giao trang phục</b>25/10/2026 · Nhận tại showroom</li>
+<li>
+<b>Đã xác nhận</b>20/10/2026 · Đã kiểm tra lịch trống</li>
+<li>
+<b>Đã tạo đơn</b>19/10/2026</li>
+</ol>
+</div>
+</div>
+<div class="card">
+<h2>Tóm tắt đơn thuê</h2>
+<div class="summary-list">
+<div>
+<span>Tiền thuê</span>
+<b>2.800.000₫</b>
+</div>
+<div>
+<span>Phí giao nhận</span>
+<b>Nhận tại showroom</b>
+</div>
+<div>
+<span>Tiền cọc</span>
+<b>2.000.000₫</b>
+</div>
+<div>
+<span>Giảm giá</span>
+<b>0₫</b>
+</div>
+<div class="total">
+<span>Tổng ban đầu</span>
+<span>4.800.000₫</span>
+</div>
+</div>
+<small>Tiền cọc được theo dõi và hoàn riêng theo tình trạng đồ.</small>
+</div>
+</div>
+</section>
+</div>
+</div>

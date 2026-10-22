@@ -1,0 +1,105 @@
+@{ ViewBag.Title = "Sản phẩm"; ViewBag.PageKey = "admin_products"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
+<h1>Quản lý sản phẩm</h1>
+<p>Mẫu thiết kế, giá thuê và trạng thái hiển thị.</p>
+</div>
+<a class="btn primary" href="@Url.Action("Edit", "SanPham", new { area = "Admin", id = 1 })">+ Thêm sản phẩm</a>
+</div>
+<div class="toolbar">
+<input type="search" data-table-search="#products-table" placeholder="Tìm mã hoặc tên sản phẩm..." aria-label="Tìm sản phẩm"/>
+<span class="count-note">4 mẫu sản phẩm</span>
+</div>
+<div class="table-wrap">
+<table id="products-table">
+<thead>
+<tr>
+<th>Sản phẩm</th>
+<th>Giá gói / 3 ngày</th>
+<th>Kích thước</th>
+<th>Hiển thị</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>
+<div class="table-product">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
+<span>
+<b>Váy cưới Élodie</b>
+<small>Váy cưới</small>
+</span>
+</div>
+</td>
+<td>2.800.000₫</td>
+<td>S M L</td>
+<td>
+<span class="status green">Đang hiển thị</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Edit", "SanPham", new { area = "Admin", id = 1 })">Sửa</a> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>
+<div class="table-product">
+<img src="@Url.Content("~/images/dragneel/vest.svg")" alt="Vest nam Modern Fit"/>
+<span>
+<b>Vest nam Modern Fit</b>
+<small>Vest chú rể</small>
+</span>
+</div>
+</td>
+<td>1.600.000₫</td>
+<td>M L XL</td>
+<td>
+<span class="status green">Đang hiển thị</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Edit", "SanPham", new { area = "Admin", id = 1 })">Sửa</a> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>
+<div class="table-product">
+<img src="@Url.Content("~/images/dragneel/aodai.svg")" alt="Áo dài Minh Châu"/>
+<span>
+<b>Áo dài Minh Châu</b>
+<small>Áo dài</small>
+</span>
+</div>
+</td>
+<td>1.800.000₫</td>
+<td>S M L</td>
+<td>
+<span class="status green">Đang hiển thị</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Edit", "SanPham", new { area = "Admin", id = 1 })">Sửa</a> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>
+<div class="table-product">
+<img src="@Url.Content("~/images/dragneel/pearl.svg")" alt="Set phụ kiện Pearl"/>
+<span>
+<b>Set phụ kiện Pearl</b>
+<small>Phụ kiện</small>
+</span>
+</div>
+</td>
+<td>650.000₫</td>
+<td>Freesize</td>
+<td>
+<span class="status green">Đang hiển thị</span>
+</td>
+<td>
+<a class="btn small" href="@Url.Action("Edit", "SanPham", new { area = "Admin", id = 1 })">Sửa</a> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>

@@ -1,0 +1,96 @@
+@{ ViewBag.Title = "Thu chi & tiền cọc"; ViewBag.PageKey = "admin_payments"; Layout = "~/Areas/NhanVien/Views/Shared/_LayoutNhanVien.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / NHÂN VIÊN</span>
+<h1>Thu chi & tiền cọc</h1>
+<p>Theo dõi riêng tiền thuê, tiền cọc và phụ phí.</p>
+</div>
+</div>
+<div class="split">
+<div>
+<div class="table-wrap">
+<table >
+<thead>
+<tr>
+<th>Mã đơn</th>
+<th>Loại giao dịch</th>
+<th>Số tiền</th>
+<th>Kết quả</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>DH001</td>
+<td>Thu tiền thuê</td>
+<td>2.800.000₫</td>
+<td>
+<span class="status green">Thành công</span>
+</td>
+</tr>
+<tr >
+<td>DH001</td>
+<td>Thu cọc</td>
+<td>2.000.000₫</td>
+<td>
+<span class="status green">Thành công</span>
+</td>
+</tr>
+<tr >
+<td>DH003</td>
+<td>Thu tiền thuê</td>
+<td>1.800.000₫</td>
+<td>
+<span class="status green">Thành công</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card">
+<h2>Ghi nhận giao dịch</h2>
+<form data-ui-only>
+<label class="field">
+<span>Mã đơn</span>
+<input type="text" name="MaDonThue" value="DH001" />
+</label>
+<label class="field">
+<span>Loại giao dịch</span>
+<select name="LoaiGiaoDich">
+<option>Thu tiền thuê</option>
+<option>Thu cọc</option>
+<option>Hoàn cọc</option>
+<option>Thu phụ phí</option>
+<option>Hoàn tiền thuê</option>
+<option>Hoàn phụ phí</option>
+</select>
+</label>
+<label class="field">
+<span>Số tiền (đ)</span>
+<input type="number" name="SoTien" value="" min="1"/>
+</label>
+<label class="field">
+<span>Phương thức</span>
+<select name="PhuongThuc">
+<option>Tiền mặt</option>
+<option>Chuyển khoản</option>
+</select>
+</label>
+<label class="field">
+<span>Mã tham chiếu / biên lai</span>
+<input type="text" name="MaThamChieu" value="" />
+</label>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Ghi nhận giao dịch</button>
+</div>
+</form>
+</div>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Chỉ ghi nhận thành công sau khi xác minh khoản tiền thật. Cọc không phải doanh thu.</span>
+</div>

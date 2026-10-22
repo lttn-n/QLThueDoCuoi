@@ -1,0 +1,71 @@
+@{ ViewBag.Title = "Đơn thuê của tôi"; ViewBag.PageKey = "orders"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
+<div class="account-layout">@await Html.PartialAsync("_MenuTaiKhoan")<section class="account-content">
+<div class="page-head">
+<div>
+<span class="eyebrow">THEO DÕI QUÁ TRÌNH THUÊ</span>
+<h1>Đơn thuê của tôi</h1>
+<p>Xem lịch nhận/trả và trạng thái các đơn đã đặt.</p>
+</div>
+</div>
+<div class="tabs" data-status-group="#customer-orders">
+<button type="button" data-status-filter="" class="is-active" aria-pressed="true">Tất cả</button>
+<button type="button" data-status-filter="CHO_XAC_NHAN" class="" aria-pressed="false">Chờ xác nhận</button>
+<button type="button" data-status-filter="DANG_THUE" class="" aria-pressed="false">Đang thuê</button>
+<button type="button" data-status-filter="HOAN_TAT" class="" aria-pressed="false">Hoàn tất</button>
+<button type="button" data-status-filter="DA_HUY" class="" aria-pressed="false">Đã hủy</button>
+</div>
+<div id="customer-orders">
+<article class="card" data-status="DANG_THUE">
+<div class="panel-title">
+<b>DH001</b>
+<span class="status blue">Đang thuê</span>
+</div>
+<div class="list-row">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
+<div>
+<h3>Váy cưới Élodie</h3>
+<small>Size M · 25/10 → 28/10/2026</small>
+<strong>2.800.000₫</strong>
+</div>
+<a class="btn small push" href="@Url.Action("Details", "DonThue", new { area = "", id = 1 })">Xem chi tiết →</a>
+</div>
+</article>
+<article class="card" data-status="CHO_XAC_NHAN">
+<div class="panel-title">
+<b>DH002</b>
+<span class="status amber">Chờ xác nhận</span>
+</div>
+<div class="list-row">
+<img src="@Url.Content("~/images/dragneel/vest.svg")" alt="Vest nam Modern Fit"/>
+<div>
+<h3>Vest nam Modern Fit</h3>
+<small>Size M · 30/10 → 02/11/2026</small>
+<strong>1.600.000₫</strong>
+</div>
+<a class="btn small push" href="@Url.Action("Details", "DonThue", new { area = "", id = 1 })">Xem chi tiết →</a>
+</div>
+</article>
+<article class="card" data-status="HOAN_TAT">
+<div class="panel-title">
+<b>DH003</b>
+<span class="status green">Hoàn tất</span>
+</div>
+<div class="list-row">
+<img src="@Url.Content("~/images/dragneel/aodai.svg")" alt="Áo dài Minh Châu"/>
+<div>
+<h3>Áo dài Minh Châu</h3>
+<small>Size M · 12/10 → 15/10/2026</small>
+<strong>1.800.000₫</strong>
+</div>
+<a class="btn small push" href="@Url.Action("Details", "DonThue", new { area = "", id = 1 })">Xem chi tiết →</a>
+</div>
+</article>
+</div>
+<div class="empty" data-empty-status hidden>Chưa có đơn ở trạng thái này.</div>
+</section>
+</div>
+</div>

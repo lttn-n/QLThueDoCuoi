@@ -1,0 +1,73 @@
+@{ ViewBag.Title = "Kho trang phục"; ViewBag.PageKey = "admin_inventory"; Layout = "~/Areas/NhanVien/Views/Shared/_LayoutNhanVien.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / NHÂN VIÊN</span>
+<h1>Kho trang phục</h1>
+<p>Quản lý từng chiếc thực tế theo size/màu và tình trạng vật lý.</p>
+</div>
+</div>
+<div class="toolbar">
+<input type="search" data-table-search="#inventory-table" placeholder="Tìm mã bộ hoặc tên mẫu..." aria-label="Tìm bộ đồ"/>
+<button type="button" class="btn primary" disabled aria-disabled="true">+ Thêm bộ đồ</button>
+</div>
+<div class="table-wrap">
+<table id="inventory-table">
+<thead>
+<tr>
+<th>Mã bộ</th>
+<th>Sản phẩm</th>
+<th>Size / màu</th>
+<th>Chi nhánh</th>
+<th>Tình trạng</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>DRAGNEEL-2-1</td>
+<td>Váy cưới Élodie</td>
+<td>M · Trắng</td>
+<td>Chi nhánh 1</td>
+<td>
+<span class="status green">Tốt</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
+</td>
+</tr>
+<tr >
+<td>DRAGNEEL-2-2</td>
+<td>Váy cưới Élodie</td>
+<td>M · Trắng</td>
+<td>Chi nhánh 1</td>
+<td>
+<span class="status amber">Đang giặt</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
+</td>
+</tr>
+<tr >
+<td>DRAGNEEL-6-1</td>
+<td>Vest nam Modern Fit</td>
+<td>M · Đen</td>
+<td>Chi nhánh 2</td>
+<td>
+<span class="status green">Tốt</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Tình trạng bộ đồ khác với lịch còn trống. Cần kiểm tra cả khoảng ngày thuê và thời gian vệ sinh.</span>
+</div>

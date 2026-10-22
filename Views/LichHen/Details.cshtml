@@ -1,0 +1,79 @@
+@{ ViewBag.Title = "Chi tiết lịch hẹn"; ViewBag.PageKey = "appointment_detail"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
+<div class="account-layout">@await Html.PartialAsync("_MenuTaiKhoan")<section class="account-content">
+<div class="page-head">
+<div>
+<span class="eyebrow">LỊCH HẸN LH001</span>
+<h1>Chi tiết lịch thử đồ</h1>
+<p>Thông tin mẫu đã chọn và lịch đến showroom.</p>
+</div>
+<span class="status green">Đã xác nhận</span>
+</div>
+<div class="card">
+<div class="appointment-card" style="border:0;padding:0">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
+<div class="appointment-copy">
+<h3>Váy cưới Élodie</h3>
+<small>Size M · Trắng</small>
+<p>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="3" y="5" width="18" height="16" rx="2"/>
+<path d="M7 3v5m10-5v5M3 11h18"/>
+</svg>22/10/2026 · 10:00–10:30</p>
+<p>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/>
+<circle cx="12" cy="10" r="3"/>
+</svg>Showroom DRAGNEEL · 86 Nguyễn Huệ, TP.HCM</p>
+</div>
+</div>
+<div class="summary-list">
+<div>
+<span>Họ tên liên hệ</span>
+<b>Lâm Thị Thanh Nhi</b>
+</div>
+<div>
+<span>Yêu cầu khi thử</span>
+<b>Tư vấn phom dáng và size phù hợp</b>
+</div>
+<div>
+<span>Mốc hủy đối với lịch đã xác nhận</span>
+<b>Trước 10:00 ngày 21/10/2026</b>
+</div>
+</div>
+<div class="button-row">
+<a class="btn" href="@Url.Action("Index", "LichHen", new { area = "" })">← Danh sách lịch hẹn</a>
+<button class="btn" type="button" data-open-dialog="cancel-appointment">Hủy lịch</button>
+</div>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Lịch thử không thu tiền thuê hoặc cọc. Quyết định thuê được thực hiện bằng đơn thuê riêng.</span>
+</div>
+<dialog id="cancel-appointment" class="dialog">
+<div class="dialog-body">
+<span class="eyebrow">LỊCH HẸN THỬ ĐỒ</span>
+<h2>Hủy lịch hẹn?</h2>
+<p>Vui lòng cho biết lý do để cửa hàng điều chỉnh lịch tiếp khách.</p>
+<form data-ui-only>
+<label class="field">
+<span>Lý do hủy</span>
+<textarea name="LyDoHuy" maxlength="1000">
+</textarea>
+</label>
+<div class="form-actions">
+<button type="button" class="btn" data-close-dialog>Giữ lịch</button>
+<button type="button" class="btn primary" disabled aria-disabled="true">Xác nhận hủy</button>
+</div>
+</form>
+</div>
+</dialog>
+</section>
+</div>
+</div>

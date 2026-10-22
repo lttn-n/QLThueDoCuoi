@@ -1,0 +1,9 @@
+@{ ViewBag.Title = "Công việc nhân viên"; ViewBag.PageKey = "staff_home"; }
+<div class="page-head"><div><span class="eyebrow">DRAGNEEL / NHÂN VIÊN</span><h1>Công việc tại cửa hàng</h1><p>Theo dõi đơn thuê, lịch thử, giao trả và tình trạng từng bộ.</p></div></div>
+<div class="metrics"><div class="metric"><small>Đơn chờ xác nhận</small><strong>1</strong></div><div class="metric"><small>Lịch thử sắp tới</small><strong>2</strong></div><div class="metric"><small>Bộ đang giặt</small><strong>1</strong></div><div class="metric"><small>Cần nhận trả hôm nay</small><strong>1</strong></div></div>
+<section class="card" style="margin-top:24px"><h2>Thao tác công việc</h2><div class="button-row" style="margin-top:20px">
+<a class="btn primary" href="@Url.Action("Index", "DonThue", new { area = "NhanVien" })">Quản lý đơn thuê</a>
+<a class="btn" href="@Url.Action("Index", "LichHen", new { area = "NhanVien" })">Lịch hẹn thử đồ</a>
+<a class="btn" href="@Url.Action("Index", "Kho", new { area = "NhanVien" })">Kho trang phục</a>
+<a class="btn" href="@Url.Action("Index", "ThanhToan", new { area = "NhanVien" })">Thu / hoàn tiền</a>
+</div></section>

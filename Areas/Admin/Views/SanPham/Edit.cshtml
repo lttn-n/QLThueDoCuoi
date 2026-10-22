@@ -1,0 +1,95 @@
+@{ ViewBag.Title = "Thông tin sản phẩm"; ViewBag.PageKey = "admin_product_form"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
+<h1>Thông tin sản phẩm</h1>
+<p>Điền mẫu thiết kế, giá gói và các cờ hiển thị.</p>
+</div>
+<a class="btn" href="@Url.Action("Index", "SanPham", new { area = "Admin" })">← Danh sách</a>
+</div>
+<form data-ui-only>
+<div class="split">
+<div class="card">
+<h2>Thông tin cơ bản</h2>
+<div class="form-grid">
+<label class="field">
+<span>Tên sản phẩm</span>
+<input type="text" name="TenSanPham" value="Váy cưới Élodie" />
+</label>
+<label class="field">
+<span>Danh mục</span>
+<select name="MaLoaiSanPham">
+<option>Váy cưới</option>
+<option>Vest chú rể</option>
+<option>Áo dài</option>
+<option>Phụ kiện</option>
+</select>
+</label>
+<label class="field">
+<span>Slug</span>
+<input type="text" name="Slug" value="vay-cuoi-elodie" />
+</label>
+<label class="field">
+<span>Chất liệu</span>
+<input type="text" name="ChatLieu" value="Organza" />
+</label>
+<label class="field full">
+<span>Mô tả ngắn</span>
+<textarea name="MoTaNgan">Thiết kế thanh lịch với phom dáng chữ A.</textarea>
+</label>
+</div>
+<h3 style="margin-top:25px">Giá và thời gian thuê</h3>
+<div class="form-grid">
+<label class="field">
+<span>Giá thuê gói (đ)</span>
+<input type="number" name="GiaThue" value="2800000" min="0"/>
+</label>
+<label class="field">
+<span>Số ngày trong gói</span>
+<input type="number" name="SoNgayThueTrongGoi" value="3" min="1"/>
+</label>
+<label class="field">
+<span>Giá thêm ngày (đ)</span>
+<input type="number" name="GiaThueMoiNgayThem" value="400000" min="0"/>
+</label>
+<label class="field">
+<span>Tiền cọc (đ)</span>
+<input type="number" name="TienCoc" value="2000000" min="0"/>
+</label>
+</div>
+<div class="form-actions">
+<div class="checkboxes">
+<label>
+<input type="checkbox" name="HienThi" checked/>Hiển thị sản phẩm</label>
+<label>
+<input type="checkbox" name="NoiBat" checked/>Sản phẩm nổi bật</label>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Hình ảnh sản phẩm</h2>
+<div class="image-upload">
+<div>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M5 8h14l1 13H4L5 8Z"/>
+<path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+</svg>
+<p>Chọn ảnh đại diện</p>
+<input type="file" name="HinhAnh" accept="image/*" aria-label="Chọn ảnh sản phẩm"/>
+</div>
+</div>
+<h3 style="margin-top:25px">Ảnh đại diện</h3>
+<div class="checkboxes">
+<label>
+<input type="radio" name="AnhDaiDien" checked/>Dùng ảnh đầu tiên</label>
+<label>
+<input type="radio" name="AnhDaiDien"/>Chọn trong thư viện</label>
+</div>
+</div>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Lưu sản phẩm</button>
+<a class="btn" href="@Url.Action("Index", "SanPham", new { area = "Admin" })">Hủy</a>
+</div>
+</form>

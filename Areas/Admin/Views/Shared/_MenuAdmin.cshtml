@@ -1,0 +1,23 @@
+<aside class="admin-sidebar">
+<a class="brand" href="@Url.Action("Index", "Home", new { area = "Admin" })">
+<span class="brand-mark">M</span>
+<span>
+<b>DRAGNEEL</b>
+<small>ADMIN</small>
+</span>
+</a>
+<div class="nav-section">ADMIN</div>
+<a class="nav-item" data-page-link="admin_home" href="@Url.Action("Index", "Home", new { area = "Admin" })">Tổng quan</a>
+<a class="nav-item" data-page-link="admin_users" href="@Url.Action("Index", "TaiKhoan", new { area = "Admin" })">Tài khoản và vai trò</a>
+<a class="nav-item" data-page-link="admin_products" href="@Url.Action("Index", "SanPham", new { area = "Admin" })">Sản phẩm</a>
+<a class="nav-item" data-page-link="admin_categories" href="@Url.Action("Index", "LoaiSanPham", new { area = "Admin" })">Loại sản phẩm</a>
+<a class="nav-item" data-page-link="admin_branches" href="@Url.Action("Index", "ChiNhanh", new { area = "Admin" })">Chi nhánh</a>
+<a class="nav-item" data-page-link="admin_promotions" href="@Url.Action("Index", "KhuyenMai", new { area = "Admin" })">Khuyến mãi</a>
+<a class="nav-item" data-page-link="admin_reports" href="@Url.Action("Index", "ThongKe", new { area = "Admin" })">Thống kê</a>
+<div class="sidebar-bottom">
+<a class="nav-item" href="@Url.Action("Index", "Home", new { area = "" })">Xem website</a>
+<form asp-area="" asp-controller="TaiKhoan" asp-action="Logout" method="post">
+<button type="submit">Đăng xuất</button>
+</form>
+</div>
+</aside>

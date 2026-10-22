@@ -1,0 +1,60 @@
+@{ ViewBag.Title = "Tài khoản của tôi"; ViewBag.PageKey = "profile"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
+<div class="account-layout">@await Html.PartialAsync("_MenuTaiKhoan")<section class="account-content">
+<div class="page-head">
+<div>
+<span class="eyebrow">KHÔNG GIAN CỦA BẠN</span>
+<h1>Tài khoản của tôi</h1>
+<p>Quản lý thông tin cá nhân và thông tin liên hệ.</p>
+</div>
+</div>
+<section class="card">
+<h2>Thông tin cá nhân</h2>
+<form data-ui-only>
+<div class="form-grid">
+<label class="field">
+<span>Họ và tên</span>
+<input type="text" name="HoTen" value="Lâm Thị Thanh Nhi" />
+</label>
+<label class="field">
+<span>Email</span>
+<input type="email" name="Email" value="" placeholder="Nhập email"/>
+</label>
+<label class="field">
+<span>Số điện thoại</span>
+<input type="tel" name="SoDienThoai" value="" placeholder="Chưa cập nhật"/>
+</label>
+<label class="field">
+<span>Địa chỉ</span>
+<input type="text" name="DiaChi" value="" placeholder="Chưa cập nhật"/>
+</label>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Lưu thay đổi</button>
+</div>
+</form>
+</section>
+<section class="card">
+<h2>Đổi mật khẩu</h2>
+<form data-ui-only>
+<div class="form-grid">
+<label class="field">
+<span>Mật khẩu hiện tại</span>
+<input type="password" name="MatKhauCu" value="" />
+</label>
+<label class="field">
+<span>Mật khẩu mới</span>
+<input type="password" name="MatKhauMoi" value="" />
+</label>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Cập nhật mật khẩu</button>
+</div>
+</form>
+</section>
+</section>
+</div>
+</div>

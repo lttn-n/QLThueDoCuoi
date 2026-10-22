@@ -1,0 +1,70 @@
+@model QLThueDoCuoi.ViewModels.TheSanPhamViewModel
+@{ ViewBag.Title = "Đặt lịch thử đồ"; ViewBag.PageKey = "fitting"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
+<div class="account-layout">@await Html.PartialAsync("_MenuTaiKhoan")<section class="account-content">
+<div class="page-head">
+<div>
+<span class="eyebrow">THỬ TRƯỚC KHI QUYẾT ĐỊNH</span>
+<h1>Đặt lịch thử đồ</h1>
+<p>Mẫu đã chọn được điền từ trang sản phẩm.</p>
+</div>
+</div>
+<div class="cart-layout">
+<div class="card">
+<form data-ui-only>
+<div class="form-grid">
+<label class="field">
+<span>Họ tên liên hệ</span>
+<input type="text" name="HoTenLienHe" value="Lâm Thị Thanh Nhi" />
+</label>
+<label class="field">
+<span>Số điện thoại liên hệ</span>
+<input type="tel" name="SoDienThoaiLienHe" value="" required/>
+</label>
+<label class="field full"><span>Chi nhánh cửa hàng</span><select name="MaChiNhanh" required><option value="">Chọn chi nhánh</option><option value="1">DRAGNEEL - Chi nhánh 1</option><option value="2">DRAGNEEL - Chi nhánh 2</option></select></label>
+<label class="field">
+<span>Ngày thử</span>
+<input type="date" name="NgayHen" value="" />
+</label>
+<label class="field">
+<span>Giờ thử</span>
+<select name="GioHen">
+<option>10:00 – 10:30</option>
+<option>10:30 – 11:00</option>
+<option>14:00 – 14:30</option>
+<option>14:30 – 15:00</option>
+</select>
+</label>
+<label class="field full">
+<span>Số đo hoặc yêu cầu tư vấn</span>
+<textarea name="GhiChu" placeholder="Ví dụ: cần tư vấn size, thử phom dáng...">
+</textarea>
+</label>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Lịch sẽ chờ cửa hàng xác nhận. Đặt lịch thử chưa giữ trang phục cho ngày thuê.</span>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Gửi lịch hẹn</button>
+<a class="btn ghost" href="@Url.Action("Details", "SanPham", new { area = "", id = Model.MaSanPham })">Quay lại sản phẩm</a>
+</div>
+</form>
+</div>
+<div class="card">
+<span class="eyebrow">MẪU MUỐN THỬ</span>
+<img src="@Url.Content("~" + Model.HinhAnh)" alt="@Model.TenSanPham" style="height:230px;width:100%;object-fit:cover"/>
+<h3 style="margin-top:15px">@Model.TenSanPham</h3>
+<p>Size tham khảo: @Model.KichThuoc</p>
+<small>Thử tại chi nhánh đã chọn</small>
+</div>
+</div>
+</section>
+</div>
+</div>

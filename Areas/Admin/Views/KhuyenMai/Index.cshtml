@@ -1,0 +1,85 @@
+@{ ViewBag.Title = "Khuyến mãi"; ViewBag.PageKey = "admin_promotions"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
+<h1>Quản lý khuyến mãi</h1>
+<p>Mã ưu đãi theo phần trăm hoặc số tiền.</p>
+</div>
+</div>
+<div class="split">
+<div>
+<div class="table-wrap">
+<table >
+<thead>
+<tr>
+<th>Mã ưu đãi</th>
+<th>Giá trị</th>
+<th>Điều kiện</th>
+<th>Kích hoạt</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>MIRA10</td>
+<td>Giảm 10%</td>
+<td>Đơn từ 1.000.000₫<small>Tối đa 500.000₫</small>
+</td>
+<td>
+<span class="status green">Có</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card">
+<h2>Thông tin ưu đãi</h2>
+<form data-ui-only>
+<div class="form-grid">
+<label class="field">
+<span>Mã ưu đãi</span>
+<input type="text" name="MaUuDai" value="MIRA10" />
+</label>
+<label class="field">
+<span>Loại giảm</span>
+<select name="LoaiGiam">
+<option>Phần trăm</option>
+<option>Số tiền</option>
+</select>
+</label>
+<label class="field">
+<span>Giá trị</span>
+<input type="number" name="GiaTri" value="10" />
+</label>
+<label class="field">
+<span>Giảm tối đa (đ)</span>
+<input type="number" name="GiamToiDa" value="500000" />
+</label>
+<label class="field">
+<span>Đơn tối thiểu (đ)</span>
+<input type="number" name="DonToiThieu" value="1000000" />
+</label>
+<label class="field">
+<span>Giới hạn lượt</span>
+<input type="number" name="LuotToiDa" value="100" />
+</label>
+<label class="field">
+<span>Bắt đầu</span>
+<input type="datetime-local" name="BatDau" value="" />
+</label>
+<label class="field">
+<span>Kết thúc</span>
+<input type="datetime-local" name="KetThuc" value="" />
+</label>
+</div>
+<div class="form-actions">
+<label>
+<input type="checkbox" checked/> Kích hoạt</label>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Lưu ưu đãi</button>
+</div>
+</form>
+</div>
+</div>

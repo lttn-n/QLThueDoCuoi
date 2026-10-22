@@ -1,0 +1,50 @@
+@{ ViewBag.Title = "Tài khoản & vai trò"; ViewBag.PageKey = "admin_users"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
+<h1>Tài khoản & vai trò</h1>
+<p>Chỉ admin quản lý quyền và trạng thái tài khoản.</p>
+</div>
+</div>
+<div class="table-wrap">
+<table >
+<thead>
+<tr>
+<th>Họ tên</th>
+<th>Vai trò</th>
+<th>Trạng thái</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>Khách hàng mẫu</td>
+<td>KHACHHANG</td>
+<td>
+<span class="status green">Hoạt động</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
+</td>
+</tr>
+<tr >
+<td>Nhân viên mẫu</td>
+<td>NHANVIEN</td>
+<td>
+<span class="status green">Hoạt động</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Khách đăng ký luôn nhận vai trò KHACHHANG. Quyền quản trị phải được kiểm tra ở server.</span>
+</div>

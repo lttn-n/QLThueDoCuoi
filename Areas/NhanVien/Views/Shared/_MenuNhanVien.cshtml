@@ -1,0 +1,21 @@
+<aside class="admin-sidebar">
+<a class="brand" href="@Url.Action("Index", "Home", new { area = "NhanVien" })">
+<span class="brand-mark">M</span>
+<span>
+<b>DRAGNEEL</b>
+<small>NHÂN VIÊN</small>
+</span>
+</a>
+<div class="nav-section">NHÂN VIÊN</div>
+<a class="nav-item" data-page-link="staff_home" href="@Url.Action("Index", "Home", new { area = "NhanVien" })">Tổng quan</a>
+<a class="nav-item" data-page-link="admin_orders" href="@Url.Action("Index", "DonThue", new { area = "NhanVien" })">Đơn thuê</a>
+<a class="nav-item" data-page-link="admin_appointments" href="@Url.Action("Index", "LichHen", new { area = "NhanVien" })">Lịch thử đồ</a>
+<a class="nav-item" data-page-link="admin_inventory" href="@Url.Action("Index", "Kho", new { area = "NhanVien" })">Kho trang phục</a>
+<a class="nav-item" data-page-link="admin_payments" href="@Url.Action("Index", "ThanhToan", new { area = "NhanVien" })">Thu / hoàn tiền</a>
+<div class="sidebar-bottom">
+<a class="nav-item" href="@Url.Action("Index", "Home", new { area = "" })">Xem website</a>
+<form asp-area="" asp-controller="TaiKhoan" asp-action="Logout" method="post">
+<button type="submit">Đăng xuất</button>
+</form>
+</div>
+</aside>

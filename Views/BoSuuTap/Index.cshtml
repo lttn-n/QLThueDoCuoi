@@ -1,0 +1,31 @@
+@{ ViewBag.Title = "Bộ sưu tập"; ViewBag.PageKey = "collections"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Bộ sưu tập</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">ĐƯỢC TUYỂN CHỌN</span>
+<h1>Bộ sưu tập</h1>
+<p>Những thiết kế đồng điệu cho từng phong cách cưới.</p>
+</div>
+</div>
+<div class="collection-grid">
+<a class="collection" href="@Url.Action("Index", "SanPham", new { area = "" })">
+<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Ngày chung đôi"/>
+<div>
+<span class="eyebrow">DRAGNEEL COLLECTION</span>
+<h2>Ngày chung đôi</h2>
+<p>Váy cưới, vest và phụ kiện cho khoảnh khắc bên nhau.</p>
+</div>
+</a>
+<a class="collection" href="@Url.Action("Index", "SanPham", new { area = "" })">
+<img src="@Url.Content("~/images/dragneel/aodai.svg")" alt="Nét Việt thanh lịch"/>
+<div>
+<span class="eyebrow">DRAGNEEL COLLECTION</span>
+<h2>Nét Việt thanh lịch</h2>
+<p>Áo dài truyền thống với những đường nét trang nhã.</p>
+</div>
+</a>
+</div>
+</div>

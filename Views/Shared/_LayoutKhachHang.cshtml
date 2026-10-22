@@ -1,0 +1,20 @@
+@* Khung dùng chung; nội dung từng trang được chèn vào RenderBody. *@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title · DRAGNEEL</title>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/dragneel-shared.css")" />
+    @await RenderSectionAsync("styles", required: false)
+</head>
+<body data-page="@ViewBag.PageKey">
+    @await Html.PartialAsync("_Header")
+    @await Html.PartialAsync("_Menu")
+    <main id="main-content">@RenderBody()</main>
+    @await Html.PartialAsync("_Footer")
+    <script src="@Url.Content("~/js/site.js")"></script>
+    @await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

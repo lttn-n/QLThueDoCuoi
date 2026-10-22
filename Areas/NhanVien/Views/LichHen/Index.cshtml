@@ -1,0 +1,70 @@
+@{ ViewBag.Title = "Lịch hẹn thử đồ"; ViewBag.PageKey = "admin_appointments"; Layout = "~/Areas/NhanVien/Views/Shared/_LayoutNhanVien.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / NHÂN VIÊN</span>
+<h1>Quản lý lịch hẹn thử đồ</h1>
+<p>Xác nhận mẫu, thời gian và khả năng tiếp khách của showroom.</p>
+</div>
+</div>
+<div class="table-wrap">
+<table >
+<thead>
+<tr>
+<th>Mã lịch / khách</th>
+<th>Mẫu / size</th>
+<th>Ngày giờ</th>
+<th>Trạng thái</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>LH001<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Váy cưới Élodie<small>M · Trắng</small>
+</td>
+<td>22/10/2026 · 10:00</td>
+<td>
+<span class="status green">Đã xác nhận</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Xác nhận</button> <button type="button" class="btn small" disabled aria-disabled="true">Hoàn thành</button> <button type="button" class="btn small" disabled aria-disabled="true">Hủy</button>
+</td>
+</tr>
+<tr >
+<td>LH002<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Áo dài Minh Châu<small>S · Trắng</small>
+</td>
+<td>24/10/2026 · 14:30</td>
+<td>
+<span class="status amber">Chờ xác nhận</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Xác nhận</button> <button type="button" class="btn small" disabled aria-disabled="true">Hoàn thành</button> <button type="button" class="btn small" disabled aria-disabled="true">Hủy</button>
+</td>
+</tr>
+<tr >
+<td>LH003<small>Lâm Thị Thanh Nhi</small>
+</td>
+<td>Vest nam Modern Fit<small>L · Đen</small>
+</td>
+<td>18/10/2026 · 09:00</td>
+<td>
+<span class="status neutral">Đã hoàn thành</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Xác nhận</button> <button type="button" class="btn small" disabled aria-disabled="true">Hoàn thành</button> <button type="button" class="btn small" disabled aria-disabled="true">Hủy</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/>
+<path d="M12 6v6l4 2"/>
+</svg>
+<span>Khách hủy lịch đã xác nhận trước ít nhất 24 giờ. Nhân viên kiểm tra quyền và ghi rõ lý do nếu xử lý hủy sát giờ.</span>
+</div>

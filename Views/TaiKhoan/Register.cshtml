@@ -1,0 +1,35 @@
+@{ ViewBag.Title = "Tạo tài khoản"; ViewBag.PageKey = "register"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="auth-wrap">
+<div class="card">
+<span class="eyebrow">TRỞ THÀNH KHÁCH HÀNG</span>
+<h1>Tạo tài khoản</h1>
+<form data-ui-only>
+<label class="field">
+<span>Họ và tên</span>
+<input type="text" name="HoTen" value="" />
+</label>
+<label class="field">
+<span>Email hoặc số điện thoại</span>
+<input type="text" name="TenDangNhap" value="" />
+</label>
+<label class="field">
+<span>Mật khẩu</span>
+<input type="password" name="MatKhau" value="" autocomplete="new-password"/>
+</label>
+<label class="field">
+<span>Nhập lại mật khẩu</span>
+<input type="password" name="NhapLaiMatKhau" value="" autocomplete="new-password"/>
+</label>
+<label class="checkline">
+<input type="checkbox" name="DongYDieuKhoan"/>Tôi đồng ý với điều khoản sử dụng.</label>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Tạo tài khoản</button>
+</div>
+</form>
+<p>Đã có tài khoản? <a class="" href="@Url.Action("Login", "TaiKhoan", new { area = "" })">Đăng nhập</a>
+</p>
+</div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@ViewBag.Title · DRAGNEEL Nhân viên</title>
+<link rel="stylesheet" href="@Url.Content("~/css/site.css")">@await RenderSectionAsync("styles", required: false)</head>
+<body class="admin-app" data-page="@ViewBag.PageKey">
+<div class="admin-shell">
+@await Html.PartialAsync("~/Areas/NhanVien/Views/Shared/_MenuNhanVien.cshtml")
+<div class="admin-body">
+<header class="admin-topbar">
+<button class="mobile-toggle" type="button" data-toggle-admin aria-label="Mở menu" aria-expanded="false">☰</button>
+<span>DRAGNEEL / Nhân viên</span>
+<div class="right">
+<a href="@Url.Action("Index", "Home", new { area = "" })">Xem website →</a>
+<b>@(User.Identity?.Name ?? "Tài khoản")</b>
+</div>
+</header>
+<main class="admin-content" id="main-content">@RenderBody()</main>
+</div>
+</div>
+<script src="@Url.Content("~/js/site.js")">
+</script>@await RenderSectionAsync("scripts", required: false)</body>
+</html>

@@ -1,0 +1,95 @@
+@{ ViewBag.Title = "Danh mục"; ViewBag.PageKey = "admin_categories"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
+<h1>Quản lý danh mục</h1>
+<p>Menu hai cấp, loại sản phẩm và thứ tự hiển thị.</p>
+</div>
+</div>
+<div class="split">
+<div>
+<div class="table-wrap">
+<table >
+<thead>
+<tr>
+<th>Tên danh mục</th>
+<th>Danh mục cha</th>
+<th>Hiển thị</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>Váy cưới</td>
+<td>Trang phục cưới</td>
+<td>
+<span class="status green">Có</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Sửa</button> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>Vest chú rể</td>
+<td>Trang phục cưới</td>
+<td>
+<span class="status green">Có</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Sửa</button> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>Áo dài</td>
+<td>Trang phục cưới</td>
+<td>
+<span class="status green">Có</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Sửa</button> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+<tr >
+<td>Phụ kiện</td>
+<td>Trang phục cưới</td>
+<td>
+<span class="status green">Có</span>
+</td>
+<td>
+<button type="button" class="btn small" disabled aria-disabled="true">Sửa</button> <button type="button" class="btn small" disabled aria-disabled="true">Xóa</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="card">
+<h2>Thông tin danh mục</h2>
+<form data-ui-only>
+<label class="field">
+<span>Tên danh mục</span>
+<input type="text" name="TenLoaiSanPham" value="" />
+</label>
+<label class="field">
+<span>Danh mục cha</span>
+<select name="MaDanhMucCha">
+<option>Không có (cấp 1)</option>
+<option>Trang phục cưới</option>
+</select>
+</label>
+<label class="field">
+<span>Thứ tự</span>
+<input type="number" name="ThuTu" value="0" />
+</label>
+<div class="form-actions">
+<label>
+<input type="checkbox" checked/> Hiển thị</label>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Lưu danh mục</button>
+</div>
+</form>
+</div>
+</div>

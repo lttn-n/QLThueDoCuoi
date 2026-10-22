@@ -1,0 +1,71 @@
+@{ ViewBag.Title = "Sản phẩm"; ViewBag.PageKey = "products"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Sản phẩm</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">DANH MỤC SẢN PHẨM</span>
+<h1>Trang phục cưới</h1>
+<p>Tìm thiết kế phù hợp cho ngày trọng đại.</p>
+</div>
+</div>
+<div class="catalog-layout">
+<aside class="filters">
+<div class="filter-block">
+<b>Danh mục</b>
+<label>
+<input data-filter="category" type="radio" name="category" value="" checked/>Tất cả</label>
+<label>
+<input data-filter="category" type="radio" name="category" value="Váy cưới" />Váy cưới</label>
+<label>
+<input data-filter="category" type="radio" name="category" value="Vest chú rể" />Vest chú rể</label>
+<label>
+<input data-filter="category" type="radio" name="category" value="Áo dài" />Áo dài</label>
+<label>
+<input data-filter="category" type="radio" name="category" value="Phụ kiện" />Phụ kiện</label>
+</div>
+<div class="filter-block">
+<b>Khoảng giá</b>
+<select data-filter="price" aria-label="Khoảng giá">
+<option value="">Tất cả mức giá</option>
+<option value="low">Dưới 2.000.000₫</option>
+<option value="mid">2.000.000₫ – 4.000.000₫</option>
+<option value="high">Trên 4.000.000₫</option>
+</select>
+</div>
+<div class="filter-block">
+<b>Kích thước</b>
+<select data-filter="size" aria-label="Kích thước">
+<option value="">Tất cả size</option>
+<option value="S">S</option>
+<option value="M">M</option>
+<option value="L">L</option>
+<option value="XL">XL</option>
+<option value="Freesize">Freesize</option>
+</select>
+</div>
+<div class="filter-block">
+<button type="button" class="text-button" data-reset-filters>Đặt lại bộ lọc</button>
+</div>
+</aside>
+<div>
+<div class="toolbar">
+<input type="search" data-filter="search" placeholder="Tìm tên sản phẩm..." aria-label="Tìm trong danh sách"/>
+<select data-sort aria-label="Sắp xếp">
+<option value="featured">Sắp xếp: Nổi bật</option>
+<option value="asc">Giá thấp đến cao</option>
+<option value="desc">Giá cao đến thấp</option>
+</select>
+</div>
+<p class="count-note" style="margin-bottom:15px">Hiển thị <span data-result-count>4</span> sản phẩm</p>
+<div class="dragneel-product-grid dragneel-catalog-grid" data-catalog>
+@foreach (var sanPham in QLThueDoCuoi.Data.DuLieuGiaoDien.SanPham)
+{ @await Html.PartialAsync("_TheSanPham", sanPham) }
+</div>
+<div class="empty" data-empty-catalog hidden>Chưa có mẫu phù hợp với bộ lọc của bạn.</div>
+</div>
+</div>
+</div>
+
+@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /> }

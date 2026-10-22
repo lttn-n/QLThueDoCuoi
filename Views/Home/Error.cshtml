@@ -1,0 +1,5 @@
+@model QLThueDoCuoi.Models.ErrorViewModel
+@{ ViewBag.Title = "Có lỗi xảy ra"; }
+<section class="container section"><span class="eyebrow">DRAGNEEL</span><h1>Chưa thể tải trang này</h1><p>Em vui lòng thử lại sau.</p>
+@if (Model.ShowRequestId) { <p>Mã yêu cầu: <code>@Model.RequestId</code></p> }
+<a class="btn" asp-area="" asp-controller="Home" asp-action="Index">Về trang chủ</a></section>

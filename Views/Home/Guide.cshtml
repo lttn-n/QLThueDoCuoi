@@ -1,0 +1,25 @@
+@{ ViewBag.Title = "Hướng dẫn thuê"; ViewBag.PageKey = "guide"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Hướng dẫn thuê</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">TRƯỚC NGÀY TRỌNG ĐẠI</span>
+<h1>Hướng dẫn thuê</h1>
+<p>Thông tin cần biết khi chọn mẫu, nhận và hoàn trả trang phục.</p>
+</div>
+</div>
+<article class="prose card">
+<h2>1. Chọn mẫu và lịch thuê</h2>
+<p>Xem sản phẩm, chọn size/màu, ngày nhận và ngày trả. Thêm các món muốn thuê vào giỏ rồi kiểm tra thông tin.</p>
+<h2>2. Bạn có thể đặt lịch thử riêng</h2>
+<p>Nếu cần thử phom dáng, chọn mẫu rồi đặt lịch đến showroom. Đặt lịch thử không đồng nghĩa đã giữ bộ đồ hay tạo đơn thuê; bạn cũng có thể đặt thuê mà không cần thử trước.</p>
+<h2>3. Xác nhận đơn và nhận đồ</h2>
+<p>Cửa hàng kiểm tra lịch trống, xác nhận đơn và thông tin tiền thuê, tiền cọc. Nhận tại showroom hoặc đăng ký giao tận nơi.</p>
+<h2>4. Trả đồ và quyết toán</h2>
+<p>Trả đúng ngày đã chọn. Cửa hàng kiểm tra đồ, đối chiếu phụ phí nếu có và xử lý tiền cọc.</p>
+<h2>Hủy lịch thử như thế nào?</h2>
+<p>Lịch chờ xác nhận được hủy trước giờ hẹn. Lịch đã xác nhận được hủy khi còn ít nhất 24 giờ; sát giờ hẹn, hãy liên hệ cửa hàng. Lịch đã đến, hoàn thành hoặc đã hủy không có nút hủy.</p>
+</article>
+</div>

@@ -1,0 +1,46 @@
+@{ ViewBag.Title = "Về DRAGNEEL"; ViewBag.PageKey = "about"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Về DRAGNEEL</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">DRAGNEEL WEDDING RENTAL</span>
+<h1>Thanh lịch trong từng lựa chọn</h1>
+<p>Không gian dành cho những thiết kế và khoảnh khắc đẹp.</p>
+</div>
+</div>
+<div class="story">
+<img class="story-art" src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Thiết kế váy cưới DRAGNEEL"/>
+<div>
+<h2>Ghé showroom,<br/>tìm mẫu phù hợp.</h2>
+<p>86 Nguyễn Huệ, TP.HCM<br/>09:00 – 21:00 mỗi ngày</p>
+<a class="btn primary" href="@Url.Action("Create", "LichHen", new { area = "", maSanPham = 1 })">Đặt lịch thử đồ</a>
+</div>
+</div>
+<section class="section">
+<div class="card">
+<h2>Liên hệ với DRAGNEEL</h2>
+<form data-ui-only>
+<div class="form-grid">
+<label class="field">
+<span>Họ và tên</span>
+<input type="text" name="HoTen" value="" />
+</label>
+<label class="field">
+<span>Email hoặc số điện thoại</span>
+<input type="text" name="LienHe" value="" />
+</label>
+<label class="field full">
+<span>Nội dung</span>
+<textarea name="NoiDung">
+</textarea>
+</label>
+</div>
+<div class="form-actions">
+<button type="button" class="btn primary" disabled aria-disabled="true">Gửi liên hệ</button>
+</div>
+</form>
+</div>
+</section>
+</div>

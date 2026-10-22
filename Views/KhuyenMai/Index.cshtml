@@ -1,0 +1,22 @@
+@{ ViewBag.Title = "Khuyến mãi"; ViewBag.PageKey = "promotions"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+<div class="container">
+<div class="breadcrumb">
+<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Khuyến mãi</div>
+<div class="page-head">
+<div>
+<span class="eyebrow">ƯU ĐÃI DÀNH CHO BẠN</span>
+<h1>Thuê đẹp, thêm ưu đãi</h1>
+<p>Kiểm tra điều kiện áp dụng trước khi nhập mã tại giỏ thuê.</p>
+</div>
+</div>
+<div class="voucher">
+<strong>MIRA10</strong>
+<div>
+<h3>Giảm 10% tiền thuê</h3>
+<p>Đơn từ 1.000.000₫ · Giảm tối đa 500.000₫</p>
+<small>Không áp dụng trên tiền cọc và phí giao nhận.</small>
+</div>
+<a class="btn primary" href="@Url.Action("Index", "SanPham", new { area = "" })">Chọn trang phục →</a>
+</div>
+</div>
