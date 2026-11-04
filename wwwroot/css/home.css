@@ -10,3 +10,5 @@
 .dragneel-catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.dragneel-catalog-grid .dragneel-product:nth-child(even){margin-top:0}.dragneel-catalog-grid .dragneel-product-photo>img{height:340px}.dragneel-product[hidden]{display:none!important}
 @media(max-width:1100px){.dragneel-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.dragneel-catalog-grid{gap:14px}.dragneel-catalog-grid .dragneel-product-photo>img{height:250px}}
+
+.dragneel-hero h1,.dragneel-section h2,.dragneel-booking h2,.dragneel-category-list h3,.dragneel-story-copy h2,.dragneel-process-grid>div h3,.dragneel-process li h3,.dragneel-preparation article h3,.dragneel-quick-copy h2{font-family:"Segoe UI",Arial,sans-serif;letter-spacing:normal}

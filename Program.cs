@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using QLThueDoCuoi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<TaiKhoanRepository>();
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
