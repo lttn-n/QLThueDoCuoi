@@ -127,7 +127,76 @@ public class TaiKhoanController : Controller
 
     [Authorize(Roles = "KHACHHANG")]
     [HttpGet]
-    public IActionResult Profile() => View();
+    public IActionResult Profile()
+    {
+        if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int maTaiKhoan))
+            return Unauthorized();
+
+        var taiKhoan = _taiKhoanRepository.GetThongTinCaNhan(maTaiKhoan);
+        if (taiKhoan is null)
+            return NotFound();
+
+        return View(new CapNhatThongTinCaNhanViewModel
+        {
+            HoTen = taiKhoan.HoTen,
+            Email = taiKhoan.Email,
+            SoDienThoai = taiKhoan.SoDienThoai,
+            DiaChi = taiKhoan.DiaChi
+        });
+    }
+
+    [Authorize(Roles = "KHACHHANG")]
+    [HttpPost]
+    public async Task<IActionResult> Profile(CapNhatThongTinCaNhanViewModel model)
+    {
+        if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int maTaiKhoan))
+            return Unauthorized();
+
+        model.HoTen = model.HoTen.Trim();
+        model.Email = string.IsNullOrWhiteSpace(model.Email) ? null : model.Email.Trim();
+        model.SoDienThoai = string.IsNullOrWhiteSpace(model.SoDienThoai)
+            ? null
+            : model.SoDienThoai.Trim();
+        model.DiaChi = string.IsNullOrWhiteSpace(model.DiaChi) ? null : model.DiaChi.Trim();
+
+        if (model.Email is null)
+            ModelState.Remove(nameof(model.Email));
+
+        if (model.Email is null && model.SoDienThoai is null)
+        {
+            ModelState.AddModelError(string.Empty,
+                "Vui lòng cung cấp email hoặc số điện thoại.");
+        }
+
+        if (!ModelState.IsValid)
+            return View(model);
+
+        bool daCapNhat = _taiKhoanRepository.CapNhatThongTinCaNhan(
+            maTaiKhoan,
+            model.HoTen,
+            model.Email,
+            model.SoDienThoai,
+            model.DiaChi);
+
+        if (!daCapNhat)
+        {
+            ModelState.AddModelError(string.Empty,
+                "Không thể cập nhật. Email hoặc số điện thoại có thể đã được tài khoản khác sử dụng.");
+            return View(model);
+        }
+
+        var claims = User.Claims
+            .Where(claim => claim.Type != ClaimTypes.Name)
+            .Append(new Claim(ClaimTypes.Name, model.HoTen));
+        var identity = new ClaimsIdentity(
+            claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity));
+
+        TempData["ThongBao"] = "Đã cập nhật thông tin cá nhân.";
+        return RedirectToAction(nameof(Profile));
+    }
 
     [Authorize]
     [HttpPost]

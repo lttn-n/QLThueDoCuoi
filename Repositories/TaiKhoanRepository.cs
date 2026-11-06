@@ -115,6 +115,70 @@ public class TaiKhoanRepository
             }
         }
     }
+
+    public TaiKhoan? GetThongTinCaNhan(int maTaiKhoan)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        using var command = new SqlCommand(@"
+            SELECT MaTaiKhoan, HoTen, Email, SoDienThoai, DiaChi
+            FROM dbo.TaiKhoan
+            WHERE MaTaiKhoan = @MaTaiKhoan;", connection);
+        command.Parameters.Add("@MaTaiKhoan", SqlDbType.Int).Value = maTaiKhoan;
+
+        connection.Open();
+        using var reader = command.ExecuteReader();
+        if (!reader.Read())
+            return null;
+
+        int emailOrdinal = reader.GetOrdinal("Email");
+        int phoneOrdinal = reader.GetOrdinal("SoDienThoai");
+        int addressOrdinal = reader.GetOrdinal("DiaChi");
+
+        return new TaiKhoan
+        {
+            MaTaiKhoan = reader.GetInt32(reader.GetOrdinal("MaTaiKhoan")),
+            HoTen = reader.GetString(reader.GetOrdinal("HoTen")),
+            Email = reader.IsDBNull(emailOrdinal) ? null : reader.GetString(emailOrdinal),
+            SoDienThoai = reader.IsDBNull(phoneOrdinal) ? null : reader.GetString(phoneOrdinal),
+            DiaChi = reader.IsDBNull(addressOrdinal) ? null : reader.GetString(addressOrdinal)
+        };
+    }
+
+    public bool CapNhatThongTinCaNhan(
+        int maTaiKhoan,
+        string hoTen,
+        string? email,
+        string? soDienThoai,
+        string? diaChi)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        using var command = new SqlCommand(@"
+            UPDATE dbo.TaiKhoan
+            SET HoTen = @HoTen,
+                Email = @Email,
+                SoDienThoai = @SoDienThoai,
+                DiaChi = @DiaChi
+            WHERE MaTaiKhoan = @MaTaiKhoan;", connection);
+        command.Parameters.Add("@MaTaiKhoan", SqlDbType.Int).Value = maTaiKhoan;
+        command.Parameters.Add("@HoTen", SqlDbType.NVarChar, 100).Value = hoTen;
+        command.Parameters.Add("@Email", SqlDbType.VarChar, 254).Value =
+            (object?)email ?? DBNull.Value;
+        command.Parameters.Add("@SoDienThoai", SqlDbType.VarChar, 20).Value =
+            (object?)soDienThoai ?? DBNull.Value;
+        command.Parameters.Add("@DiaChi", SqlDbType.NVarChar, 500).Value =
+            (object?)diaChi ?? DBNull.Value;
+
+        try
+        {
+            connection.Open();
+            return command.ExecuteNonQuery() > 0;
+        }
+        catch (SqlException ex) when (ex.Number is 2601 or 2627)
+        {
+            return false;
+        }
+    }
+
     public bool ThemKhachHang(string hoTen, string? email, string? soDienThoai, string matKhauHash)
     {
         //kiểm tra email và số điện thoại có trống hay không, nếu trống thì ném ra ngoại lệ
