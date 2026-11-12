@@ -1,71 +1,59 @@
-@{ ViewBag.Title = "Sản phẩm"; ViewBag.PageKey = "products"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+@model DanhSachSanPhamViewModel
+@{
+    ViewBag.Title = "Sản phẩm"; ViewBag.PageKey = "products"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+    var demLoai = Model.SanPham.GroupBy(x => x.TenLoai).ToDictionary(g => g.Key, g => g.Count());
+    var homNay = DateTime.UtcNow.AddHours(7).Date;
+}
+@* Danh sách đọc từ SQL. Lọc loại/size/giá và sắp xếp chạy trong site.js (data-catalog, data-filter, data-sort).
+   Tìm kiếm dùng ô ở header (chỉ lọc khi bấm Enter/kính lúp). Lọc "còn trống từ ngày đến ngày" gọi SanPham/ConHang. san-pham.js lo phần giao diện. *@
+@section styles { <link rel="stylesheet" href="~/css/san-pham.css" asp-append-version="true" /> }
 <div class="container">
-<div class="breadcrumb">
-<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Sản phẩm</div>
-<div class="page-head">
-<div>
-<span class="eyebrow">DANH MỤC SẢN PHẨM</span>
-<h1>Trang phục cưới</h1>
-<p>Tìm thiết kế phù hợp cho ngày trọng đại.</p>
-</div>
-</div>
-<div class="catalog-layout">
-<aside class="filters">
-<div class="filter-block">
-<b>Danh mục</b>
-<label>
-<input data-filter="category" type="radio" name="category" value="" checked/>Tất cả</label>
-<label>
-<input data-filter="category" type="radio" name="category" value="Váy cưới" />Váy cưới</label>
-<label>
-<input data-filter="category" type="radio" name="category" value="Vest chú rể" />Vest chú rể</label>
-<label>
-<input data-filter="category" type="radio" name="category" value="Áo dài" />Áo dài</label>
-<label>
-<input data-filter="category" type="radio" name="category" value="Phụ kiện" />Phụ kiện</label>
-</div>
-<div class="filter-block">
-<b>Khoảng giá</b>
-<select data-filter="price" aria-label="Khoảng giá">
-<option value="">Tất cả mức giá</option>
-<option value="low">Dưới 2.000.000₫</option>
-<option value="mid">2.000.000₫ – 4.000.000₫</option>
-<option value="high">Trên 4.000.000₫</option>
-</select>
-</div>
-<div class="filter-block">
-<b>Kích thước</b>
-<select data-filter="size" aria-label="Kích thước">
-<option value="">Tất cả size</option>
-<option value="S">S</option>
-<option value="M">M</option>
-<option value="L">L</option>
-<option value="XL">XL</option>
-<option value="Freesize">Freesize</option>
-</select>
-</div>
-<div class="filter-block">
-<button type="button" class="text-button" data-reset-filters>Đặt lại bộ lọc</button>
-</div>
-</aside>
-<div>
-<div class="toolbar">
-<input type="search" data-filter="search" placeholder="Tìm tên sản phẩm..." aria-label="Tìm trong danh sách"/>
-<select data-sort aria-label="Sắp xếp">
-<option value="featured">Sắp xếp: Nổi bật</option>
-<option value="asc">Giá thấp đến cao</option>
-<option value="desc">Giá cao đến thấp</option>
-</select>
-</div>
-<p class="count-note" style="margin-bottom:15px">Hiển thị <span data-result-count>4</span> sản phẩm</p>
-<div class="dragneel-product-grid dragneel-catalog-grid" data-catalog>
-@foreach (var sanPham in QLThueDoCuoi.Data.DuLieuGiaoDien.SanPham)
-{ @await Html.PartialAsync("_TheSanPham", sanPham) }
-</div>
-<div class="empty" data-empty-catalog hidden>Chưa có mẫu phù hợp với bộ lọc của bạn.</div>
-</div>
-</div>
+<div class="breadcrumb"><a href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Sản phẩm</div>
+
+<section class="dragneel-catalog-hero">
+<p class="script">Bộ sưu tập cho thuê</p>
+<h1>Chọn trang phục cho ngày của bạn</h1>
+<p class="lead">Váy cưới, áo dài, vest chú rể và phụ kiện. Chọn mẫu để xem size, giá gói và ngày thuê.</p>
+</section>
+
+@if (Model.Loi is not null)
+{
+<div class="alert error" role="alert">@Model.Loi</div>
+}
+else
+{
+<input type="hidden" data-filter="search" />
+<div class="dragneel-chips" role="radiogroup" aria-label="Loại trang phục">
+<label class="dragneel-chip"><input type="radio" name="loai" value="" data-filter="category" checked /><span>Tất cả <small>@Model.SanPham.Count</small></span></label>
+@foreach (var l in Model.CacLoai) { <label class="dragneel-chip"><input type="radio" name="loai" value="@l" data-filter="category" /><span>@l <small>@(demLoai.GetValueOrDefault(l))</small></span></label> }
 </div>
 
-@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /> }
+<div class="dragneel-catalog-bar">
+<div class="dragneel-dates" data-date-filter data-url="@Url.Action("ConHang", "SanPham", new { area = "" })" data-today="@homNay.ToString("yyyy-MM-dd")" data-max="@(4 + QLThueDoCuoi.Services.GioThueService.SoNgayThemToiDa)">
+<span class="dates-label">Còn trống từ</span>
+<label class="dragneel-date"><input type="date" data-date-from min="@homNay.ToString("yyyy-MM-dd")" aria-label="Ngày nhận" autocomplete="off" /></label>
+<span class="dates-sep" aria-hidden="true">đến</span>
+<label class="dragneel-date"><input type="date" data-date-to min="@homNay.AddDays(1).ToString("yyyy-MM-dd")" aria-label="Ngày trả" autocomplete="off" /></label>
+<button type="button" class="dates-clear" data-date-clear hidden aria-label="Bỏ lọc ngày">×</button>
+</div>
+<label class="dragneel-select"><span>Kích thước</span><select data-filter="size" aria-label="Kích thước"><option value="">Tất cả</option>@foreach (var sz in Model.CacSize) { <option>@sz</option> }</select></label>
+<label class="dragneel-select"><span>Giá gói</span><select data-filter="price" aria-label="Giá thuê gói"><option value="">Tất cả</option><option value="low">Dưới 2 triệu</option><option value="mid">2 – 4 triệu</option><option value="high">Trên 4 triệu</option></select></label>
+<label class="dragneel-select"><span>Sắp xếp</span><select data-sort aria-label="Sắp xếp"><option value="">Mặc định</option><option value="asc">Giá tăng dần</option><option value="desc">Giá giảm dần</option></select></label>
+<button type="button" class="dragneel-clear" data-reset-filters hidden>Xóa bộ lọc</button>
+</div>
+<p class="dragneel-date-msg" data-date-msg hidden role="status" aria-live="polite"></p>
+<p class="count"><b data-result-count>@Model.SanPham.Count</b> sản phẩm</p>
+
+<div class="dragneel-product-grid dragneel-catalog-grid" data-catalog>
+@foreach (var sp in Model.SanPham) { @await Html.PartialAsync("_TheSanPham", sp) }
+</div>
+
+<div class="dragneel-empty dragneel-catalog-empty" data-empty-catalog hidden>
+<p>Không có sản phẩm nào phù hợp bộ lọc.</p>
+<button type="button" class="dragneel-clear" data-empty-reset>Xóa bộ lọc</button>
+</div>
+
+<div class="dragneel-load-more"><button type="button" data-load-more hidden>Xem thêm <b data-more-n>12</b> sản phẩm</button></div>
+}
+</div>
+@section scripts { <script src="~/js/san-pham.js" asp-append-version="true"></script> }

@@ -1,6 +1,18 @@
-@* Footer dùng chung. Địa chỉ minh họa; nhóm thay bằng thông tin thật của chi nhánh. *@
-<footer class="dragneel-footer"><div class="container"><div class="dragneel-footer-grid"><div class="dragneel-footer-brand"><a class="dragneel-logo" href="@Url.Action("Index", "Home", new { area = "" })">DRAGNEEL</a><p>Trang phục cho ngày trọng đại.<br />Trải nghiệm thuê dành riêng cho bạn.</p><span class="dragneel-footer-signature">A little grace. A lasting memory.</span></div>
-<div><h2>Khám phá</h2><a href="@Url.Action("Index", "SanPham", new { area = "" })?category=V%C3%A1y%20c%C6%B0%E1%BB%9Bi">Váy cưới</a><a href="@Url.Action("Index", "SanPham", new { area = "" })?category=%C3%81o%20d%C3%A0i">Áo dài</a><a href="@Url.Action("Index", "SanPham", new { area = "" })?category=Vest%20ch%C3%BA%20r%E1%BB%83">Vest chú rể</a><a href="@Url.Action("Index", "SanPham", new { area = "" })?category=Ph%E1%BB%A5%20ki%E1%BB%87n">Phụ kiện</a></div>
-<div><h2>Đồng hành cùng bạn</h2><a href="@Url.Action("Guide", "Home", new { area = "" })">Hướng dẫn thuê</a><a href="@Url.Action("Guide", "Home", new { area = "" })#chinh-sach">Chính sách thuê</a><a href="@Url.Action("Create", "LichHen", new { area = "", maSanPham = 1 })">Đặt lịch thử đồ</a><a href="@Url.Action("Profile", "TaiKhoan", new { area = "" })">Tài khoản của tôi</a></div>
-<div><h2>Ghé thăm DRAGNEEL</h2><span>Showroom DRAGNEEL</span><span>86 Nguyễn Huệ, TP.HCM</span><span>Tư vấn trang phục</span><a href="@Url.Action("Create", "LichHen", new { area = "", maSanPham = 1 })">Đặt lịch trước khi đến ↗</a></div></div>
-<div class="dragneel-footer-bottom"><span>© @DateTime.Now.Year DRAGNEEL Wedding Rental</span><span>Trân trọng từng khoảnh khắc của bạn.</span></div></div></footer>
+@* Footer dùng chung. Địa chỉ + link mạng xã hội là minh họa; nhóm thay bằng thông tin thật của chi nhánh (bảng ChiNhanh). *@
+<footer class="dragneel-footer"><div class="container dragneel-footer-grid">
+<div><div class="dragneel-footer-logo">Dragneel</div><p>Trang phục cho ngày trọng đại.<br />Trải nghiệm thuê dành riêng cho bạn.</p>
+<div class="ft-social" aria-label="Liên hệ Dragneel">
+<a class="ft-soc" style="--c:#1877F2" href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">@await Html.PartialAsync("_Icon", "facebook")</a>
+<a class="ft-soc" style="--c:linear-gradient(45deg,#f9a03f,#e1306c,#833ab4)" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">@await Html.PartialAsync("_Icon", "instagram")</a>
+<a class="ft-soc" style="--c:#0068FF" href="https://zalo.me/" target="_blank" rel="noopener" aria-label="Zalo" title="Zalo">@await Html.PartialAsync("_Icon", "zalo")</a>
+<a class="ft-soc" style="--c:linear-gradient(45deg,#00b2ff,#a033ff)" href="https://m.me/" target="_blank" rel="noopener" aria-label="Messenger" title="Messenger">@await Html.PartialAsync("_Icon", "messenger")</a>
+</div></div>
+<div><h4>Khám phá</h4><a href="@Url.Action("Index", "SanPham", new { area = "", category = "Váy cưới" })">Váy cưới</a><a href="@Url.Action("Index", "SanPham", new { area = "", category = "Áo dài" })">Áo dài</a><a href="@Url.Action("Index", "SanPham", new { area = "", category = "Vest chú rể" })">Vest chú rể</a><a href="@Url.Action("Index", "SanPham", new { area = "", category = "Phụ kiện" })">Phụ kiện</a></div>
+<div><h4>Đồng hành cùng bạn</h4><a href="@Url.Action("Guide", "Home", new { area = "" })">Hướng dẫn thuê</a><a href="@Url.Action("Guide", "Home", new { area = "" })#chinh-sach">Chính sách thuê</a><a href="@Url.Action("Create", "LichHen", new { area = "", maSanPham = 1 })">Đặt lịch thử đồ</a><a href="@Url.Action("Profile", "TaiKhoan", new { area = "" })">Tài khoản của tôi</a></div>
+<div><h4>Ghé thăm Dragneel</h4>
+<span class="ft-line">@await Html.PartialAsync("_Icon", "store")Showroom Dragneel</span>
+<span class="ft-line">@await Html.PartialAsync("_Icon", "pin")86 Nguyễn Huệ, TP.HCM</span>
+<span class="ft-line">@await Html.PartialAsync("_Icon", "sparkle")Tư vấn trang phục</span>
+<a class="ft-line" href="@Url.Action("Create", "LichHen", new { area = "", maSanPham = 1 })">@await Html.PartialAsync("_Icon", "calendar")Đặt lịch trước khi đến</a></div>
+</div>
+<div class="container dragneel-footer-bottom"><span>© @DateTime.Now.Year Dragneel Wedding Rental</span><span>Trân trọng từng khoảnh khắc của bạn.</span></div></footer>

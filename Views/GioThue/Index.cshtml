@@ -1,69 +1,98 @@
-@{ ViewBag.Title = "Giỏ thuê"; ViewBag.PageKey = "cart"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+@model GioThueViewModel
+@using System.Globalization
+@{
+    ViewBag.Title = "Giỏ thuê"; ViewBag.PageKey = "cart"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+    var vn = CultureInfo.GetCultureInfo("vi-VN"); var iv = CultureInfo.InvariantCulture;
+    string Tien(decimal d) => d.ToString("N0", vn) + "₫";
+    var homNay = DateOnly.FromDateTime(DateTime.UtcNow.AddHours(7)).ToString("yyyy-MM-dd");
+}
 <div class="container">
 <div class="breadcrumb">
-<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Giỏ thuê</div>
+<a href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Giỏ thuê</div>
 <div class="page-head">
 <div>
 <span class="eyebrow">NHỮNG MẪU BẠN ĐÃ CHỌN</span>
 <h1>Giỏ thuê của bạn</h1>
-<p>
-</p>
+<p>Điều chỉnh số lượng, size và ngày thuê trước khi đặt.</p>
 </div>
 </div>
-<div class="cart-layout">
+@if (Model.Rong)
+{
 <div class="card">
-<div class="cart-line">
-<img src="@Url.Content("~/images/dragneel/elodie.svg")" alt="Váy cưới Élodie"/>
-<div>
-<h3>Váy cưới Élodie</h3>
-<p>Size M · Trắng</p>
-<p>25/10/2026 → 28/10/2026 · 3 ngày</p>
-<label>Số lượng <input aria-label="Số lượng" type="number" min="1" value="1" disabled/>
-</label>
-<div>
-<button type="button" class="btn ghost small" disabled aria-disabled="true">Chỉnh sửa</button>
-<button type="button" class="btn ghost small" disabled aria-disabled="true">Xóa</button>
+<div class="cart-empty">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l1 12.5h-15L5.5 8Z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>
+<h2>Không có sản phẩm nào</h2>
+<p>Giỏ thuê của bạn đang trống. Hãy chọn một mẫu ưng ý nhé.</p>
+<a class="dragneel-button" href="@Url.Action("Index", "SanPham", new { area = "" })">Khám phá sản phẩm</a>
 </div>
 </div>
-<strong class="line-price">2.800.000₫</strong>
+}
+else
+{
+<div class="cart-layout">
+<form class="card" id="cart-form" asp-controller="GioThue" asp-action="CapNhat" asp-area="" method="post" data-cart-form data-today="@homNay">
+<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true" data-confirm="Bạn có muốn lưu các thay đổi trong giỏ thuê không?" data-confirm-title="Xác nhận lưu thay đổi" data-confirm-ok="Lưu thay đổi">Lưu thay đổi</button>
+<div class="cart-tools">
+<label class="cart-pick-all"><input type="checkbox" data-pick-all /><span class="cart-pick-box" aria-hidden="true"></span> Chọn tất cả</label>
+<div class="cart-tools-actions">
+<button type="submit" class="btn danger" disabled data-delete-selected formaction="@Url.Action("XoaNhieu", "GioThue", new { area = "" })" formmethod="post" formnovalidate data-confirm="Các sản phẩm đã chọn sẽ bị xóa khỏi giỏ thuê. Bạn có chắc không?" data-confirm-title="Xác nhận xóa sản phẩm đã chọn" data-confirm-ok="Xóa đã chọn" data-confirm-tone="danger"><span>Xóa đã chọn (<span data-pick-count>0</span>)</span></button>
+<button type="submit" class="btn danger" formaction="@Url.Action("XoaTatCa", "GioThue", new { area = "" })" formmethod="post" formnovalidate data-confirm="Toàn bộ sản phẩm trong giỏ thuê sẽ bị xóa. Bạn có chắc không?" data-confirm-title="Xóa toàn bộ giỏ thuê" data-confirm-ok="Xóa tất cả" data-confirm-tone="danger">Xóa tất cả</button>
+</div></div>
+@for (var i = 0; i < Model.Dong.Count; i++)
+{
+    var d = Model.Dong[i];
+    <div class="cart-line" data-line data-max="@d.SoNgayToiDa" data-gia="@d.GiaGoi.ToString(iv)" data-goi="@d.SoNgayGoi" data-them="@d.GiaNgayThem.ToString(iv)" data-coc="@d.TienCoc.ToString(iv)">
+    <input type="hidden" name="dong[@i].MaChiTiet" value="@d.MaChiTiet" />
+    <label class="cart-pick"><input type="checkbox" name="chon" value="@d.MaChiTiet" data-pick aria-label="Chọn “@d.Ten” để xóa" /><span class="cart-pick-box" aria-hidden="true"></span></label>
+    <a class="cart-thumb ph" href="@Url.Action("Details", "SanPham", new { area = "", id = d.MaSanPham })">@if (!string.IsNullOrEmpty(d.Anh)) { <img src="@Url.Content("~" + d.Anh)" alt="@d.Ten" loading="lazy" onerror="this.remove()" /> }</a>
+    <div class="cart-main">
+        <h3><a href="@Url.Action("Details", "SanPham", new { area = "", id = d.MaSanPham })">@d.Ten</a></h3>
+        <p class="cart-meta">Size <b data-v-size>@d.KichThuoc</b> · @d.MauSac</p>
+        <p class="cart-meta" data-v-dates>@(d.SoNgay is int sn ? $"{d.NgayNhan:dd/MM/yyyy} → {d.NgayTra:dd/MM/yyyy} · {sn} ngày" : $"Chưa chọn ngày · tạm tính theo gói {d.SoNgayGoi} ngày")</p>
+        @if (d.NgungThue) { <p class="cart-meta warn">Sản phẩm này đã ngừng cho thuê, vui lòng xóa khỏi giỏ.</p> }
+        <div class="cart-qty-row"><span class="cart-meta">Số lượng</span>
+        <div class="qty"><button type="button" data-qty="-1" aria-label="Giảm số lượng">−</button><input type="number" name="dong[@i].SoLuong" min="1" max="10" value="@d.SoLuong" aria-label="Số lượng" required /><button type="button" data-qty="1" aria-label="Tăng số lượng">+</button></div></div>
+        <div class="cart-edit">
+            <div class="field"><label for="size-@i">Kích thước</label>
+            <select id="size-@i" name="dong[@i].MaSanPham" data-v-sizeselect>@foreach (var sz in d.CacSize) { <option value="@sz.MaSanPham" selected="@(sz.MaSanPham == d.MaSanPham)">@sz.KichThuoc</option> }</select></div>
+            <div class="field"><label for="nhan-@i">Ngày nhận</label><input id="nhan-@i" type="date" name="dong[@i].NgayNhan" value="@(d.NgayNhan?.ToString("yyyy-MM-dd"))" min="@homNay" autocomplete="off" data-nhan /></div>
+            <div class="field"><label for="tra-@i">Ngày trả</label><input id="tra-@i" type="date" name="dong[@i].NgayTra" value="@(d.NgayTra?.ToString("yyyy-MM-dd"))" min="@DateOnly.Parse(homNay).AddDays(1).ToString("yyyy-MM-dd")" autocomplete="off" data-tra /></div>
+        </div>
+        <p class="rent-rule cart-rule">Gói <b>@d.SoNgayGoi ngày</b>. Thêm ngày tính <b>@Tien(d.GiaNgayThem)/ngày</b>, thuê tối đa <b>@d.SoNgayToiDa ngày</b>. Không chọn được ngày đã qua.</p>
+        <div class="cart-actions">
+            <button type="button" class="btn ghost small" data-edit-toggle aria-expanded="false">Chỉnh sửa</button>
+            <button type="submit" class="btn ghost small danger" formaction="@Url.Action("Xoa", "GioThue", new { area = "" })" formmethod="post" formnovalidate name="id" value="@d.MaChiTiet" data-confirm="Bạn có chắc muốn xóa “@d.Ten” (size @d.KichThuoc) khỏi giỏ thuê không?" data-confirm-title="Xác nhận xóa" data-confirm-ok="Xóa" data-confirm-tone="danger">Xóa</button>
+        </div>
+    </div>
+    <strong class="line-price"><span data-v-price>@Tien(d.TienThue)</span><small data-v-coc>Cọc @Tien(d.TongCoc)</small></strong>
+    </div>
+}
+<div class="cart-save" data-save-bar hidden>
+<span>Bạn có thay đổi chưa lưu.</span>
+<div class="cart-save-actions"><button type="button" class="btn" data-reset>Hoàn tác</button><button type="submit" class="btn primary" data-confirm="Bạn có muốn lưu các thay đổi trong giỏ thuê không?" data-confirm-title="Xác nhận lưu thay đổi" data-confirm-ok="Lưu thay đổi">Lưu thay đổi</button></div>
 </div>
-<form class="button-row" data-ui-only>
-<label class="field">
-<span>Mã ưu đãi</span>
-<input name="MaUuDai" placeholder="Nhập mã ưu đãi"/>
-</label>
-<button type="button" class="btn small" disabled aria-disabled="true">Áp dụng</button>
 </form>
-</div>
 <div class="card">
 <h2>Tóm tắt đơn thuê</h2>
 <div class="summary-list">
-<div>
-<span>Tiền thuê</span>
-<b>2.800.000₫</b>
+<div><span>Tiền thuê (<span data-sum-count>@Model.TongSoLuong</span> sản phẩm)</span><b data-sum-thue>@Tien(Model.TongThue)</b></div>
+<div><span>Phí giao nhận</span><b>Chọn khi đặt thuê</b></div>
+<div><span>Tiền cọc</span><b data-sum-coc>@Tien(Model.TongCoc)</b></div>
+<div class="total"><span>Tổng ban đầu</span><span data-sum-total>@Tien(Model.TongBanDau)</span></div>
 </div>
-<div>
-<span>Phí giao nhận</span>
-<b>Nhận tại showroom</b>
-</div>
-<div>
-<span>Tiền cọc</span>
-<b>2.000.000₫</b>
-</div>
-<div>
-<span>Giảm giá</span>
-<b>0₫</b>
-</div>
-<div class="total">
-<span>Tổng ban đầu</span>
-<span>4.800.000₫</span>
-</div>
-</div>
-<small>Tiền cọc được theo dõi và hoàn riêng theo tình trạng đồ.</small>
+<small>Tiền cọc được theo dõi và hoàn riêng theo tình trạng đồ. Cần chọn ngày nhận/trả cho mọi sản phẩm trước khi đặt thuê.</small>
 <div class="form-actions">
-<a class="btn primary" href="@Url.Action("Checkout", "GioThue", new { area = "" })">Tiến hành đặt thuê →</a>
+@if (Model.CoDongKhongHopLe)
+{
+<button type="button" class="btn primary" disabled aria-disabled="true">Tiến hành đặt thuê →</button>
+}
+else
+{
+<a class="btn primary" href="@Url.Action("Checkout", "GioThue", new { area = "" })" data-checkout>Tiến hành đặt thuê →</a>
+}
 </div>
 </div>
 </div>
+}
 </div>
+@section scripts { <script src="~/js/cart.js" asp-append-version="true"></script> }

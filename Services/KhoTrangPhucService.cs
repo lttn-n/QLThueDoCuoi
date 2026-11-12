@@ -24,18 +24,12 @@ public sealed class HetTrangPhucException : InvalidOperationException
         => (MaSanPham, SoLuongCon) = (maSanPham, con);
 }
 
-// Dùng ASP.NET Core .NET 6+; không phụ thuộc trực tiếp EF hay SqlClient.
-// Truyền factory tạo SqlConnection kết nối QuanLyThueDoCuoi.
-// SQL Server docs: https://learn.microsoft.com/sql/relational-databases/system-stored-procedures/sp-getapplock-transact-sql
-// Mọi ghi kho/phân bộ/đổi ngày/giao/trả phải dùng cùng khóa; SQL trực tiếp có thể bỏ qua cơ chế.
 public sealed class KhoTrangPhucService
 {
     private readonly Func<DbConnection> _taoKetNoi;
     public const string TenKhoaKho = "QuanLyThueDoCuoi:Kho";
     public KhoTrangPhucService(Func<DbConnection> taoKetNoi) => _taoKetNoi = taoKetNoi;
 
-    // Xem trước: không giữ đồ. Kết quả có thể thay đổi trước lúc khách bấm xác nhận.
-    // maChiNhanh=null: toàn kho. Khi nhận tại cửa hàng phải truyền đúng chi nhánh.
     public async Task<KetQuaTon> KiemTraConDoAsync(int maSanPham, DateTime ngayNhan,
         DateTime ngayTra, int? maChiNhanh = null, CancellationToken ct = default)
     {
@@ -53,10 +47,6 @@ AND (@cn IS NULL OR b.MaChiNhanh=@cn);", ("@sp", maSanPham), ("@cn", maChiNhanh)
         return new KetQuaTon(tong, bo);
     }
 
-    // Callback phải TẠO DonThue + toàn bộ ChiTietDonThue trong c,t truyền vào,
-    // không tự commit, không mở connection riêng. Trả đủ mã của mọi dòng vừa tạo.
-    // Quyền tài khoản, giá, voucher, chống bấm lặp được ứng dụng kiểm tra trong callback.
-    // Exception (gồm thiếu bộ) rollback TOÀN BỘ đơn, không chỉ rollback phần phân bộ.
     public Task<IReadOnlyList<int>> DatThueAsync(
         Func<DbConnection, DbTransaction, CancellationToken, Task<IReadOnlyList<int>>> taoDon,
         CancellationToken ct = default)
@@ -65,7 +55,6 @@ AND (@cn IS NULL OR b.MaChiNhanh=@cn);", ("@sp", maSanPham), ("@cn", maChiNhanh)
             var ids = await taoDon(c, t, token);
             if (ids.Count == 0 || ids.Distinct().Count() != ids.Count)
                 throw new InvalidOperationException("Phải trả danh sách mã chi tiết đơn không rỗng, không trùng.");
-            // Không được bỏ sót dòng hoặc ghép mã dòng của nhiều đơn vào một lần đặt.
             var toanBo = new List<int>();
             using (var cmd = Lenh(c, t, @"
 SELECT d.MaChiTietDonThue FROM dbo.ChiTietDonThue d
@@ -81,9 +70,6 @@ AND o.TrangThai='CHO_XAC_NHAN';", ("@id", ids[0])))
             return ids;
         }, ct);
 
-    // Dùng chung wrapper cho sửa ngày/hủy/giao/trả/sửa tình trạng/chuyển kho.
-    // Wrapper chỉ cấp khóa + commit/rollback; callback vẫn phải kiểm tra quyền/trạng thái/lịch.
-    // Hạn chế phạm vi callback, không chờ người dùng/HTTP/upload trong transaction.
     public async Task<T> ThucHienTrongKhoaKhoAsync<T>(
         Func<DbConnection, DbTransaction, CancellationToken, Task<T>> xuLy,
         CancellationToken ct = default)
@@ -102,7 +88,7 @@ IF @kq<0 THROW 51000,N'Kho đang bận. Chưa đặt được đồ, vui lòng t
                 ("@khoa", TenKhoaKho)))
                 await cmd.ExecuteNonQueryAsync(ct);
             T ketQua = await xuLy(c, t, ct);
-            await t.CommitAsync(ct); // khóa Transaction tự được giải phóng
+            await t.CommitAsync(ct);
             return ketQua;
         }
         catch
@@ -112,9 +98,6 @@ IF @kq<0 THROW 51000,N'Kho đang bận. Chưa đặt được đồ, vui lòng t
         }
     }
 
-    // Chỉ gọi trong wrapper có khóa trên, cho dòng GIU_CHO chưa giao.
-    // Sau đổi ngày/số lượng của dòng GIU_CHO: gọi lại hàm này TRƯỚC commit để phân lại bộ.
-    // Nếu thất bại phải để exception đi ra wrapper, KHÔNG nuốt lỗi rồi commit.
     public async Task PhanBoDongAsync(DbConnection c, DbTransaction t,
         int maChiTiet, CancellationToken ct = default)
     {
@@ -137,14 +120,12 @@ AND o.TrangThai IN ('CHO_XAC_NHAN','DA_XAC_NHAN');", ("@id", maChiTiet)))
             tra = r.GetDateTime(3); veSinh = r.GetInt32(4); cn = r.IsDBNull(5) ? null : r.GetInt32(5);
         }
         KiemTraNgay(nhan, tra);
-        // Thời điểm hôm nay lấy từ SQL Server (cùng múi giờ VN với truy vấn kho).
         using (var cmd = Lenh(c, t, "SELECT CONVERT(date,DATEADD(hour,7,SYSUTCDATETIME()));"))
             if (nhan.Date < Convert.ToDateTime(await cmd.ExecuteScalarAsync(ct)).Date)
                 throw new InvalidOperationException("Không được đặt ngày nhận trong quá khứ.");
         if (soLuong <= 0) throw new InvalidOperationException("Số lượng phải lớn hơn 0.");
         var con = await TimBoAsync(c, t, sp, nhan, tra, veSinh, cn, maChiTiet, ct);
         if (con.Count < soLuong) throw new HetTrangPhucException(sp, con.Count, soLuong);
-        // Xóa phân bộ cũ chỉ SAU kiểm tra đủ; toàn bộ vẫn được rollback nếu có lỗi.
         using (var cmd = Lenh(c, t, "DELETE dbo.BoTrangPhucTrongDon WHERE MaChiTietDonThue=@id;", ("@id", maChiTiet)))
             await cmd.ExecuteNonQueryAsync(ct);
         foreach (var bo in con.Take(soLuong))
@@ -165,9 +146,6 @@ VALUES(@id,@bo,@sp);", ("@id", maChiTiet), ("@bo", bo.MaBoTrangPhuc), ("@sp", sp
         return Convert.ToInt32(v);
     }
 
-    // Bộ hợp lệ phải TRỐNG TRỌN khoảng [X,Y+vệ sinh). Biên kết thúc bằng ngày nhận mới được phép.
-    // DA_GIAO chưa quá hạn: dùng ngày dự kiến. Quá hạn chưa trả: chặn tới khi xử lý thực tế.
-    // DANG_THUE chỉ cho đặt tương lai khi có bản ghi DA_GIAO chứng minh lịch đang giữ bộ.
     private static async Task<IReadOnlyList<BoConTrong>> TimBoAsync(DbConnection c, DbTransaction? t,
         int sp, DateTime nhan, DateTime tra, int veSinh, int? cn, int? boQuaDong, CancellationToken ct)
     {
@@ -222,7 +200,6 @@ ORDER BY b.MaBoTrangPhuc;";
         foreach (var (ten, value) in args)
         {
             var p = cmd.CreateParameter(); p.ParameterName = ten; p.Value = value ?? DBNull.Value;
-            // Null phải có kiểu để SqlClient không đoán thành NVARCHAR.
             if (value is null || value is int) p.DbType = DbType.Int32;
             else if (value is DateTime) p.DbType = DbType.Date;
             else if (value is string) p.DbType = DbType.String;

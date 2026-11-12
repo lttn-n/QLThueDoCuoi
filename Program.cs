@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QLThueDoCuoi.Data;
+using QLThueDoCuoi.Models;
+using QLThueDoCuoi.Repositories;
+using QLThueDoCuoi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews(options =>
 {
-    // Các action ghi dữ liệu bằng POST/PUT/PATCH/DELETE đều kiểm tra CSRF.
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
@@ -25,6 +29,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorization();
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<KetNoiDatabase>();
+builder.Services.AddScoped<LoaiSanPhamRepository>();
+builder.Services.AddScoped<SanPhamRepository>();
+builder.Services.AddScoped<GioThueRepository>();
+builder.Services.AddScoped<TaiKhoanRepository>();
+builder.Services.AddSingleton<IPasswordHasher<TaiKhoan>, PasswordHasher<TaiKhoan>>();
+builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
+builder.Services.AddScoped<IGioThueService, GioThueService>();
+builder.Services.AddScoped<ITrangChuService, TrangChuService>();
+
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
@@ -38,7 +53,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Đặt route 
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

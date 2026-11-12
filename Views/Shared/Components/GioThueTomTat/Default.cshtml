@@ -1,0 +1,2 @@
+@model int
+<a class="dragneel-cart" href="@Url.Action("Index", "GioThue", new { area = "" })" aria-label="Giỏ thuê, @Model sản phẩm">@await Html.PartialAsync("_Icon", "bag")<span class="tool-text"><b>Giỏ thuê</b><small><span data-cart-count>@Model</span> sản phẩm</small></span><em class="fav-badge cart-badge" data-cart-badge @(Model > 0 ? "" : "hidden")>@Model</em></a>

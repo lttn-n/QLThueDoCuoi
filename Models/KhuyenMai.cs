@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng KhuyenMai trong Database/QuanLyThueDoCuoi.sql.
 public class KhuyenMai
 {
     public int MaKhuyenMai { get; set; }

@@ -1,5 +1,5 @@
+@model TrangHoSoViewModel
 @{ ViewBag.Title = "Tài khoản của tôi"; ViewBag.PageKey = "profile"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
 <div class="container">
 <div class="breadcrumb">
 <a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> Tài khoản</div>
@@ -11,47 +11,71 @@
 <p>Quản lý thông tin cá nhân và thông tin liên hệ.</p>
 </div>
 </div>
+<div asp-validation-summary="ModelOnly" class="alert error" role="alert"></div>
 <section class="card">
 <h2>Thông tin cá nhân</h2>
-<form data-ui-only>
+<p class="account-meta">Thành viên từ <b>@Model.NgayThamGia.ToString("dd/MM/yyyy")</b></p>
+<form asp-controller="TaiKhoan" asp-action="CapNhatHoSo" asp-area="" method="post">
 <div class="form-grid">
-<label class="field">
-<span>Họ và tên</span>
-<input type="text" name="HoTen" value="Lâm Thị Thanh Nhi" />
-</label>
-<label class="field">
-<span>Email</span>
-<input type="email" name="Email" value="" placeholder="Nhập email"/>
-</label>
-<label class="field">
-<span>Số điện thoại</span>
-<input type="tel" name="SoDienThoai" value="" placeholder="Chưa cập nhật"/>
-</label>
-<label class="field">
-<span>Địa chỉ</span>
-<input type="text" name="DiaChi" value="" placeholder="Chưa cập nhật"/>
-</label>
+<div class="field">
+<label asp-for="HoSo.HoTen"></label>
+<input asp-for="HoSo.HoTen" autocomplete="name" minlength="2" maxlength="100" required />
+<span asp-validation-for="HoSo.HoTen" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="HoSo.Email"></label>
+<input asp-for="HoSo.Email" type="email" autocomplete="email" maxlength="254" placeholder="Nhập email" />
+<span asp-validation-for="HoSo.Email" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="HoSo.SoDienThoai"></label>
+<input asp-for="HoSo.SoDienThoai" type="tel" autocomplete="tel" maxlength="20" placeholder="Chưa cập nhật" />
+<span asp-validation-for="HoSo.SoDienThoai" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="HoSo.DiaChi"></label>
+<input asp-for="HoSo.DiaChi" autocomplete="street-address" maxlength="500" placeholder="Chưa cập nhật" />
+<span asp-validation-for="HoSo.DiaChi" class="field-error"></span>
+</div>
 </div>
 <div class="form-actions">
-<button type="button" class="btn primary" disabled aria-disabled="true">Lưu thay đổi</button>
+<button type="submit" class="btn primary" data-confirm="Bạn có muốn lưu các thay đổi thông tin cá nhân không?" data-confirm-title="Xác nhận lưu thay đổi" data-confirm-ok="Lưu thay đổi">Lưu thay đổi</button>
+<small>Cần có ít nhất email hoặc số điện thoại.</small>
 </div>
 </form>
 </section>
 <section class="card">
 <h2>Đổi mật khẩu</h2>
-<form data-ui-only>
+<form asp-controller="TaiKhoan" asp-action="DoiMatKhau" asp-area="" method="post">
 <div class="form-grid">
-<label class="field">
-<span>Mật khẩu hiện tại</span>
-<input type="password" name="MatKhauCu" value="" />
-</label>
-<label class="field">
-<span>Mật khẩu mới</span>
-<input type="password" name="MatKhauMoi" value="" />
-</label>
+<div class="field full">
+<label asp-for="MatKhau.MatKhauCu"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhau.MatKhauCu" autocomplete="current-password" required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span asp-validation-for="MatKhau.MatKhauCu" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="MatKhau.MatKhauMoi"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhau.MatKhauMoi" autocomplete="new-password" maxlength="100" pattern="(?=.*[A-Za-zÀ-ỹ])(?=.*[0-9])\S{8,100}" data-msg-pattern="Mật khẩu 8-100 ký tự, gồm cả chữ và số, không chứa khoảng trắng." required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span class="field-hint">8 ký tự trở lên, gồm cả chữ và số, không có khoảng trắng.</span>
+<span asp-validation-for="MatKhau.MatKhauMoi" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="MatKhau.NhapLaiMatKhauMoi"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhau.NhapLaiMatKhauMoi" autocomplete="new-password" data-match="#MatKhau_MatKhauMoi" required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span asp-validation-for="MatKhau.NhapLaiMatKhauMoi" class="field-error"></span><span class="field-error js-error" aria-live="polite"></span>
+</div>
 </div>
 <div class="form-actions">
-<button type="button" class="btn primary" disabled aria-disabled="true">Cập nhật mật khẩu</button>
+<button type="submit" class="btn primary" data-confirm="Bạn có chắc muốn đổi mật khẩu không?" data-confirm-title="Xác nhận đổi mật khẩu" data-confirm-ok="Đổi mật khẩu">Cập nhật mật khẩu</button>
 </div>
 </form>
 </section>

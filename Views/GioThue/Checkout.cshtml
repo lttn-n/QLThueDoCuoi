@@ -16,11 +16,11 @@
 <div class="form-grid">
 <label class="field">
 <span>Họ tên người nhận</span>
-<input type="text" name="TenNguoiNhan" value="Lâm Thị Thanh Nhi" />
+<input type="text" name="TenNguoiNhan" value="" autocomplete="off" data-suggest="ten" data-suggest-seed="@(User.Identity?.Name)" />
 </label>
 <label class="field">
 <span>Số điện thoại</span>
-<input type="text" name="SoDienThoaiNhan" value="" required/>
+<input type="text" name="SoDienThoaiNhan" value="" required autocomplete="off" inputmode="tel" data-suggest="sdt" />
 </label>
 <label class="field">
 <span>Hình thức nhận</span>
@@ -31,7 +31,7 @@
 </label>
 <label class="field">
 <span>Địa chỉ giao (nếu có)</span>
-<input type="text" name="DiaChiNhan" value="" />
+<input type="text" name="DiaChiNhan" value="" autocomplete="off" data-suggest="diachi" />
 </label>
 <label class="field"><span>Chi nhánh nhận tại cửa hàng</span><select name="MaChiNhanhNhan"><option value="1">DRAGNEEL - Chi nhánh 1</option><option value="2">DRAGNEEL - Chi nhánh 2</option></select></label>
 <label class="field"><span>Phương thức thanh toán</span><select name="PhuongThucThanhToan"><option value="TIENMAT">Tiền mặt</option><option value="CHUYENKHOAN">Chuyển khoản</option></select></label>

@@ -1,25 +1,39 @@
+@model DangNhapViewModel
 @{ ViewBag.Title = "Đăng nhập"; ViewBag.PageKey = "login"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
 <div class="container">
 <div class="auth-wrap">
 <div class="card">
 <span class="eyebrow">CHÀO MỪNG TRỞ LẠI</span>
 <h1>Đăng nhập</h1>
-<form data-ui-only>
-<label class="field">
-<span>Email hoặc số điện thoại</span>
-<input type="text" name="TenDangNhap" value="" />
-</label>
-<label class="field">
-<span>Mật khẩu</span>
-<input type="password" name="MatKhau" value="" autocomplete="current-password"/>
-</label>
+<form asp-controller="TaiKhoan" asp-action="Login" asp-area="" method="post">
+@if (!string.IsNullOrEmpty(Model.ReturnUrl) && ViewData.ModelState.IsValid)
+{
+<div class="alert info" role="status">Bạn cần đăng nhập để tiếp tục.</div>
+}
+<div asp-validation-summary="ModelOnly" class="alert error" role="alert"></div>
+<input type="hidden" asp-for="ReturnUrl" />
+<div class="field">
+<label asp-for="TenDangNhap"></label>
+<input asp-for="TenDangNhap" type="text" autocomplete="username" maxlength="254" pattern="[^@@\s]+@@[^@@\s]+\.[^@@\s]+|(\+?84|0)[0-9 .\-]{8,12}" data-msg-pattern="Nhập email hợp lệ hoặc số điện thoại 10 số (bắt đầu bằng 0)." required />
+<span asp-validation-for="TenDangNhap" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="MatKhau"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhau" autocomplete="current-password" maxlength="100" required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span asp-validation-for="MatKhau" class="field-error"></span>
+</div>
+<div class="login-extra">
+<label class="checkline"><input type="checkbox" asp-for="GhiNho" />Ghi nhớ đăng nhập</label>
+<a class="forgot-link" href="@Url.Action("QuenMatKhau", "TaiKhoan", new { area = "" })">Quên mật khẩu?</a>
+</div>
 <div class="form-actions">
-<button type="button" class="btn primary" disabled aria-disabled="true">Đăng nhập</button>
+<button type="submit" class="btn primary">Đăng nhập</button>
 </div>
 </form>
-<p>Chưa có tài khoản? <a class="" href="@Url.Action("Register", "TaiKhoan", new { area = "" })">Đăng ký ngay</a>
-</p>
+<p>Chưa có tài khoản? <a href="@Url.Action("Register", "TaiKhoan", new { area = "" })">Đăng ký ngay</a></p>
 </div>
 </div>
 </div>

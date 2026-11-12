@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng ChiNhanh trong Database/QuanLyThueDoCuoi.sql.
 public class ChiNhanh
 {
     public int MaChiNhanh { get; set; }

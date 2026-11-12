@@ -1,10 +1,13 @@
+@model TrangChuViewModel
 @{ ViewBag.Title = "Trang chủ"; ViewBag.PageKey = "home"; }
-@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /> }
+@section styles { <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" /> }
 @await Html.PartialAsync("_Banner")
 @await Html.PartialAsync("_DiemNoiBat")
-@await Html.PartialAsync("_DanhMuc")
-@await Html.PartialAsync("_SanPhamNoiBat")
+@await Html.PartialAsync("_DanhMuc", Model.DanhMuc)
+@await Html.PartialAsync("_SanPhamNoiBat", Model.SanPhamNoiBat)
+@await Html.PartialAsync("_ThongKe")
 @await Html.PartialAsync("_GioiThieu")
 @await Html.PartialAsync("_HuongDanThue")
 @await Html.PartialAsync("_GocChuanBi")
 @await Html.PartialAsync("_DatLich")
+@section scripts { <script src="~/js/home.js" asp-append-version="true"></script> }

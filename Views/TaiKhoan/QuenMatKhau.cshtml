@@ -1,0 +1,40 @@
+@model DatLaiMatKhauViewModel
+@{ ViewBag.Title = "Quên mật khẩu"; ViewBag.PageKey = "forgot"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
+<div class="container">
+<div class="auth-wrap">
+<div class="card">
+<span class="eyebrow">ĐẶT LẠI MẬT KHẨU</span>
+<h1>Quên mật khẩu</h1>
+<p class="auth-lead">Nhập email hoặc số điện thoại đã đăng ký và chọn mật khẩu mới.</p>
+<form asp-controller="TaiKhoan" asp-action="QuenMatKhau" asp-area="" method="post">
+<div asp-validation-summary="ModelOnly" class="alert error" role="alert"></div>
+<div class="field">
+<label asp-for="TenDangNhap"></label>
+<input asp-for="TenDangNhap" type="text" autocomplete="username" maxlength="254" pattern="[^@@\s]+@@[^@@\s]+\.[^@@\s]+|(\+?84|0)[0-9 .\-]{8,12}" data-msg-pattern="Nhập email hợp lệ hoặc số điện thoại 10 số (bắt đầu bằng 0)." required />
+<span asp-validation-for="TenDangNhap" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="MatKhauMoi"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhauMoi" autocomplete="new-password" maxlength="100" pattern="(?=.*[A-Za-zÀ-ỹ])(?=.*[0-9])\S{8,100}" data-msg-pattern="Mật khẩu 8-100 ký tự, gồm cả chữ và số, không chứa khoảng trắng." required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span class="field-hint">8 ký tự trở lên, gồm cả chữ và số, không có khoảng trắng.</span>
+<span asp-validation-for="MatKhauMoi" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="NhapLaiMatKhauMoi"></label>
+<div class="pw-wrap">
+<input asp-for="NhapLaiMatKhauMoi" autocomplete="new-password" maxlength="100" data-match="#MatKhauMoi" data-msg-required="Vui lòng nhập xác nhận mật khẩu mới." required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span asp-validation-for="NhapLaiMatKhauMoi" class="field-error"></span><span class="field-error js-error" aria-live="polite"></span>
+</div>
+<div class="form-actions">
+<button type="submit" class="btn primary" data-confirm="Mật khẩu hiện tại của tài khoản sẽ được thay bằng mật khẩu mới." data-confirm-title="Xác nhận đặt lại mật khẩu" data-confirm-ok="Đặt lại mật khẩu">Đặt lại mật khẩu</button>
+</div>
+</form>
+<p><a href="@Url.Action("Login", "TaiKhoan", new { area = "" })">← Quay lại đăng nhập</a></p>
+</div>
+</div>
+</div>

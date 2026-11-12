@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace QLThueDoCuoi.Controllers;
 
-// Layout mẫu. Bổ sung service/repository trước khi xử lý dữ liệu thật.
-public class HomeController : Controller
+public class HomeController(QLThueDoCuoi.Services.ITrangChuService trangChu, ILogger<HomeController> log) : Controller
 {
     [HttpGet]
-    public IActionResult Index() => View();
+    public async Task<IActionResult> Index()
+    {
+        log.LogInformation("Mở trang chủ");
+        return View(await trangChu.LayTrangChuAsync());
+    }
 
     [HttpGet]
     public IActionResult Guide() => View();

@@ -18,11 +18,11 @@
 <div class="form-grid">
 <label class="field">
 <span>Họ tên liên hệ</span>
-<input type="text" name="HoTenLienHe" value="Lâm Thị Thanh Nhi" />
+<input type="text" name="HoTenLienHe" value="" autocomplete="off" data-suggest="ten" data-suggest-seed="@(User.Identity?.Name)" />
 </label>
 <label class="field">
 <span>Số điện thoại liên hệ</span>
-<input type="tel" name="SoDienThoaiLienHe" value="" required/>
+<input type="tel" name="SoDienThoaiLienHe" value="" required autocomplete="off" data-suggest="sdt" />
 </label>
 <label class="field full"><span>Chi nhánh cửa hàng</span><select name="MaChiNhanh" required><option value="">Chọn chi nhánh</option><option value="1">DRAGNEEL - Chi nhánh 1</option><option value="2">DRAGNEEL - Chi nhánh 2</option></select></label>
 <label class="field">

@@ -1,0 +1,26 @@
+/* Hộp thoại xác nhận dùng chung (js/confirm.js). Tự theo màu sáng/tối của từng layout. */
+.dg-confirm{border:0;padding:0;background:transparent;max-width:none;max-height:none;margin:auto;overflow:visible;color:inherit}
+.dg-confirm::backdrop{background:rgba(30,22,17,.55);backdrop-filter:blur(3px)}
+.dg-confirm[open]{animation:dgIn .32s cubic-bezier(.2,.7,.2,1)}
+.dg-box{width:min(420px,calc(100vw - 32px));padding:32px 30px 26px;border:1px solid var(--line,#e3dbd1);border-radius:26px;background:var(--bg,#faf8f5);color:var(--ink,#3b2f27);text-align:center;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.dg-ico{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 16px;border-radius:50%;background:var(--sand,#e6ded3);color:var(--brown,#8b6b52)}
+.dg-confirm[data-tone=danger] .dg-ico{background:#f8e7e4;color:#b3432f}
+.dg-title{margin:0 0 8px;font:500 30px/1.2 var(--serif,Georgia,serif)}
+.dg-msg{margin:0 0 24px;color:var(--mut,#7a6b60);font:14px/1.6 var(--sans,system-ui,sans-serif)}
+.dg-actions{display:flex;gap:12px}
+.dg-btn{flex:1;padding:13px 18px;border:1px solid var(--line,#d9cdbf);border-radius:999px;background:transparent;color:var(--ink,#3b2f27);font:500 14px var(--sans,system-ui,sans-serif);cursor:pointer;transition:background .25s,transform .25s,box-shadow .25s}
+.dg-btn:hover{background:var(--sand,#e6ded3);transform:translateY(-2px)}
+.dg-btn.dg-yes{border-color:var(--brown,#8b6b52);background:var(--brown,#8b6b52);color:#fff}
+.dg-btn.dg-yes:hover{background:var(--dark,#4a3b32);box-shadow:0 14px 24px -14px rgba(74,59,50,.8)}
+.dg-confirm[data-tone=danger] .dg-yes{border-color:#b3432f;background:#b3432f}
+.dg-confirm[data-tone=danger] .dg-yes:hover{background:#963523}
+.dg-btn:focus-visible{outline:2px solid var(--brown,#8b6b52);outline-offset:3px}
+@keyframes dgIn{from{opacity:0;transform:translateY(16px) scale(.96)}}
+html[data-theme=dark] .dg-box{background:#221b17;border-color:#3b312a}
+html[data-theme=dark] .dg-confirm[data-tone=danger] .dg-ico{background:#3a1f1c;color:#ee9a92}
+html[data-theme=dark] .dg-btn.dg-yes{background:#8f6a4c;border-color:#8f6a4c}
+html[data-theme=dark] .dg-btn.dg-yes:hover{background:#a67c5a}
+html[data-theme=dark] .dg-confirm[data-tone=danger] .dg-yes{background:#b3432f;border-color:#b3432f}
+@media(prefers-reduced-motion:reduce){.dg-confirm[open]{animation:none}}
+
+.dg-btn[hidden]{display:none!important}

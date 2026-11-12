@@ -1,0 +1,21 @@
+@model IReadOnlyList<MenuDanhMucViewModel>
+@* Menu 2 cấp: cha = LoaiSanPham.MaLoaiCha IS NULL, con = các loại thuộc cha đó. *@
+<nav class="nav container" aria-label="Menu chính">
+<a data-page-link="home" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a>
+<div class="has-sub">
+<a data-page-link="products" href="@Url.Action("Index", "SanPham", new { area = "" })">Sản phẩm</a>
+<button type="button" class="sub-toggle" aria-expanded="false" aria-label="Mở danh mục sản phẩm">@await Html.PartialAsync("_Icon", "chevron")</button>
+<div class="sub">
+@foreach (var nhom in Model)
+{
+    <div>
+        <a class="sub-h" href="@Url.Action("Index", "SanPham", new { area = "" })">@nhom.Cha.TenLoaiSanPham</a>
+        @foreach (var con in nhom.Con) { <a href="@Url.Action("Index", "SanPham", new { area = "", category = con.TenLoaiSanPham })">@con.TenLoaiSanPham</a> }
+    </div>
+}
+</div></div>
+<a data-page-link="collections" href="@Url.Action("Index", "BoSuuTap", new { area = "" })">Bộ sưu tập</a>
+<a data-page-link="promotions" href="@Url.Action("Index", "KhuyenMai", new { area = "" })">Khuyến mãi</a>
+<a data-page-link="guide" href="@Url.Action("Guide", "Home", new { area = "" })">Hướng dẫn thuê</a>
+<a data-page-link="about" href="@Url.Action("About", "Home", new { area = "" })">Về chúng tôi</a>
+</nav>

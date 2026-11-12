@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng LichHenThuDo trong Database/QuanLyThueDoCuoi.sql.
 public class LichHenThuDo
 {
     public int MaLichHen { get; set; }

@@ -1,0 +1,11 @@
+@* Liên hệ nhanh + nút lên đầu trang. Thay các link bên dưới bằng link thật của shop. *@
+<button type="button" id="toTop" aria-label="Lên đầu trang"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+<div class="fab" id="fab">
+    <div class="fab-list">
+        <a href="https://facebook.com/" target="_blank" rel="noopener" style="--i:3"><b style="background:#1877F2">@await Html.PartialAsync("_Icon", "facebook")</b>Facebook</a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener" style="--i:2"><b style="background:linear-gradient(45deg,#f9a03f,#e1306c,#833ab4)">@await Html.PartialAsync("_Icon", "instagram")</b>Instagram</a>
+        <a href="https://zalo.me/" target="_blank" rel="noopener" style="--i:1"><b style="background:#0068FF">@await Html.PartialAsync("_Icon", "zalo")</b>Zalo</a>
+        <a href="https://m.me/" target="_blank" rel="noopener" style="--i:0"><b style="background:linear-gradient(45deg,#00b2ff,#a033ff)">@await Html.PartialAsync("_Icon", "messenger")</b>Messenger</a>
+    </div>
+    <button type="button" class="fab-main" aria-expanded="false" aria-label="Liên hệ"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg><span>Liên hệ</span></button>
+</div>

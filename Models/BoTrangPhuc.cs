@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng BoTrangPhuc trong Database/QuanLyThueDoCuoi.sql.
 public class BoTrangPhuc
 {
     public int MaBoTrangPhuc { get; set; }

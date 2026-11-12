@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng ThanhToan trong Database/QuanLyThueDoCuoi.sql.
 public class ThanhToan
 {
     public int MaThanhToan { get; set; }

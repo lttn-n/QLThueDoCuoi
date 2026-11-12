@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng TaiKhoan trong Database/QuanLyThueDoCuoi.sql.
 public class TaiKhoan
 {
     public int MaTaiKhoan { get; set; }

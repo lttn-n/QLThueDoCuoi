@@ -1,3 +1,11 @@
 @* Banner đầu trang; thay chữ/ảnh trực tiếp tại đây. *@
-<section class="dragneel-hero container"><div class="dragneel-hero-copy"><span class="dragneel-kicker">DÀNH CHO NGÀY CHUNG ĐÔI</span><h1>Dịu dàng trong<br />ngày trọng đại.</h1><div class="dragneel-hero-note"><img src="@Url.Content("~/images/trang-chu/vay-cuoi.jpg")" alt="Những chi tiết nhỏ cho ngày cưới" width="122" height="152" /><div><p>Một thiết kế vừa vặn.<br />Một khoảnh khắc là chính bạn.</p><a class="dragneel-button" href="@Url.Action("Index", "SanPham", new { area = "" })">Khám phá sản phẩm <span>↗</span></a></div></div><a class="dragneel-text-link" href="@Url.Action("Guide", "Home", new { area = "" })">Xem cách thuê <span>↗</span></a></div>
-<figure class="dragneel-hero-visual"><img src="@Url.Content("~/images/trang-chu/ngay-cuoi.jpg")" alt="Cô dâu, chú rể cùng chú ngựa giữa đồng cỏ" width="960" height="1040" fetchpriority="high" /><figcaption><span>VẺ ĐẸP TỰ NHIÊN, KHOẢNH KHẮC VĨNH CỬU</span><span>DRAGNEEL — 01</span></figcaption></figure></section>
+<section class="dragneel-hero container">
+<div class="petals" aria-hidden="true"></div>
+<div class="dragneel-hero-copy">
+<p class="script" data-reveal>Câu chuyện của riêng bạn</p>
+<h1><span class="ln"><span>Trang phục</span></span><span class="ln"><span>cho ngày</span></span><span class="ln"><span>trọng đại.</span></span></h1>
+<p class="hero-sub">Váy cưới, áo dài, vest chú rể và phụ kiện — thuê theo gói, thử đồ tại showroom.</p>
+<div class="hero-cta"><a class="dragneel-button" href="@Url.Action("Index", "SanPham", new { area = "" })">Khám phá sản phẩm</a><a class="dragneel-text-link" href="@Url.Action("Guide", "Home", new { area = "" })">Xem cách thuê</a></div>
+</div>
+<figure class="dragneel-hero-visual"><div class="hero-img ph"><img data-parallax src="@Url.Content("~/images/trang-chu/ngay-cuoi.jpg")" alt="Cô dâu, chú rể cùng chú ngựa giữa đồng cỏ" width="960" height="1040" fetchpriority="high" onerror="this.remove()" /></div><figcaption>Vẻ đẹp tự nhiên, khoảnh khắc vĩnh cửu</figcaption></figure>
+</section>

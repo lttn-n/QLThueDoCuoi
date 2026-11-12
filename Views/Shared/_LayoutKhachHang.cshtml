@@ -1,20 +1,31 @@
-@* Khung dùng chung; nội dung từng trang được chèn vào RenderBody. *@
+@* Khung khách hàng; nội dung từng trang được chèn vào RenderBody. *@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
+    <script>try{var t=localStorage.getItem('dragneel:theme');if(!t&&matchMedia('(prefers-color-scheme: dark)').matches)t='dark';if(t==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title · DRAGNEEL</title>
-    <link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/css/dragneel-shared.css")" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dragneel-shared.css" asp-append-version="true" />
     @await RenderSectionAsync("styles", required: false)
+    <link rel="stylesheet" href="~/css/confirm.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-dark.css" asp-append-version="true" />
 </head>
 <body data-page="@ViewBag.PageKey">
+    <div id="bar" aria-hidden="true"></div>
     @await Html.PartialAsync("_Header")
-    @await Html.PartialAsync("_Menu")
+    @if (TempData["ThongBao"] is string thongBao) { <div class="flash" role="status" aria-live="polite">@thongBao</div> }
+    @if (TempData["ThongBaoLoi"] is string thongBaoLoi) { <div class="flash error" role="alert">@thongBaoLoi</div> }
     <main id="main-content">@RenderBody()</main>
     @await Html.PartialAsync("_Footer")
-    <script src="@Url.Content("~/js/site.js")"></script>
+    @await Html.PartialAsync("_LienHeNhanh")
+    <script src="~/js/confirm.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dragneel-shared.js" asp-append-version="true"></script>
     @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

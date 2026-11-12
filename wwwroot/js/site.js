@@ -59,18 +59,16 @@
   document.querySelectorAll('[data-close-dialog]').forEach(b=>b.addEventListener('click',()=>b.closest('dialog')?.close()));
 })();
 
-// Đánh dấu giao diện trên thiết bị này, không thêm bảng yêu thích vào SQL.
 (() => {
-  const key = 'mira:marked-products';
-  let marked = [];
-  try { marked = JSON.parse(localStorage.getItem(key) || '[]'); if(!Array.isArray(marked)) marked=[]; } catch {}
-  document.querySelectorAll('[data-mark-product]').forEach(button => {
-    const id = button.dataset.markProduct;
-    button.setAttribute('aria-pressed', String(marked.includes(id)));
-    button.addEventListener('click', () => {
-      marked = marked.includes(id) ? marked.filter(x => x !== id) : [...marked, id];
-      document.querySelectorAll('[data-mark-product]').forEach(b => b.setAttribute('aria-pressed', String(marked.includes(b.dataset.markProduct))));
-      try { localStorage.setItem(key, JSON.stringify(marked)); } catch {}
-    });
-  });
+  const root = document.documentElement;
+  const sync = () => document.querySelectorAll('[data-theme-toggle]').forEach(b => b.setAttribute('aria-pressed', String(root.dataset.theme === 'dark')));
+  sync();
+  document.querySelectorAll('[data-theme-toggle]').forEach(b => b.addEventListener('click', () => {
+    root.classList.add('theme-anim');
+    const dark = root.dataset.theme !== 'dark';
+    if (dark) root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('dragneel:theme', dark ? 'dark' : 'light'); } catch {}
+    sync();
+    setTimeout(() => root.classList.remove('theme-anim'), 600);
+  }));
 })();

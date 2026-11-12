@@ -1,0 +1,116 @@
+/* Chế độ tối: bật bằng <html data-theme="dark">. Nạp SAU site.css / dragneel-shared.css / home.css ở mọi layout. */
+html{color-scheme:light}
+html[data-theme=dark]{
+  color-scheme:dark;
+  /* bộ biến của dragneel-shared.css */
+  --bg:#171210;--ink:#f1e8de;--mut:#b5a79b;--brown:#d0ab88;--dark:#2a211b;--sand:#2e251f;--line:#3b312a;
+  /* bộ biến của site.css (trang con + admin) */
+  --paper:#221b17;--canvas:#171210;--muted:#b5a79b;--taupe:#d0ab88;--soft:#2e251f;--green:#1f3326;--amber:#3a2e17;
+  --surface:#221b17;--surface2:#2b221d;
+}
+html[data-theme=dark] body{background:var(--bg);color:var(--ink)}
+html[data-theme=dark] img:not(.keep-light){filter:brightness(.9) contrast(1.02)}
+html[data-theme=dark] ::selection{background:#6b4e38;color:#fff}
+
+/* nền trắng cứng trong CSS -> mặt phẳng tối */
+html[data-theme=dark] :is(.shop-header,.main-nav,.dropdown-menu,.dropdown-menu a,.dropdown-menu button,.btn,.product-card,.icon-button,
+  .filter-block select,.toolbar input,.toolbar select,.size-group button,.field input,.field select,.field textarea,.card,
+  .account-sidebar,.account-sidebar a,.account-sidebar button,.tabs button,.tabs a,.appointment-card,.table-wrap,.admin-sidebar,
+  .admin-topbar,.metric,.collection>div,.voucher,.dragneel-benefits>div,.dragneel-preparation>div){background:var(--surface);color:var(--ink)}
+html[data-theme=dark] :is(.searchbox,.image-upload,.gallery-main,.story,th,.admin-sidebar a.nav-item:hover,.status){background:var(--surface2)}
+html[data-theme=dark] .admin-app{background:var(--bg)}
+html[data-theme=dark] .status.blue{background:#1d2b3a;color:#9cc3ec}
+html[data-theme=dark] .status.red{background:#3a1f1c;color:#ee9a92}
+html[data-theme=dark] .product-badge{background:rgba(34,27,23,.94)}
+html[data-theme=dark] :is(.dropdown-menu a,.dropdown-menu button,.account-sidebar a,.account-sidebar button){border-bottom-color:var(--line)}
+html[data-theme=dark] :is(.btn.primary,.size-group button.is-active,.dragneel-button,.fab-main){background:#8f6a4c;border-color:#8f6a4c;color:#fff}
+html[data-theme=dark] :is(.btn.primary:hover,.dragneel-button:hover,.fab-main:hover){background:#a67c5a}
+html[data-theme=dark] .dragneel-button.dragneel-button-light{background:var(--surface2);border-color:var(--surface2);color:var(--ink)}
+html[data-theme=dark] input,html[data-theme=dark] select,html[data-theme=dark] textarea{color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] input::placeholder,html[data-theme=dark] textarea::placeholder{color:#8a7d72}
+html[data-theme=dark] table,html[data-theme=dark] td,html[data-theme=dark] th{border-color:var(--line)}
+
+/* header, thẻ sản phẩm, nút, footer */
+html[data-theme=dark] .dragneel-header{background:rgba(23,18,16,.88)}
+html[data-theme=dark] .dragneel-header.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.45)}
+html[data-theme=dark] .search input{border-color:#4a3d34;color:var(--ink)}
+html[data-theme=dark] .sub{background:var(--surface);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+html[data-theme=dark] .dragneel-product-like{background:rgba(34,27,23,.92);color:var(--ink)}
+html[data-theme=dark] .dragneel-product-like:hover{background:var(--surface2)}
+html[data-theme=dark] .dragneel-product-like[aria-pressed=true],html[data-theme=dark] .dragneel-product-like.on{color:#ee7b66}
+html[data-theme=dark] .dragneel-product-badge{background:rgba(34,27,23,.94);color:var(--ink)}
+html[data-theme=dark] .dragneel-product-quick{background:rgba(34,27,23,.96);color:var(--ink)}
+html[data-theme=dark] :is(.dragneel-product-quick:hover,.dragneel-text-link:hover){background:#3d3027;color:#eadbc9;border-color:#5a4535}
+html[data-theme=dark] .dragneel-text-link{border-color:#4a3d34}
+html[data-theme=dark] .dragneel-product-photo{box-shadow:0 22px 44px -22px rgba(0,0,0,.8)}
+html[data-theme=dark] .fab-list a{background:var(--surface);color:var(--ink)}
+html[data-theme=dark] .fab-list a:hover{background:var(--surface2)}
+html[data-theme=dark] #toTop::before{background:var(--bg)}
+html[data-theme=dark] #toast{background:#3d3027}
+html[data-theme=dark] .dragneel-footer{background:#221b17;border-top:1px solid var(--line)}
+html[data-theme=dark] .ph{background:linear-gradient(135deg,#3a2f27,#251d18)}
+
+/* trang chủ */
+/* Rèm hero: nhung tối, nếp gấp ánh vàng đồng, viền đồng và bóng đổ tối (không còn quầng trắng) */
+html[data-theme=dark] .hero-img{--vl-a:#2c211b;--vl-b:#1a1310;--vl-fold:rgba(208,171,136,.09);--vl-shade:rgba(0,0,0,.18);--vl-edge:rgba(208,171,136,.65);--vl-glow:rgba(0,0,0,.65)}
+html[data-theme=dark] .hero-img::after{-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-theme=dark] .hero-img{box-shadow:0 0 0 1px rgba(208,171,136,.18),0 30px 60px -30px rgba(0,0,0,.9)}
+html[data-theme=dark] .dragneel-category-item:hover,html[data-theme=dark] .dragneel-process li:hover{background:rgba(208,171,136,.1)}
+html[data-theme=dark] .dragneel-benefits i{background:var(--surface2)}
+html[data-theme=dark] .dragneel-benefits>div,html[data-theme=dark] .dragneel-preparation>div{box-shadow:0 14px 34px -24px rgba(0,0,0,.8)}
+html[data-theme=dark] .dragneel-story{background:#221b17}
+html[data-theme=dark] .dragneel-booking{background:linear-gradient(120deg,#2a211b,#33271f,#2a211b);background-size:200% 100%}
+html[data-theme=dark] .petal{background:rgba(232,176,160,.7)}
+
+/* ===== Nút đổi giao diện ===== */
+.theme-toggle{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;transition:background .3s,transform .4s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.theme-toggle:hover{background:rgba(139,107,82,.14);transform:rotate(18deg)}
+.theme-toggle svg{width:19px;height:19px;grid-area:1/1;transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.theme-toggle .i-sun{opacity:0;transform:rotate(-90deg) scale(.4)}
+.theme-toggle .i-moon{opacity:1}
+html[data-theme=dark] .theme-toggle .i-sun{opacity:1;transform:none}
+html[data-theme=dark] .theme-toggle .i-moon{opacity:0;transform:rotate(90deg) scale(.4)}
+.admin-topbar .theme-toggle{width:36px;height:36px;flex-basis:36px}
+html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{transition:background-color .45s,color .45s,border-color .45s,box-shadow .45s!important}
+@media(prefers-reduced-motion:reduce){html.theme-anim *{transition:none!important}}
+
+/* ===== Header: menu tài khoản, icon, nút xổ xuống mobile ===== */
+html[data-theme=dark] .dragneel-account .dropdown-menu{background:var(--surface);border-color:var(--line);box-shadow:0 26px 50px -20px rgba(0,0,0,.85)}
+html[data-theme=dark] .dragneel-account .dropdown-menu a,html[data-theme=dark] .dragneel-account .dropdown-menu button{background:transparent;color:var(--ink)}
+html[data-theme=dark] .dragneel-account .dropdown-menu a:hover,html[data-theme=dark] .dragneel-account .dropdown-menu button:hover{background:var(--surface2)}
+html[data-theme=dark] .dragneel-account .dropdown-menu .menu-logout,html[data-theme=dark] .dragneel-account .dropdown-menu .menu-logout .ico{color:#ee7b66}
+html[data-theme=dark] .sub-toggle:hover{background:var(--surface2)}
+@media(max-width:900px){html[data-theme=dark] .dragneel-header .has-sub .sub{background:var(--surface2)}html[data-theme=dark] .sub a:hover{background:rgba(208,171,136,.1)}}
+html[data-theme=dark] .dragneel-header.open{background:rgba(23,18,16,.97)}
+
+/* ===== Footer, thông báo, biểu mẫu ===== */
+html[data-theme=dark] .ft-line .ico{color:var(--brown)}
+html[data-theme=dark] .flash{background:#3d3027;box-shadow:0 20px 40px -18px rgba(0,0,0,.9)}
+html[data-theme=dark] .alert.error{background:#3a1f1c;border-color:#5b2f2a;color:#f0a79e}
+html[data-theme=dark] .alert.info{background:var(--surface2);border-color:var(--line)}
+html[data-theme=dark] .alert.success{background:#1f3326;border-color:#2e5238;color:#9fd0ae}
+html[data-theme=dark] .field-error{color:#ee8a78}
+html[data-theme=dark] .field input.input-validation-error,html[data-theme=dark] .field input:user-invalid{border-color:#ee7b66}
+html[data-theme=dark] .pw-toggle:hover{background:var(--surface2)}
+html[data-theme=dark] .auth-wrap .card,html[data-theme=dark] .account-content .card{box-shadow:0 22px 44px -30px rgba(0,0,0,.9)}
+html[data-theme=dark] .auth-wrap .field input:focus,html[data-theme=dark] .account-content .field input:focus{box-shadow:0 0 0 4px rgba(208,171,136,.16)}
+html[data-theme=dark] :is(.auth-wrap,.account-content) .btn.primary{background:#8f6a4c;border-color:#8f6a4c}
+html[data-theme=dark] :is(.auth-wrap,.account-content) .btn.primary:hover{background:#a67c5a}
+
+html[data-theme=dark] .qty{background:var(--surface)}
+html[data-theme=dark] .qty button:hover{background:var(--surface2)}
+html[data-theme=dark] .cart-edit{background:var(--surface2)}
+html[data-theme=dark] .cart-save{background:var(--surface);box-shadow:0 18px 36px -22px rgba(0,0,0,.9)}
+html[data-theme=dark] .cart-meta.warn,html[data-theme=dark] .cart-actions .btn.danger,html[data-theme=dark] .cart-tools .btn.danger{color:#ee7b66}
+html[data-theme=dark] .cart-actions .btn.ghost:hover{background:var(--surface2)}
+html[data-theme=dark] .cart-layout .btn.primary{background:#8f6a4c;border-color:#8f6a4c}
+html[data-theme=dark] .cart-layout .btn.primary:hover{background:#a67c5a}
+html[data-theme=dark] .cart-line .line-price{color:var(--brown)}
+
+html[data-theme=dark] .field-error:not(:empty)::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ee8a78' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 7v6M12 16.5v.5'/%3E%3C/svg%3E")}
+html[data-theme=dark] .field:has(input.input-validation-error)>label{color:#ee8a78}
+html[data-theme=dark] .auth-wrap .field input.input-validation-error,html[data-theme=dark] .account-content .field input.input-validation-error{border-color:#ee7b66;background:rgba(238,123,102,.07)}
+html[data-theme=dark] .auth-wrap .field input.input-validation-error:focus,html[data-theme=dark] .account-content .field input.input-validation-error:focus{box-shadow:0 0 0 4px rgba(238,123,102,.18)}
+
+html[data-theme=dark] .rent-calc{background:rgba(208,171,136,.12)}
+html[data-theme=dark] .rent-calc.bad{background:rgba(238,123,102,.14);color:#ee8a78}

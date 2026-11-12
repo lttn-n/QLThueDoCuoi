@@ -1,35 +1,45 @@
+@model DangKyViewModel
 @{ ViewBag.Title = "Tạo tài khoản"; ViewBag.PageKey = "register"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
 <div class="container">
 <div class="auth-wrap">
 <div class="card">
 <span class="eyebrow">TRỞ THÀNH KHÁCH HÀNG</span>
 <h1>Tạo tài khoản</h1>
-<form data-ui-only>
-<label class="field">
-<span>Họ và tên</span>
-<input type="text" name="HoTen" value="" />
-</label>
-<label class="field">
-<span>Email hoặc số điện thoại</span>
-<input type="text" name="TenDangNhap" value="" />
-</label>
-<label class="field">
-<span>Mật khẩu</span>
-<input type="password" name="MatKhau" value="" autocomplete="new-password"/>
-</label>
-<label class="field">
-<span>Nhập lại mật khẩu</span>
-<input type="password" name="NhapLaiMatKhau" value="" autocomplete="new-password"/>
-</label>
-<label class="checkline">
-<input type="checkbox" name="DongYDieuKhoan"/>Tôi đồng ý với điều khoản sử dụng.</label>
+<form asp-controller="TaiKhoan" asp-action="Register" asp-area="" method="post">
+<div asp-validation-summary="ModelOnly" class="alert error" role="alert"></div>
+<div class="field">
+<label asp-for="HoTen"></label>
+<input asp-for="HoTen" autocomplete="name" minlength="2" maxlength="100" required />
+<span asp-validation-for="HoTen" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="TenDangNhap"></label>
+<input asp-for="TenDangNhap" type="text" autocomplete="username" maxlength="254" pattern="[^@@\s]+@@[^@@\s]+\.[^@@\s]+|(\+?84|0)[0-9 .\-]{8,12}" data-msg-pattern="Nhập email hợp lệ hoặc số điện thoại 10 số (bắt đầu bằng 0)." required />
+<span class="field-hint">Dùng để đăng nhập và để cửa hàng liên lạc về đơn thuê.</span>
+<span asp-validation-for="TenDangNhap" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="MatKhau"></label>
+<div class="pw-wrap">
+<input asp-for="MatKhau" autocomplete="new-password" maxlength="100" pattern="(?=.*[A-Za-zÀ-ỹ])(?=.*[0-9])\S{8,100}" data-msg-pattern="Mật khẩu 8-100 ký tự, gồm cả chữ và số, không chứa khoảng trắng." required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span class="field-hint">8 ký tự trở lên, gồm cả chữ và số, không có khoảng trắng.</span>
+<span asp-validation-for="MatKhau" class="field-error"></span>
+</div>
+<div class="field">
+<label asp-for="NhapLaiMatKhau"></label>
+<div class="pw-wrap">
+<input asp-for="NhapLaiMatKhau" autocomplete="new-password" data-match="#MatKhau" data-msg-required="Vui lòng nhập lại mật khẩu để xác nhận." required />
+@await Html.PartialAsync("_NutHienMatKhau")
+</div>
+<span asp-validation-for="NhapLaiMatKhau" class="field-error"></span><span class="field-error js-error" aria-live="polite"></span>
+</div>
 <div class="form-actions">
-<button type="button" class="btn primary" disabled aria-disabled="true">Tạo tài khoản</button>
+<button type="submit" class="btn primary">Tạo tài khoản</button>
 </div>
 </form>
-<p>Đã có tài khoản? <a class="" href="@Url.Action("Login", "TaiKhoan", new { area = "" })">Đăng nhập</a>
-</p>
+<p>Đã có tài khoản? <a href="@Url.Action("Login", "TaiKhoan", new { area = "" })">Đăng nhập</a></p>
 </div>
 </div>
 </div>

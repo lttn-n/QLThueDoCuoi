@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng GioThue trong Database/QuanLyThueDoCuoi.sql.
 public class GioThue
 {
     public int MaGioThue { get; set; }

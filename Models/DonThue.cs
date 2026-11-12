@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng DonThue trong Database/QuanLyThueDoCuoi.sql.
 public class DonThue
 {
     public int MaDonThue { get; set; }

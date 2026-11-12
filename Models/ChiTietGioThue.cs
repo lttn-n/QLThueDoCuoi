@@ -1,6 +1,5 @@
 namespace QLThueDoCuoi.Models;
 
-// Tương ứng bảng ChiTietGioThue trong Database/QuanLyThueDoCuoi.sql.
 public class ChiTietGioThue
 {
     public int MaChiTietGioThue { get; set; }

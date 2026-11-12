@@ -1,0 +1,104 @@
+/* Trang danh sách sản phẩm: mềm hơn, thoáng hơn. Chỉ nạp ở SanPham/Index (và vài nét nhẹ cho Details). */
+.dragneel-catalog-hero{position:relative;overflow:hidden;isolation:isolate;margin:6px 0 0;padding:clamp(42px,6vw,78px) clamp(20px,5vw,64px) clamp(38px,5vw,64px);border-radius:36px;text-align:center;background:radial-gradient(circle at 12% 18%,color-mix(in srgb,var(--brown) 24%,transparent),transparent 46%),radial-gradient(circle at 92% 82%,color-mix(in srgb,var(--brown) 16%,transparent),transparent 42%),var(--sand)}
+.dragneel-catalog-hero::before,.dragneel-catalog-hero::after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(2px);background:color-mix(in srgb,var(--brown) 12%,transparent);animation:spDrift 14s ease-in-out infinite alternate}
+.dragneel-catalog-hero::before{width:220px;height:220px;left:-60px;bottom:-90px}
+.dragneel-catalog-hero::after{width:160px;height:160px;right:8%;top:-60px;animation-delay:-6s}
+@keyframes spDrift{to{transform:translate(24px,-18px) scale(1.08)}}
+.dragneel-catalog-hero .script{margin:0 0 4px}
+.dragneel-catalog-hero h1{font-size:clamp(34px,5vw,58px);line-height:1.12;max-width:760px;margin:0 auto 14px}
+.dragneel-catalog-hero .lead{max-width:560px;margin:0 auto;color:var(--mut)}
+
+/* Nút chọn loại dạng viên thuốc (vẫn là radio để site.js lọc như cũ) */
+.dragneel-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:30px 0 4px}
+.dragneel-chip{position:relative;cursor:pointer}
+.dragneel-chip input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.dragneel-chip span{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border:1px solid var(--line);border-radius:999px;background:var(--paper,#fff);color:var(--ink);font-size:14px;transition:transform .35s var(--ease),background .3s,color .3s,border-color .3s,box-shadow .3s}
+.dragneel-chip small{font-size:12px;opacity:.55}
+.dragneel-chip:hover span{transform:translateY(-2px);border-color:var(--brown)}
+.dragneel-chip input:checked+span{background:var(--brown);border-color:var(--brown);color:var(--bg);box-shadow:0 14px 26px -16px var(--brown)}
+.dragneel-chip input:focus-visible+span{outline:2px solid var(--brown);outline-offset:3px}
+
+/* Thanh công cụ */
+.dragneel-catalog-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:26px 0 30px}
+.dragneel-select{display:inline-flex;align-items:center;gap:8px;padding:0 6px 0 18px;border:1px solid var(--line);border-radius:999px;background:var(--paper,#fff);font-size:13px;transition:border-color .3s}
+.dragneel-select:hover,.dragneel-select:focus-within{border-color:var(--brown)}
+.dragneel-select>span{color:var(--mut)}
+.dragneel-select select{width:auto;appearance:none;border:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b6b52' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;padding:11px 32px 11px 4px;font:inherit;color:var(--ink);cursor:pointer}
+.dragneel-select select:focus{outline:0}
+.dragneel-clear{padding:10px 20px;border:1px solid color-mix(in srgb,#b3432f 45%,var(--line));border-radius:999px;background:transparent;color:#b3432f;font:inherit;font-size:13px;cursor:pointer;transition:background .3s,color .3s}
+.dragneel-clear:hover{background:#b3432f;color:#fff}
+.dragneel-clear[hidden]{display:none}
+
+/* Lưới và thẻ sản phẩm */
+.dragneel-catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 24px}
+.dragneel-catalog-grid .dragneel-product{animation:spIn .7s var(--ease) backwards;animation-delay:calc(var(--i,0)*55ms)}
+@keyframes spIn{from{opacity:0;transform:translateY(26px) scale(.97)}}
+.dragneel-catalog-grid .dragneel-product-photo{border-radius:28px;box-shadow:0 26px 40px -30px rgba(59,47,39,.55)}
+.dragneel-catalog-grid .dragneel-product-info{padding:16px 6px 4px}
+.dragneel-catalog-grid .dragneel-product-info h3{font-size:23px;margin-bottom:8px}
+.dragneel-catalog-grid .price b{font-size:16px}
+.dragneel-sizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.dragneel-sizes i{font-style:normal;font-size:11px;letter-spacing:.04em;padding:3px 10px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.dragneel-product.is-folded{display:none!important}
+.dragneel-catalog-empty{padding:64px 20px;border:1px dashed var(--line);border-radius:28px;text-align:center}
+.dragneel-catalog-empty p{margin-bottom:18px}
+.dragneel-load-more{display:flex;justify-content:center;margin-top:48px}
+.dragneel-load-more button{padding:15px 34px;border:1px solid var(--brown);border-radius:999px;background:transparent;color:var(--brown);font:inherit;font-weight:500;cursor:pointer;transition:background .3s,color .3s,transform .3s var(--ease)}
+.dragneel-load-more button:hover{background:var(--brown);color:var(--bg);transform:translateY(-2px)}
+.dragneel-load-more button[hidden]{display:none}
+
+@media(max-width:1100px){.dragneel-catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.dragneel-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px}.dragneel-catalog-grid .dragneel-product-info h3{font-size:19px}.dragneel-catalog-hero{border-radius:28px}.dragneel-catalog-bar .count{flex:1 0 100%}}
+@media(max-width:420px){.dragneel-chip span{padding:9px 16px;font-size:13px}.dragneel-select{flex:1 1 100%}.dragneel-select select{flex:1}}
+@media(prefers-reduced-motion:reduce){.dragneel-catalog-hero::before,.dragneel-catalog-hero::after{animation:none}.dragneel-catalog-grid .dragneel-product{animation:none}}
+
+/* Nét mềm nhẹ cho trang chi tiết (dùng chung file này) */
+.detail-grid .gallery-main{border-radius:30px;box-shadow:0 30px 50px -34px rgba(59,47,39,.6)}
+.detail-grid .gallery-thumbs img{border-radius:16px;transition:transform .35s var(--ease),box-shadow .3s}
+.detail-grid .gallery-thumbs img:hover{transform:translateY(-3px);box-shadow:0 14px 24px -16px rgba(59,47,39,.6)}
+.detail-grid .size-group button{border-radius:999px}
+.detail-grid .option details,.detail-grid details.option{border-radius:18px}
+
+/* ===== Lọc theo ngày, dropdown tự vẽ, hiệu ứng ===== */
+.dragneel-catalog-bar{margin-bottom:18px}
+.dragneel-dates{display:inline-flex;align-items:center;gap:8px;padding:3px 8px 3px 18px;border:1px solid var(--line);border-radius:999px;background:var(--paper,#fff);font-size:13px;transition:border-color .3s,box-shadow .3s}
+.dragneel-dates:focus-within,.dragneel-dates.is-on{border-color:var(--brown)}
+.dragneel-dates.is-on{box-shadow:0 12px 24px -16px var(--brown)}
+.dates-label,.dates-sep{color:var(--mut);white-space:nowrap}
+.dragneel-date input{border:0;background:transparent;font:inherit;color:var(--ink);padding:9px 6px;border-radius:12px;cursor:pointer;color-scheme:light}
+html[data-theme=dark] .dragneel-date input{color-scheme:dark}
+.dragneel-date input:focus{outline:0;background:color-mix(in srgb,var(--brown) 12%,transparent)}
+.dates-clear{width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--mut);font-size:20px;line-height:1;cursor:pointer;transition:background .2s,color .2s,transform .3s var(--ease)}
+.dates-clear:hover{background:var(--brown);color:var(--bg);transform:rotate(90deg)}
+.dates-clear[hidden]{display:none}
+.dragneel-date-msg{margin:0 0 14px;padding:0 6px;font-size:13px;color:var(--mut);animation:spIn .4s var(--ease)}
+.dragneel-date-msg.bad{color:#b3432f}
+p.count{margin:0 0 22px;padding:0 6px;color:var(--mut);font-size:14px}
+p.count b{display:inline-block;color:var(--ink);font-weight:600}
+p.count b.bump{animation:spBump .45s var(--ease)}
+@keyframes spBump{40%{transform:scale(1.35);color:var(--brown)}}
+.dragneel-catalog-grid{transition:opacity .25s,filter .25s}
+.dragneel-catalog-grid.is-loading{opacity:.4;filter:saturate(.6);pointer-events:none}
+[data-product-card][data-free="0"]{display:none!important}
+.dragneel-chip input:checked+span{animation:spChip .45s var(--ease)}
+@keyframes spChip{40%{transform:scale(1.09)}}
+.dragneel-chip:active span{transform:scale(.96)}
+
+/* Dropdown thay cho ô chọn mặc định */
+.dragneel-select{position:relative;padding-left:18px}
+.dragneel-select.is-enhanced select{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;padding:0;border:0}
+.dd-btn{display:inline-flex;align-items:center;gap:10px;padding:11px 12px 11px 2px;border:0;border-radius:999px;background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+.dd-btn:focus-visible{outline:2px solid var(--brown);outline-offset:2px}
+.dd-btn svg{width:13px;height:13px;color:var(--brown);transition:transform .35s var(--ease)}
+.dragneel-select.is-open .dd-btn svg{transform:rotate(180deg)}
+.dd-list{position:absolute;top:calc(100% + 10px);left:0;z-index:60;min-width:100%;max-height:320px;overflow:auto;margin:0;padding:8px;list-style:none;border:1px solid var(--line);border-radius:20px;background:var(--paper,#fff);box-shadow:0 28px 50px -24px rgba(59,47,39,.55);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.97);transform-origin:top left;transition:opacity .22s,transform .3s var(--ease),visibility .22s}
+.dd-list.align-right{left:auto;right:0;transform-origin:top right}
+.dragneel-select.is-open .dd-list{opacity:1;visibility:visible;transform:none}
+.dd-list li{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:10px 14px;border-radius:13px;font-size:14px;white-space:nowrap;cursor:pointer;color:var(--ink);transition:background .2s,padding .25s var(--ease)}
+.dragneel-select.is-open .dd-list li{animation:ddIn .32s var(--ease) backwards;animation-delay:calc(var(--k,0)*28ms)}
+@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}}
+.dd-list li:hover,.dd-list li.is-act{background:color-mix(in srgb,var(--brown) 14%,transparent);padding-left:19px}
+.dd-list li[aria-selected=true]{color:var(--brown);font-weight:600}
+.dd-list li[aria-selected=true]::after{content:"";flex:0 0 14px;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b6b52' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
+@media(max-width:760px){.dragneel-dates{flex:1 1 100%;justify-content:space-between}.dragneel-date input{max-width:130px}}
+@media(prefers-reduced-motion:reduce){.dd-list,.dd-list li,.dragneel-chip input:checked+span,p.count b.bump{animation:none;transition:none}}

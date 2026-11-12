@@ -1,6 +1,5 @@
 using QLThueDoCuoi.ViewModels;
 namespace QLThueDoCuoi.Data;
-// Chỉ minh họa layout. Khi có repository, đọc SQL và ánh xạ sang cùng ViewModel này.
 public static class DuLieuGiaoDien
 {
     public static IReadOnlyList<TheSanPhamViewModel> SanPham { get; } = new[]

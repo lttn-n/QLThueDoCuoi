@@ -1,54 +1,61 @@
-@model QLThueDoCuoi.ViewModels.TheSanPhamViewModel
-@{ ViewBag.Title = Model.TenSanPham; ViewBag.PageKey = "detail"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+@model QLThueDoCuoi.ViewModels.ChiTietSanPhamViewModel
+@using System.Globalization
+@{
+    var homNay = DateTime.UtcNow.AddHours(7).Date;
+    var vn = CultureInfo.GetCultureInfo("vi-VN"); var iv = CultureInfo.InvariantCulture;
+    string Tien(decimal d) => d.ToString("N0", vn) + "₫";
+    ViewBag.Title = Model.Ten; ViewBag.PageKey = "detail"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+    var anhChinh = string.IsNullOrEmpty(Model.Anh) ? null : Url.Content("~" + Model.Anh);
+}
 <div class="container">
 <div class="breadcrumb">
-<a class="" href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> @Model.TenLoai / @Model.TenSanPham</div>
+<a href="@Url.Action("Index", "Home", new { area = "" })">Trang chủ</a> <span>/</span> <a href="@Url.Action("Index", "SanPham", new { area = "" })">Sản phẩm</a> <span>/</span> @Model.TenLoai / @Model.Ten</div>
 <div class="detail-grid">
 <div>
-<img class="gallery-main" src="@Url.Content("~" + Model.HinhAnh)" alt="@Model.TenSanPham"/>
+@if (anhChinh is not null) { <img class="gallery-main" src="@anhChinh" alt="@Model.Ten" onerror="this.remove()" /> }
 <div class="gallery-thumbs">
-<img src="@Url.Content("~" + Model.HinhAnh)" alt="@Model.TenSanPham"/>
+@if (anhChinh is not null) { <img src="@anhChinh" alt="@Model.Ten" onerror="this.remove()" /> }
+@foreach (var a in Model.AnhPhu) { <img src="@Url.Content("~" + a)" alt="@Model.Ten" loading="lazy" onerror="this.remove()" /> }
 </div>
 </div>
 <div class="detail-copy">
 <span class="eyebrow">DRAGNEEL SIGNATURE</span>
-<h1>@Model.TenSanPham</h1>
-<div class="rating">@Model.TenLoai · @Model.Nhan</div>
-<div class="detail-price">@(Model.GiaThue.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")))₫ <small>/ gói @Model.SoNgayTrongGoi ngày</small>
+<h1>@Model.Ten</h1>
+<div class="rating">@Model.TenLoai@(string.IsNullOrEmpty(Model.Nhan) ? "" : " · " + Model.Nhan)</div>
+<div class="detail-price">@if (Model.GiaGoc is not null) { <s>@Tien(Model.GiaGoc.Value)</s> } @Tien(Model.GiaThue) <small>/ gói @Model.SoNgayGoi ngày</small>
 </div>
-<p>Phom dáng thanh lịch, chất liệu nhẹ và những đường nét mềm mại dành cho ngày trọng đại.</p>
+<p>@(string.IsNullOrWhiteSpace(Model.MoTa) ? "Phom dáng thanh lịch, chất liệu nhẹ và những đường nét mềm mại dành cho ngày trọng đại." : Model.MoTa)</p>
 <div class="option">
 <b>Kích thước</b>
 <div class="size-group" data-size-group>
-@foreach (var size in Model.KichThuoc.Split(' ')) { <button type="button" aria-pressed="false">@size</button> }
+@foreach (var size in Model.CacSize) { <button type="button" aria-pressed="false">@size.KichThuoc</button> }
 </div>
 </div>
-<form data-ui-only id="dat-thue">
+<form id="dat-thue" method="post" action="@Url.Action("Them", "GioThue", new { area = "" })" data-add-cart data-check-url="@Url.Action("KiemTraNgay", "SanPham", new { area = "" })" data-auth="@(User.IsInRole("KHACHHANG") ? "1" : "0")" data-login-url="@Url.Action("Login", "TaiKhoan", new { area = "", returnUrl = Context.Request.Path + Context.Request.QueryString })"
+ data-today="@homNay.ToString("yyyy-MM-dd")" data-goi="@Model.SoNgayGoi" data-max="@Model.SoNgayToiDa" data-gia="@Model.GiaThue.ToString(iv)" data-them="@Model.GiaNgayThem.ToString(iv)">
+@Html.AntiForgeryToken()
+<input type="hidden" name="MaSanPham" value="@Model.MaSanPham" />
+<input type="hidden" name="MauSac" value="@Model.MauSac" />
 <div class="option">
 <div class="form-grid">
-<label class="field">
-<span>Màu sắc</span>
-<select name="MauSac">
-<option>Trắng</option>
-</select>
-</label>
-<label class="field">
-<span>Số lượng</span>
-<input type="number" name="SoLuong" value="1" min="1" max="10"/>
-</label>
-<label class="field">
-<span>Ngày nhận</span>
-<input type="date" name="NgayNhan" value="2026-10-25" />
-</label>
-<label class="field">
-<span>Ngày trả</span>
-<input type="date" name="NgayTra" value="2026-10-28" />
-</label>
+<div class="field">
+<label for="SoLuong">Số lượng</label>
+<div class="qty"><button type="button" data-qty="-1" aria-label="Giảm số lượng">−</button><input id="SoLuong" type="number" name="SoLuong" value="1" min="1" max="10" required /><button type="button" data-qty="1" aria-label="Tăng số lượng">+</button></div>
 </div>
+<div class="field">
+<label for="NgayNhan">Ngày nhận</label>
+<input id="NgayNhan" type="date" name="NgayNhan" min="@homNay.ToString("yyyy-MM-dd")" required autocomplete="off" />
+</div>
+<div class="field">
+<label for="NgayTra">Ngày trả</label>
+<input id="NgayTra" type="date" name="NgayTra" min="@homNay.AddDays(1).ToString("yyyy-MM-dd")" required autocomplete="off" />
+</div>
+</div>
+<p class="rent-rule">Gói <b>@Model.SoNgayGoi ngày</b> = @Tien(Model.GiaThue). Giữ đồ lâu hơn tính thêm <b>@Tien(Model.GiaNgayThem)/ngày</b>, tối đa <b>@Model.SoNgayToiDa ngày</b> (nhận và trả từ hôm nay trở đi).</p>
+<p class="rent-calc" data-rent-calc aria-live="polite" hidden></p>
 </div>
 <div class="button-row">
-<button type="button" class="btn primary" disabled aria-disabled="true">
+<button type="submit" class="btn primary" data-add-btn>
 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M5 8h14l1 13H4L5 8Z"/>
 <path d="M9 9V6a3 3 0 0 1 6 0v3"/>
@@ -65,11 +72,11 @@
 <circle cx="12" cy="12" r="9"/>
 <path d="M12 6v6l4 2"/>
 </svg>
-<span>Tiền cọc: 2.000.000₫/bộ. Lịch thử đồ và đơn thuê được theo dõi riêng.</span>
+<span>Tiền cọc: @Tien(Model.TienCoc)/bộ. Lịch thử đồ và đơn thuê được theo dõi riêng.</span>
 </div>
 <details class="option">
 <summary>Mô tả & chất liệu +</summary>
-<p>Organza nhẹ, phom dáng chữ A. Đối chiếu size trước khi đặt thuê.</p>
+<p>@(string.IsNullOrWhiteSpace(Model.ChatLieu) ? "Đối chiếu size trước khi đặt thuê." : "Chất liệu: " + Model.ChatLieu + ". Màu: " + Model.MauSac + ". Đối chiếu size trước khi đặt thuê.")</p>
 </details>
 <details class="option">
 <summary>Chính sách đặt cọc +</summary>
@@ -81,14 +88,6 @@
 </details>
 </div>
 </div>
-<section class="section">
-<div class="section-head">
-<h2>Có thể bạn cũng thích</h2>
-</div>
-<div class="dragneel-product-grid dragneel-catalog-grid">
-@foreach (var sanPham in QLThueDoCuoi.Data.DuLieuGiaoDien.SanPham.Where(x => x.MaSanPham != Model.MaSanPham)) { @await Html.PartialAsync("_TheSanPham", sanPham) }
-</div>
-</section>
 </div>
 
-@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /> }
+@section styles { <link rel="stylesheet" href="@Url.Content("~/css/home.css")" /><link rel="stylesheet" href="@Url.Content("~/css/san-pham.css")" /> }
