@@ -1,85 +1,35 @@
-@{ ViewBag.Title = "Khuyến mãi"; ViewBag.PageKey = "admin_promotions"; Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
-<div class="page-head">
-<div>
-<span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
-<h1>Quản lý khuyến mãi</h1>
-<p>Mã ưu đãi theo phần trăm hoặc số tiền.</p>
+@using System
+@using System.Collections.Generic
+@using System.Globalization
+@model List<Dictionary<string,object?>>
+@{string V(Dictionary<string,object?> r,string k)=>Convert.ToString(r.GetValueOrDefault(k))??"";}
+<link rel="stylesheet" href="~/css/diem-trang.css" asp-append-version="true" />
+<main class="diem-page">
+    <div class="diem-wrap"><div class="diem-top"><div>
+        <p class="diem-eyebrow">ADMIN · DRAGNEEL</p>
+        <h1 class="diem-title">Quản lý khuyến mãi</h1>
+        <p class="diem-lead">Thêm, sửa và bật/tắt chương trình ưu đãi.</p>
+        </div><a class="diem-btn" asp-action="Edit">+ Thêm khuyến mãi</a></div>
+@if(TempData["DiemError"] is not null){<p class="diem-error">@TempData["DiemError"]</p>}@if(TempData["DiemOk"] is not null)
+{<p class="diem-ok">@TempData["DiemOk"]</p>}
+@if(Model.Count==0){<div class="diem-empty">Chưa có khuyến mãi nào.</div>}
+else{<div class="diem-grid">@foreach(var r in Model)
+    {<article class="diem-card">
+        <p class="diem-eyebrow">@V(r,"MaUuDai")</p>
+        <h2>@V(r,"TenKhuyenMai")</h2>
+        <p>Hình thức: @V(r,"HinhThucGiam") · @V(r,"GiaTriGiam")</p>
+        <p>Bắt đầu: @Convert.ToDateTime(r["NgayBatDau"]).AddHours(7).ToString("dd/MM/yyyy HH:mm") VN</p>
+        <p>Kết thúc: @Convert.ToDateTime(r["NgayKetThuc"]).AddHours(7).ToString("dd/MM/yyyy HH:mm") VN</p>
+        <p>Trạng thái: @(Convert.ToBoolean(r["TrangThai"])?"Đang bật":"Đã tắt")</p>
+        <div class="diem-card-footer">
+            <a class="diem-link" asp-action="Edit" asp-route-id="@r["MaKhuyenMai"]">Chỉnh sửa</a>
+        <form asp-action="Toggle" method="post" data-confirm="Bạn chắc chắn muốn thay đổi trạng thái mã khuyến mãi?" class="diem-mt">
+            <input type="hidden" name="id" value="@r["MaKhuyenMai"]"/>
+            <input type="hidden" name="bat" value="@(Convert.ToBoolean(r["TrangThai"])?"false":"true")"/>
+            <button type="submit">@(Convert.ToBoolean(r["TrangThai"])?"Tắt mã":"Bật mã")</button>
+            </form>
+        </div>
+    </article>}
+ </div>}
 </div>
-</div>
-<div class="split">
-<div>
-<div class="table-wrap">
-<table >
-<thead>
-<tr>
-<th>Mã ưu đãi</th>
-<th>Giá trị</th>
-<th>Điều kiện</th>
-<th>Kích hoạt</th>
-</tr>
-</thead>
-<tbody>
-<tr >
-<td>MIRA10</td>
-<td>Giảm 10%</td>
-<td>Đơn từ 1.000.000₫<small>Tối đa 500.000₫</small>
-</td>
-<td>
-<span class="status green">Có</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="card">
-<h2>Thông tin ưu đãi</h2>
-<form data-ui-only>
-<div class="form-grid">
-<label class="field">
-<span>Mã ưu đãi</span>
-<input type="text" name="MaUuDai" value="MIRA10" />
-</label>
-<label class="field">
-<span>Loại giảm</span>
-<select name="LoaiGiam">
-<option>Phần trăm</option>
-<option>Số tiền</option>
-</select>
-</label>
-<label class="field">
-<span>Giá trị</span>
-<input type="number" name="GiaTri" value="10" />
-</label>
-<label class="field">
-<span>Giảm tối đa (đ)</span>
-<input type="number" name="GiamToiDa" value="500000" />
-</label>
-<label class="field">
-<span>Đơn tối thiểu (đ)</span>
-<input type="number" name="DonToiThieu" value="1000000" />
-</label>
-<label class="field">
-<span>Giới hạn lượt</span>
-<input type="number" name="LuotToiDa" value="100" />
-</label>
-<label class="field">
-<span>Bắt đầu</span>
-<input type="datetime-local" name="BatDau" value="" />
-</label>
-<label class="field">
-<span>Kết thúc</span>
-<input type="datetime-local" name="KetThuc" value="" />
-</label>
-</div>
-<div class="form-actions">
-<label>
-<input type="checkbox" checked/> Kích hoạt</label>
-</div>
-<div class="form-actions">
-<button type="button" class="btn primary" disabled aria-disabled="true">Lưu ưu đãi</button>
-</div>
-</form>
-</div>
-</div>
+</main>

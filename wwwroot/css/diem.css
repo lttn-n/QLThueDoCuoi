@@ -1,0 +1,22 @@
+/* Phần giao diện riêng của Diễm; sử dụng biến nếu theme nhóm định nghĩa. */
+.diem-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;margin:1.25rem 0}.diem-card{border:1px solid var(--border-color,#d8d3d1);background:var(--card-bg,transparent);border-radius:14px;padding:1.25rem;box-shadow:0 6px 18px #00000008}.diem-card h2{font-size:1.15rem}.diem-form{display:grid;gap:.85rem;max-width:740px;margin:1rem 0}.diem-form label{display:grid;gap:.3rem}.diem-form input,.diem-form select,.diem-form textarea{width:100%;padding:.7rem;border:1px solid var(--border-color,#bdbdbd);border-radius:8px;background:var(--input-bg,transparent);color:inherit}.diem-form button,.diem-btn{display:inline-block;padding:.75rem 1.1rem;border:0;border-radius:9px;background:var(--primary,#815a55);color:white;text-decoration:none;cursor:pointer}.diem-error{color:#bb3434}@media(max-width:980px){.diem-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.diem-grid{grid-template-columns:1fr}.diem-card{padding:1rem}}
+
+/* Trang Bộ sưu tập: dữ liệu từ SQL, không dùng danh sách ảnh hard-code */
+.diem-collections{max-width:1280px;margin:0 auto;padding:3rem clamp(1rem,4vw,3rem) 5rem;color:var(--text-color,inherit)}
+.diem-hero{text-align:center;max-width:740px;margin:0 auto 2.5rem}
+.diem-hero h1{font-family:Georgia,serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:400;margin:.35rem 0 1rem}
+.diem-hero>p:last-child{line-height:1.7;opacity:.72}
+.diem-kicker{letter-spacing:.2em;text-transform:uppercase;font-size:.73rem;opacity:.68}
+.diem-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+.diem-collection-card{overflow:hidden;border:1px solid var(--border-color,#ddd5cc);background:var(--card-bg,transparent);border-radius:6px}
+.diem-collection-link{display:block;color:inherit;text-decoration:none;height:100%}
+.diem-collection-image{aspect-ratio:4/5;background:var(--card-bg,#eee8e2);overflow:hidden}
+.diem-collection-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.diem-collection-link:hover img{transform:scale(1.035)}
+.diem-collection-content{padding:1.35rem}
+.diem-collection-content h2{font-family:Georgia,serif;font-weight:400;font-size:1.5rem;margin:.4rem 0}
+.diem-collection-content>p{line-height:1.6;opacity:.77}
+.diem-collection-cta{display:inline-block;margin-top:.8rem;text-decoration:underline;text-underline-offset:5px;color:inherit}
+.diem-empty{text-align:center;border:1px dashed var(--border-color,#ccc);padding:3rem 1rem;border-radius:8px}
+@media(max-width:980px){.diem-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.diem-collection-grid{grid-template-columns:1fr}.diem-collections{padding-top:2rem}}

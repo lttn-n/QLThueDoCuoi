@@ -1,0 +1,44 @@
+/* Chỉ ảnh hưởng hai trang Views/BoSuuTap; mô phỏng palette/layout editorial Figma nhóm */
+.df-collection-page{background:#fcfaf7;color:#3c3632;padding:0 0 80px;min-height:60vh;font-family:inherit}
+.df-collection-page *{box-sizing:border-box}
+.df-shell{max-width:1230px;margin:0 auto;padding:0 32px}
+.df-breadcrumb{font-size:12px;color:#8a7d71;padding:23px 0;display:flex;gap:13px;align-items:center}
+.df-breadcrumb a{color:inherit;text-decoration:none}.df-breadcrumb strong{font-weight:500;color:#5a4d42}
+.df-heading{text-align:center;max-width:790px;margin:45px auto 56px}
+.df-eyebrow,.df-list-label,.df-cover-tag,.df-product-overline{font-size:10px;letter-spacing:2px;color:#927e6e;font-weight:600}
+.df-heading h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,5vw,62px);font-weight:400;letter-spacing:-1.5px;margin:17px 0 18px;line-height:1.15}
+.df-heading>p{max-width:550px;margin:auto;font-size:14px;line-height:1.9;color:#857c74}
+.df-line{margin:28px auto 0;width:48px;height:1px;background:#ad947f}
+.df-list-label{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e6ded6;padding-bottom:15px;margin-bottom:22px;color:#83766c}
+.df-list-label span:last-child{font-size:12px;letter-spacing:0;font-weight:400}
+.df-collection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}
+.df-collection-card{min-width:0;background:#fff;transition:transform .25s,box-shadow .25s}
+.df-collection-card:hover{transform:translateY(-4px);box-shadow:0 13px 35px #55453810}
+.df-collection-click,.df-product-link{display:block;text-decoration:none;color:inherit;height:100%}
+.df-cover,.df-product-image{position:relative;overflow:hidden;background:#e9e3dc}
+.df-cover{aspect-ratio:4/4.35;max-height:450px}
+.df-cover img,.df-product-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s}
+.df-cover img[src$='.svg'],.df-product-image img[src$='.svg']{object-fit:contain;padding:15%;background:#eee6dd}
+.df-collection-card:hover img,.df-product-card:hover img{transform:scale(1.035)}
+.df-cover-tag{position:absolute;bottom:15px;left:16px;background:#fdfbf7ed;padding:10px 13px;color:#685748;font-size:9px;letter-spacing:1.6px}
+.df-card-content{padding:22px 18px 25px;min-height:178px}
+.df-card-top{display:flex;justify-content:space-between;gap:8px;color:#9a8b7d;font-size:11px}
+.df-card-top span:last-child{color:#786450}
+.df-card-content h2{font-family:Georgia,'Times New Roman',serif;font-size:27px;font-weight:400;line-height:1.25;margin:13px 0 10px}
+.df-card-content p{font-size:13px;color:#837a71;line-height:1.65;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.df-bottom-banner{background:#5a4b40;color:#fff;text-align:center;padding:48px 20px;margin-top:72px}
+.df-bottom-banner>span{letter-spacing:2.3px;font-size:10px;color:#d7c2ae}.df-bottom-banner h2{font:400 34px Georgia,serif;margin:13px 0}.df-bottom-banner p{color:#e1d5cb;font-size:13px}.df-bottom-banner a{display:inline-block;border:1px solid #cdbbab;color:#fff;text-decoration:none;font-size:12px;padding:12px 23px;margin-top:15px}
+.df-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 18px}
+.df-product-card{min-width:0;background:#fff;padding-bottom:18px}
+.df-product-image{aspect-ratio:3/4;margin-bottom:18px}.df-product-overline{display:block;padding:0 12px;font-size:9px;letter-spacing:1.4px}
+.df-product-card h2{font:400 19px Georgia,serif;margin:9px 12px;line-height:1.3}.df-product-meta{font-size:11px;color:#91857b;margin:0 12px 12px}
+.df-product-foot{border-top:1px solid #eee7e0;margin:0 12px;padding-top:12px;display:flex;justify-content:space-between;gap:6px;align-items:center;font-size:11px;color:#927e6e}
+.df-product-foot strong{color:#5c4d41;font-size:13px;font-weight:600}.df-back{text-align:center;margin:45px 0}.df-back a{color:#6c5948;font-size:13px;text-decoration:none;border-bottom:1px solid #bba894;padding-bottom:6px}
+.df-empty{padding:65px 20px;text-align:center;border:1px solid #e9dfd6;background:#fff}.df-empty h2{font:400 27px Georgia,serif}.df-empty p{color:#8e8379;font-size:14px}
+@media(max-width:960px){.df-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.df-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.df-shell{padding:0 16px}.df-heading{margin:24px auto 34px}.df-collection-grid{grid-template-columns:1fr;gap:20px}.df-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.df-card-content{min-height:0}.df-product-card h2{font-size:16px}.df-product-foot{flex-direction:column;align-items:flex-start}.df-bottom-banner{margin-top:40px}.df-bottom-banner h2{font-size:27px}}
+
+/* Fix Vietnamese diacritics on banner; use existing Dragneel spacing */
+.df-bottom-banner h2{font-family:'Times New Roman',Georgia,serif;letter-spacing:normal!important;word-spacing:normal;line-height:1.42}
+.df-bottom-banner{margin-top:40px}
+@media(prefers-color-scheme:dark){.df-collection-page{background:var(--color-bg,#201c1a);color:var(--color-text,#f0e9e3)}.df-collection-card,.df-product-card{background:var(--color-surface,#292421);color:var(--color-text,#f0e9e3)}}

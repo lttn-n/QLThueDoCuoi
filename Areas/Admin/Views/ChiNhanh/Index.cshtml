@@ -1,3 +1,13 @@
-@{ ViewBag.Title = "Chi nhánh"; ViewBag.PageKey = "admin_branches"; }
-<div class="page-head"><div><span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span><h1>Quản lý chi nhánh</h1><p>Thông tin nơi khách đến thử và nhận trang phục.</p></div><button class="btn primary" disabled>Thêm chi nhánh</button></div>
-<div class="table-wrap"><table><thead><tr><th>Mã</th><th>Tên chi nhánh</th><th>Địa chỉ</th><th>Trạng thái</th></tr></thead><tbody><tr><td>1</td><td>DRAGNEEL - Chi nhánh 1</td><td>Nhóm cập nhật địa chỉ thật</td><td><span class="status green">Hoạt động</span></td></tr><tr><td>2</td><td>DRAGNEEL - Chi nhánh 2</td><td>Nhóm cập nhật địa chỉ thật</td><td><span class="status green">Hoạt động</span></td></tr></tbody></table></div>
+@using System
+@using System.Collections.Generic
+@using System.Globalization
+@model List<Dictionary<string,object?>>
+@{string V(Dictionary<string,object?> r,string k)=>Convert.ToString(r.GetValueOrDefault(k))??"";}
+<link rel="stylesheet" href="~/css/diem-trang.css" asp-append-version="true" />
+<main class="diem-page"><div class="diem-wrap"><p class="diem-eyebrow">ADMIN · DRAGNEEL</p><h1 class="diem-title">Quản lý chi nhánh</h1><p class="diem-lead">Quản lý các điểm thử đồ và nhận trang phục.</p>
+@if(TempData["DiemError"] is not null){<p class="diem-error">@TempData["DiemError"]</p>}@if(TempData["DiemOk"] is not null){<p class="diem-ok">@TempData["DiemOk"]</p>}
+<div class="diem-card"><h2>Thêm chi nhánh</h2><form asp-action="Save" method="post" class="diem-form"><label>Tên chi nhánh<input name="tenChiNhanh" maxlength="100" required /></label><label>Địa chỉ<input name="diaChi" maxlength="500" required /></label><label>Số điện thoại<input name="soDienThoai" type="tel" maxlength="20" /></label><label><input name="trangThai" type="checkbox" value="true" checked /> Hoạt động</label><button type="submit">Thêm chi nhánh</button></form></div>
+<h2 class="diem-title diem-mt">Danh sách chi nhánh</h2>
+@if(Model.Count==0){<div class="diem-empty">Chưa có chi nhánh nào.</div>}
+else{<div class="diem-grid">@foreach(var r in Model){<article class="diem-card"><h2>@V(r,"TenChiNhanh")</h2><p>@V(r,"DiaChi")</p><p>Trạng thái: @(Convert.ToBoolean(r["TrangThai"])?"Hoạt động":"Tạm ngưng")</p><form asp-action="Save" method="post" class="diem-form"><input name="id" type="hidden" value="@r["MaChiNhanh"]"/><label>Tên<input name="tenChiNhanh" maxlength="100" value="@V(r,"TenChiNhanh")" required /></label><label>Địa chỉ<input name="diaChi" maxlength="500" value="@V(r,"DiaChi")" required /></label><label>Số điện thoại<input name="soDienThoai" maxlength="20" value="@V(r,"SoDienThoai")" /></label><label><input type="checkbox" name="trangThai" value="true" checked="@(Convert.ToBoolean(r["TrangThai"]))"/> Hoạt động</label><button type="submit">Lưu thay đổi</button></form><form class="diem-mt" asp-action="Toggle" method="post" data-confirm="Bạn chắc chắn muốn thay đổi trạng thái chi nhánh?"><input type="hidden" name="id" value="@r["MaChiNhanh"]"/><input type="hidden" name="bat" value="@(Convert.ToBoolean(r["TrangThai"])?"false":"true")"/><button class="diem-btn diem-secondary" type="submit">@(Convert.ToBoolean(r["TrangThai"])?"Tạm ngưng":"Kích hoạt")</button></form></article>}</div>}
+</div></main>

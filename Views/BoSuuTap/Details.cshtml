@@ -1,0 +1,45 @@
+@model int
+@using System
+@using System.Collections.Generic
+@using System.Globalization
+@{
+    ViewData["Title"] = "Chi tiết bộ sưu tập";
+    ViewBag.PageKey = "collections";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+    var items = ViewBag.Products as List<Dictionary<string,object?>> ?? new();
+    string Get(Dictionary<string,object?> r, string k) => Convert.ToString(r.GetValueOrDefault(k)) ?? "";
+    string Photo(Dictionary<string,object?> r) {
+        var src = Get(r, "DuongDanAnh");
+        var name = Get(r, "TenSanPham").ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(src) || src.EndsWith(".svg",StringComparison.OrdinalIgnoreCase)) {
+            if (name.Contains("vest") || name.Contains("tuxedo")) return "/images/trang-chu/vest.jpg";
+            if (name.Contains("áo dài")) return "/images/trang-chu/cau-chuyen.jpg";
+            return "/images/trang-chu/ngay-cuoi.jpg";
+        }
+        return src.StartsWith("/") || src.StartsWith("https://",StringComparison.OrdinalIgnoreCase) ? src : "/" + src.TrimStart('~','/');
+    }
+    string Price(Dictionary<string,object?> r) => Convert.ToDecimal(r.GetValueOrDefault("GiaThueGoi") ?? 0).ToString("N0",CultureInfo.GetCultureInfo("vi-VN"));
+}
+<link rel="stylesheet" href="~/css/bosuutap.css" asp-append-version="true" />
+<main class="df-collection-page"><div class="df-shell">
+    <nav class="df-breadcrumb" aria-label="Đường dẫn"><a asp-controller="Home" asp-action="Index">Trang chủ</a><span>/</span><a asp-controller="BoSuuTap" asp-action="Index">Bộ sưu tập</a><span>/</span><strong>Chi tiết</strong></nav>
+    <section class="df-heading"><span class="df-eyebrow">DRAGNEEL · CURATED FOR YOU</span><h1>Trang phục trong bộ sưu tập</h1><p>Khám phá các thiết kế được lựa chọn cho ngày cưới của bạn.</p><div class="df-line"></div></section>
+    @if(items.Count == 0) { <div class="df-empty"><h2>Chưa có trang phục</h2><p>Bộ sưu tập này chưa có trang phục khả dụng.</p></div> }
+    else {
+        <div class="df-list-label"><span>THIẾT KẾ NỔI BẬT</span><span>@items.Count sản phẩm</span></div>
+        <div class="df-product-grid">
+        @foreach(var item in items) {
+            <article class="df-product-card">
+                <a asp-controller="SanPham" asp-action="Details" asp-route-id="@item["MaSanPham"]" class="df-product-link">
+                    <div class="df-product-image"><img src="@Photo(item)" alt="@Get(item,"TenSanPham")" loading="lazy" /></div>
+                    <span class="df-product-overline">DRAGNEEL WEDDING RENTAL</span>
+                    <h2>@Get(item,"TenSanPham")</h2>
+                    <p class="df-product-meta">Kích thước: @Get(item,"KichThuoc") @if(!string.IsNullOrWhiteSpace(Get(item,"MauSac"))){<span> · @Get(item,"MauSac")</span>}</p>
+                    <div class="df-product-foot"><strong>@Price(item) đ</strong><span>Xem chi tiết →</span></div>
+                </a>
+            </article>
+        }
+        </div>
+    }
+    <div class="df-back"><a asp-controller="BoSuuTap" asp-action="Index">← Trở về tất cả bộ sưu tập</a></div>
+</div></main>

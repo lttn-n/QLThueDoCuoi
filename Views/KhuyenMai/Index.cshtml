@@ -1,2 +1,21 @@
-@{ ViewBag.Title = "Khuyến mãi"; ViewBag.PageKey = "promotions"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Trang trống: chỉ có header + footer. Người phụ trách tab này thêm nội dung vào đây. *@
+@using System
+@using System.Collections.Generic
+@using System.Globalization
+@model List<Dictionary<string,object?>>
+@{ string V(Dictionary<string,object?> r,string k)=>Convert.ToString(r.GetValueOrDefault(k))??"";
+   string Money(object? v)=>Convert.ToDecimal(v??0).ToString("N0",CultureInfo.GetCultureInfo("vi-VN"))+" đ"; }
+<link rel="stylesheet" href="~/css/diem-trang.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/khuyenmai.css" asp-append-version="true" />
+<main class="diem-page"><div class="diem-wrap">
+<p class="diem-eyebrow">DRAGNEEL WEDDING RENTAL · SPECIAL OFFERS</p>
+<h1 class="diem-title">Ưu đãi dành riêng cho bạn</h1><p class="diem-lead">Khám phá những ưu đãi đang áp dụng cho ngày trọng đại.</p>
+@if(Model.Count==0){<div class="diem-empty">Hiện chưa có ưu đãi đang áp dụng.</div>}
+else {<div class="diem-promo-grid">@foreach(var r in Model){
+ <article class="diem-promo-card"><p class="diem-eyebrow">ƯU ĐÃI CÓ THỜI HẠN</p><h2>@V(r,"TenKhuyenMai")</h2>
+ <div class="diem-promo-value">@(V(r,"HinhThucGiam")=="PHANTRAM" ? V(r,"GiaTriGiam").TrimEnd('0').TrimEnd('.')+"%" : Money(r.GetValueOrDefault("GiaTriGiam")))</div>
+ <div class="diem-promo-code">@V(r,"MaUuDai")</div>
+ <p>Áp dụng cho đơn từ <strong>@Money(r.GetValueOrDefault("GiaTriDonToiThieu"))</strong></p>
+ @if(r.GetValueOrDefault("SoTienGiamToiDa") is not null){<p>Giảm tối đa @Money(r["SoTienGiamToiDa"])</p>}
+ <p>Hạn sử dụng: @Convert.ToDateTime(r["NgayKetThuc"]).AddHours(7).ToString("dd/MM/yyyy HH:mm") (giờ Việt Nam)</p>
+ </article> }</div>}
+</div></main>
