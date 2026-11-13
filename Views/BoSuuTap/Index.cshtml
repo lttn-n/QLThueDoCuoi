@@ -1,2 +1,52 @@
-@{ ViewBag.Title = "Bộ sưu tập"; ViewBag.PageKey = "collections"; Layout = "~/Views/Shared/_LayoutKhachHang.cshtml"; }
-@* Trang trống: chỉ có header + footer. Người phụ trách tab này thêm nội dung vào đây. *@
+@model List<Dictionary<string, object?>>
+@using System
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "Bộ sưu tập";
+    ViewBag.PageKey = "collections";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+    string Get(Dictionary<string, object?> r, string key) => Convert.ToString(r.GetValueOrDefault(key)) ?? "";
+    string Photo(Dictionary<string, object?> r) {
+        string s = Get(r, "DuongDanAnh");
+        string name = Get(r, "TenBoSuuTap").ToLowerInvariant();
+        // SQL mẫu của nhóm dùng ảnh SVG như hình minh họa: chuyển sang JPG editorial có sẵn.
+        if (string.IsNullOrWhiteSpace(s) || s.EndsWith(".svg", StringComparison.OrdinalIgnoreCase)) {
+            if (name.Contains("việt") || name.Contains("áo dài")) return "/images/trang-chu/cau-chuyen.jpg";
+            if (name.Contains("chú rể") || name.Contains("vest")) return "/images/trang-chu/vest.jpg";
+            return "/images/trang-chu/ngay-cuoi.jpg";
+        }
+        return s.StartsWith("/") || s.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? s : "/" + s.TrimStart('~','/');
+    }
+}
+<link rel="stylesheet" href="~/css/bosuutap.css" asp-append-version="true" />
+<main class="df-collection-page">
+    <div class="df-shell">
+        <nav class="df-breadcrumb" aria-label="Đường dẫn"><a asp-controller="Home" asp-action="Index">Trang chủ</a><span>/</span><strong>Bộ sưu tập</strong></nav>
+        <section class="df-heading">
+            <span class="df-eyebrow">DRAGNEEL WEDDING RENTAL · THE COLLECTIONS</span>
+            <h1>Những câu chuyện tình yêu</h1>
+            <p>Khám phá các bộ sưu tập trang phục được tuyển chọn tinh tế cho ngày trọng đại của bạn.</p>
+            <div class="df-line"></div>
+        </section>
+        @if (Model == null || Model.Count == 0) {
+            <div class="df-empty"><h2>Chưa có bộ sưu tập</h2><p>Vui lòng kiểm tra dữ liệu Bộ sưu tập trong SQL Server.</p></div>
+        } else {
+            <div class="df-list-label"><span>BỘ SƯU TẬP NỔI BẬT</span><span>@Model.Count bộ sưu tập</span></div>
+            <div class="df-collection-grid">
+                @foreach (var item in Model) {
+                    <article class="df-collection-card">
+                        <a class="df-collection-click" asp-controller="BoSuuTap" asp-action="Details" asp-route-id="@item["MaBoSuuTap"]">
+                            <div class="df-cover"><img src="@Photo(item)" alt="@Get(item,"TenBoSuuTap")" loading="lazy" /><span class="df-cover-tag">DRAGNEEL COLLECTION</span></div>
+                            <div class="df-card-content">
+                                <div class="df-card-top"><span>@Get(item,"SoSanPham") trang phục</span><span>Khám phá ↗</span></div>
+                                <h2>@Get(item,"TenBoSuuTap")</h2>
+                                <p>@Get(item,"MoTa")</p>
+                            </div>
+                        </a>
+                    </article>
+                }
+            </div>
+        }
+        <section class="df-bottom-banner"><span>DRAGNEEL ATELIER</span><h2>Mỗi thiết kế, một kỷ niệm đẹp.</h2><p>Lựa chọn trang phục phản chiếu câu chuyện riêng của bạn.</p><a asp-controller="SanPham" asp-action="Index">Khám phá trang phục <span aria-hidden="true">→</span></a></section>
+    </div>
+</main>

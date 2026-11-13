@@ -8,6 +8,15 @@ using QLThueDoCuoi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.DiemDb>();
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.BoSuuTapRepository>();
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.KhuyenMaiRepository>();
+builder.Services.AddScoped<QLThueDoCuoi.Services.LichHenService>();
+builder.Services.AddScoped<QLThueDoCuoi.Services.DonThueKhachHangService>();
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.LichHenRepository>();
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.ChiNhanhRepository>();
+builder.Services.AddScoped<QLThueDoCuoi.Services.ChiNhanhQuanTriService>();
+builder.Services.AddScoped<QLThueDoCuoi.Services.KhuyenMaiQuanTriService>();
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

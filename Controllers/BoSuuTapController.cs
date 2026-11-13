@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-
+using QLThueDoCuoi.Repositories;
 namespace QLThueDoCuoi.Controllers;
-
-public class BoSuuTapController : Controller
+public sealed class BoSuuTapController(BoSuuTapRepository repo):Controller
 {
-    [HttpGet]
-    public IActionResult Index() => View();
-
+ public async Task<IActionResult> Index()=>View(await repo.DanhSach());
+ public async Task<IActionResult> Details(int id){
+    if(!await repo.TonTai(id))return NotFound();
+    ViewBag.Products=await repo.SanPham(id);return View(id);
+ }
 }

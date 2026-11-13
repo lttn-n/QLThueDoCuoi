@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-
+using QLThueDoCuoi.Repositories;
 namespace QLThueDoCuoi.Controllers;
-
-public class KhuyenMaiController : Controller
+public class KhuyenMaiController(KhuyenMaiRepository repo):Controller
 {
-    [HttpGet]
-    public IActionResult Index() => View();
-
+ public async Task<IActionResult> Index()=>View(await repo.DanhSach());
 }

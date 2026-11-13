@@ -1,0 +1,403 @@
+/* DRAGNEEL - pages owned by Diem. Scoped selectors; existing shared theme remains in charge. */
+.diem-page{--diem-paper:var(--color-bg,#fcfaf7);--diem-panel:var(--color-surface,#fff);--diem-text:var(--color-text,#493d35);--diem-muted:var(--color-text-muted,#82776c);--diem-edge:var(--color-border,#e9dfd6);--diem-accent:var(--color-primary,#796352);color:var(--diem-text);background:var(--diem-paper);padding:48px 22px 78px;min-height:55vh}
+.diem-wrap{max-width:1180px;margin:auto}.diem-eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:2px;color:var(--diem-accent);margin:0 0 12px}.diem-title{font:400 clamp(30px,4vw,48px)/1.28 Georgia,'Times New Roman',serif;letter-spacing:0;margin:0 0 13px}.diem-lead{color:var(--diem-muted);font-size:15px;line-height:1.8;margin-bottom:26px}.diem-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}
+.diem-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.diem-card{min-width:0;background:var(--diem-panel);border:1px solid var(--diem-edge);border-radius:5px;padding:24px;overflow-wrap:anywhere;box-shadow:0 4px 18px rgba(52,33,23,.035)}.diem-card h2{font:400 25px/1.3 Georgia,'Times New Roman',serif;margin:0 0 12px;letter-spacing:0}.diem-card p{font-size:14px;line-height:1.75;margin:8px 0;color:var(--diem-muted)}.diem-card strong,.diem-card b{color:var(--diem-text)}.diem-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--diem-accent)}.diem-amount{font-size:20px;font-weight:600;color:var(--diem-text)}
+.diem-btn,.diem-card button,.diem-form button{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;background:var(--diem-accent);color:#fff;border:1px solid var(--diem-accent);border-radius:3px;text-decoration:none;cursor:pointer;font-size:14px;min-height:44px}.diem-btn:hover,.diem-card button:hover{filter:brightness(.9);color:#fff}.diem-secondary{background:transparent;color:var(--diem-text);border:1px solid var(--diem-edge)}.diem-link{color:var(--diem-accent);text-decoration:underline;text-underline-offset:3px}.diem-empty{border:1px dashed var(--diem-edge);background:var(--diem-panel);padding:44px 24px;text-align:center;color:var(--diem-muted);border-radius:5px}.diem-error{color:#b91c1c}.diem-ok{color:#15803d}.diem-form{display:grid;gap:18px;max-width:840px}.diem-form label{display:flex;flex-direction:column;gap:7px;font-size:14px}.diem-form input:not([type=checkbox]),.diem-form select,.diem-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--diem-edge);background:var(--diem-panel);color:var(--diem-text);border-radius:3px;padding:12px 14px;min-height:44px;font:inherit}.diem-form textarea{min-height:98px}.diem-form label:has([type=checkbox]){flex-direction:row;align-items:center}.diem-form input[type=checkbox]{width:auto}.diem-form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.diem-table{width:100%;border-collapse:collapse}.diem-table td,.diem-table th{border-bottom:1px solid var(--diem-edge);padding:14px;text-align:left;vertical-align:top}.diem-promo-code{letter-spacing:1px;font-weight:700;color:var(--diem-accent)}.diem-card-footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--diem-edge)}.diem-mt{margin-top:28px}.diem-small{font-size:12px;color:var(--diem-muted)}
+@media(prefers-color-scheme:dark){.diem-page{--diem-paper:var(--color-bg,#1d1c1b);--diem-panel:var(--color-surface,#292622);--diem-text:var(--color-text,#eee7df);--diem-muted:var(--color-text-muted,#c8bfb5);--diem-edge:var(--color-border,#514840);--diem-accent:var(--color-primary,#bd9a7d)}}
+@media(max-width:1100px){.diem-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:768px){.diem-page{padding:34px 16px 60px}.diem-form-row{grid-template-columns:1fr}.diem-title{font-size:34px}.diem-card{padding:20px}}
+@media(max-width:520px){.diem-grid{grid-template-columns:1fr}.diem-top{align-items:flex-start;flex-direction:column}.diem-table{display:block;overflow-x:auto}.diem-btn{width:100%}}
+/* Sửa lỗi chữ tiếng Việt bị tách */
+/* FIX FONT TIENG VIET - ADMIN KHUYEN MAI */
+
+.diem-page .diem-title,
+.diem-page .diem-card h2 {
+    font-family: "Times New Roman", Georgia, serif !important;
+    font-size-adjust: none;
+    font-variant-ligatures: normal;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    white-space: normal;
+    text-align: left !important;
+}
+/* LICH HEN THU DO - DRAGNEEL */
+
+.lh-page {
+    background: #fff;
+    color: #40382f;
+    min-height: 75vh;
+    font-family: Arial, sans-serif;
+}
+
+.lh-container {
+    max-width: 1240px;
+    margin: auto;
+    padding: 30px 24px 80px;
+}
+
+.lh-breadcrumb {
+    font-size: 12px;
+    color: #9a9188;
+    margin-bottom: 34px;
+}
+
+.lh-layout {
+    display: grid;
+    grid-template-columns: 225px minmax(0, 1fr);
+    gap: 42px;
+}
+
+.lh-sidebar {
+    border-right: 1px solid #eee9e4;
+    padding-right: 20px;
+}
+
+.lh-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee9e4;
+}
+
+.lh-avatar {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: #eee5db;
+    color: #806349;
+    border-radius: 50%;
+    font-family: Georgia, serif;
+    font-size: 22px;
+}
+
+.lh-user small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #9b8e81;
+}
+
+.lh-user strong {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.lh-menu {
+    margin-top: 30px;
+}
+
+.lh-menu-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #9a8a7c;
+    margin-bottom: 15px;
+}
+
+.lh-menu-link {
+    display: block;
+    padding: 13px 15px;
+    text-decoration: none;
+    color: #74695f;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.lh-menu-link:hover,
+.lh-menu-link.active {
+    background: #f4efe9;
+    color: #765a43;
+}
+
+.lh-main {
+    min-width: 0;
+}
+
+.lh-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.lh-heading small {
+    color: #aa8d73;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.lh-heading h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(27px, 3vw, 38px);
+    margin: 12px 0;
+}
+
+.lh-heading p {
+    color: #93877b;
+    font-size: 13px;
+}
+
+.lh-primary {
+    display: inline-block;
+    background: #927255;
+    color: white;
+    text-decoration: none;
+    padding: 13px 20px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.lh-primary:hover {
+    background: #76563c;
+    color: white;
+}
+
+.lh-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.lh-filter {
+    background: white;
+    color: #86776a;
+    border: 1px solid #e5ddd5;
+    border-radius: 20px;
+    padding: 9px 17px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.lh-filter.active {
+    background: #927255;
+    border-color: #927255;
+    color: white;
+}
+
+.lh-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.lh-card {
+    background: white;
+    border: 1px solid #e9e4de;
+    padding: 20px;
+}
+
+.lh-card[hidden] {
+    display: none !important;
+}
+
+.lh-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.lh-product {
+    display: flex;
+    gap: 17px;
+    min-width: 0;
+}
+
+.lh-image {
+    width: 90px;
+    height: 112px;
+    flex-shrink: 0;
+    background: #f5f0ea;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.lh-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lh-image span {
+    font-family: Georgia, serif;
+    color: #ae9780;
+    font-size: 11px;
+}
+
+.lh-product-info h3 {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    font-weight: 400;
+    margin: 2px 0 12px;
+}
+
+.lh-product-info p {
+    font-size: 12px;
+    color: #93867b;
+    margin: 9px 0;
+    line-height: 1.5;
+}
+
+.lh-status {
+    align-self: flex-start;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #f5eee5;
+    color: #927450;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.lh-status[data-status="DA_XAC_NHAN"] {
+    background: #edf5ed;
+    color: #497b53;
+}
+
+.lh-status[data-status="DA_HUY"] {
+    background: #f9eeee;
+    color: #a45454;
+}
+
+.lh-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #f0ece7;
+    margin-top: 17px;
+    padding-top: 15px;
+}
+
+.lh-card-bottom p {
+    font-size: 11px;
+    color: #a49a90;
+}
+
+.lh-card-actions {
+    display: flex;
+    gap: 9px;
+}
+
+.lh-outline {
+    padding: 9px 15px;
+    border: 1px solid #d9c9b9;
+    color: #765d49;
+    text-decoration: none;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.lh-outline:hover {
+    background: #f5efe9;
+}
+
+.lh-note {
+    display: flex;
+    gap: 13px;
+    background: #f8f5f0;
+    margin-top: 25px;
+    padding: 20px;
+    color: #8b735d;
+}
+
+.lh-note strong {
+    font-size: 13px;
+}
+
+.lh-note p {
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 6px 0 0;
+}
+
+.lh-no-results {
+    padding: 35px;
+    text-align: center;
+    color: #96887a;
+}
+
+.lh-no-results[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 850px) {
+    .lh-layout {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .lh-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee9e4;
+        padding-bottom: 15px;
+    }
+
+    .lh-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 520px) {
+    .lh-card-top,
+    .lh-card-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lh-container {
+        padding: 20px 15px 50px;
+    }
+}
+/* Mã lịch hẹn và tên sản phẩm */
+.lh-product-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.lh-booking-code {
+    display: inline-block;
+    padding: 5px 11px;
+    background: #f5f0ea;
+    border: 1px solid #e7dbce;
+    border-radius: 5px;
+    color: #8b7059;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.lh-product-name {
+    margin: 0;
+    color: #3f332c;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+/* Sửa font tiếng Việt cho tiêu đề lịch hẹn */
+.lh-page .lh-title-fix {
+    font-family: "Times New Roman", serif !important;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    font-style: normal;
+    font-variant: normal;
+    font-feature-settings: normal;
+    text-transform: none;
+}

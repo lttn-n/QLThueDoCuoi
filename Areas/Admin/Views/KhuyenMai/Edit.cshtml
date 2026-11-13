@@ -1,0 +1,14 @@
+@using System
+@using System.Collections.Generic
+@model Dictionary<string,object?>
+@{string V(string k)=>Convert.ToString(Model.GetValueOrDefault(k))??"";var old=V("HinhThucGiam");}
+<link rel="stylesheet" href="~/css/diem-trang.css" asp-append-version="true" />
+<main class="diem-page"><div class="diem-wrap"><p class="diem-eyebrow">ADMIN · DRAGNEEL</p><h1 class="diem-title">@(Model.Count==0?"Thêm khuyến mãi":"Chỉnh sửa khuyến mãi")</h1>
+@if(TempData["DiemError"] is not null){<p class="diem-error">@TempData["DiemError"]</p>}
+<form class="diem-form" asp-action="Edit" method="post"><input name="id" type="hidden" value="@V("MaKhuyenMai")"/>
+<div class="diem-form-row"><label>Mã ưu đãi<input name="maUuDai" value="@V("MaUuDai")" maxlength="40" required /></label><label>Tên chương trình<input name="tenKhuyenMai" value="@V("TenKhuyenMai")" maxlength="200" required /></label></div>
+<div class="diem-form-row"><label>Hình thức giảm<select name="hinhThucGiam" required><option value="PHANTRAM" selected="@(old!="SOTIEN")">Phần trăm</option><option value="SOTIEN" selected="@(old=="SOTIEN")">Số tiền</option></select></label><label>Giá trị giảm<input name="giaTriGiam" type="number" min="0.01" step="0.01" value="@V("GiaTriGiam")" required /></label></div>
+<div class="diem-form-row"><label>Mức giảm tối đa (không bắt buộc)<input name="soTienGiamToiDa" type="number" min="0.01" step="0.01" value="@V("SoTienGiamToiDa")" /></label><label>Giá trị đơn tối thiểu<input name="giaTriDonToiThieu" type="number" min="0" step="0.01" value="@(Model.Count==0?"0":V("GiaTriDonToiThieu"))" required /></label></div>
+<div class="diem-form-row"><label>Bắt đầu (UTC)<input name="ngayBatDau" type="datetime-local" value="@(Model.Count==0?"":Convert.ToDateTime(Model["NgayBatDau"]).ToString("yyyy-MM-ddTHH:mm"))" required /></label><label>Kết thúc (UTC)<input name="ngayKetThuc" type="datetime-local" value="@(Model.Count==0?"":Convert.ToDateTime(Model["NgayKetThuc"]).ToString("yyyy-MM-ddTHH:mm"))" required /></label></div>
+<label>Số lượt sử dụng tối đa (để trống nếu không giới hạn)<input name="soLuotSuDungToiDa" type="number" min="1" value="@V("SoLuotSuDungToiDa")" /></label><label><input type="checkbox" name="trangThai" value="true" checked="@(Model.Count==0 || Convert.ToBoolean(Model.GetValueOrDefault("TrangThai")))" /> Đang bật</label>
+<button type="submit">Lưu khuyến mãi</button><a class="diem-link" asp-action="Index">← Quay lại danh sách</a></form></div></main>

@@ -1,0 +1,13 @@
+/* DRAGNEEL - customer promotions */
+.diem-promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.diem-promo-card{background:var(--diem-panel);border:1px solid var(--diem-edge);padding:32px;position:relative}.diem-promo-card h2{font:400 26px/1.3 Georgia,'Times New Roman',serif;letter-spacing:0;margin:0 0 15px}.diem-promo-code{display:inline-block;background:var(--diem-paper);border:1px dashed var(--diem-accent);padding:11px 16px;margin:12px 0}.diem-promo-value{font-size:24px;font-weight:600;color:var(--diem-accent)}.diem-promo-card p{margin:9px 0;line-height:1.7;color:var(--diem-muted)}
+@media(max-width:1100px){.diem-promo-card{padding:24px}}@media(max-width:768px){.diem-promo-grid{grid-template-columns:1fr}}@media(max-width:520px){.diem-promo-card{padding:19px}}
+/* Khắc phục lỗi hiển thị dấu tiếng Việt */
+h1, h2, h3 {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-variant-ligatures: normal;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    text-align: left;
+    word-break: normal;
+    overflow-wrap: normal;
+}
