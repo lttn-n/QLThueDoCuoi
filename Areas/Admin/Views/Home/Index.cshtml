@@ -1,8 +1,29 @@
+@using System
+@using System.Globalization
+@using System.Collections.Generic
+@using System.Linq
+
+@section styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/admin-home.css")" />
+}
+
 @{
     ViewBag.Title = "Tổng quan"; ViewBag.PageKey = "admin_home"; Layout =
     "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var culture = CultureInfo.GetCultureInfo("vi-VN");
+    var doanhThuTheoThang =
+        ViewBag.DoanhThuTheoThang as List<Dictionary<string, object?>> ?? new();
+    var danhSachLichHen =
+        ViewBag.DanhSachLichHenSapToi as List<Dictionary<string, object?>> ?? new();
+    var donThueGanDay =
+        ViewBag.DonThueGanDay as List<Dictionary<string, object?>> ?? new();
+    var doanhThuThangCaoNhat = doanhThuTheoThang
+        .Select(thang => Convert.ToDecimal(thang["TongTien"]))
+        .Where(doanhThu => doanhThu > 0)
+        .DefaultIfEmpty(0)
+        .Max();
 }
-@* Đơn chờ xác nhận lấy từ SQL; các mục còn lại hiện là dữ liệu mẫu. *@
+@* Các thẻ thống kê lấy từ SQL; biểu đồ, lịch thử và danh sách đơn vẫn là dữ liệu mẫu. *@
 <div class="page-head">
     <div>
         <span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
@@ -32,7 +53,7 @@
             <path d="M7 3v5m10-5v5M3 11h18" />
         </svg>
         <small>Lịch hẹn sắp tới</small>
-        <strong>2</strong>
+        <strong>@(ViewBag.LichHenSapToi ?? "—")</strong>
         <span>Cửa hàng tiếp khách theo lịch</span>
     </div>
     <div class="metric">
@@ -43,7 +64,7 @@
             <path d="M5 9h1m12 6h1" />
         </svg>
         <small>Tiền cọc đang giữ</small>
-        <strong>2.000.000₫</strong>
+        <strong>@(((decimal?)ViewBag.TienCocDangGiu)?.ToString("N0", culture) ?? "—")₫</strong>
         <span>Theo dõi riêng với doanh thu</span>
     </div>
     <div class="metric">
@@ -52,7 +73,7 @@
             <path d="M3 21h19M6 17V9m6 8V3m6 14v-5" />
         </svg>
         <small>Doanh thu thực thu</small>
-        <strong>4.600.000₫</strong>
+        <strong>@(((decimal?)ViewBag.DoanhThuThucThu)?.ToString("N0", culture) ?? "—")₫</strong>
         <span>Không bao gồm tiền cọc</span>
     </div>
 </div>
@@ -63,36 +84,22 @@
             <a class="" href="@Url.Action("Index", "ThongKe", new { area = "Admin" })">Xem báo cáo →</a>
         </div>
         <div class="mini-bars">
-            <div class="bar-item">
-                <i style="height:35%">
-                </i>
-                <small>T4</small>
-            </div>
-            <div class="bar-item">
-                <i style="height:50%">
-                </i>
-                <small>T5</small>
-            </div>
-            <div class="bar-item">
-                <i style="height:43%">
-                </i>
-                <small>T6</small>
-            </div>
-            <div class="bar-item">
-                <i style="height:72%">
-                </i>
-                <small>T7</small>
-            </div>
-            <div class="bar-item">
-                <i style="height:61%">
-                </i>
-                <small>T8</small>
-            </div>
-            <div class="bar-item">
-                <i style="height:88%">
-                </i>
-                <small>T9</small>
-            </div>
+            @foreach (var thang in doanhThuTheoThang)
+            {
+                var doanhThu = Convert.ToDecimal(thang["TongTien"]);
+                var chieuCao = doanhThuThangCaoNhat > 0
+                    ? Math.Max(4, (int)Math.Round(doanhThu / doanhThuThangCaoNhat * 100))
+                    : 4;
+                var nhanThang = $"T{thang["Thang"]}";
+                var moTa = $"{nhanThang}/{thang["Nam"]} · {doanhThu.ToString("N0", culture)} ₫";
+
+                <div class="bar-item">
+                    <i style="height:@(chieuCao)%"
+                       title="@moTa"
+                       aria-label="@moTa"></i>
+                    <small>@nhanThang</small>
+                </div>
+            }
         </div>
     </section>
     <section class="card">
@@ -100,28 +107,31 @@
             <h2>Lịch thử sắp tới</h2>
             <a class="" href="@Url.Action("Index", "LichHen", new { area = "NhanVien" })">Xem lịch →</a>
         </div>
-        <div class="list-row">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="5" width="18" height="16" rx="2" />
-                <path d="M7 3v5m10-5v5M3 11h18" />
-            </svg>
-            <div>
-                <b>Váy cưới Élodie</b>
-                <small>22/10/2026 · 10:00 · Lâm Thị Thanh Nhi</small>
-            </div>
-        </div>
-        <div class="list-row">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="5" width="18" height="16" rx="2" />
-                <path d="M7 3v5m10-5v5M3 11h18" />
-            </svg>
-            <div>
-                <b>Áo dài Minh Châu</b>
-                <small>24/10/2026 · 14:30 · Lâm Thị Thanh Nhi</small>
-            </div>
-        </div>
+        @if (ViewBag.DashboardError == null && danhSachLichHen.Count == 0)
+        {
+            <p>Hiện chưa có lịch thử sắp tới.</p>
+        }
+        else if (ViewBag.DashboardError == null)
+        {
+            @foreach (var lichHen in danhSachLichHen)
+            {
+                var thoiDiemHen = Convert.ToDateTime(lichHen["ThoiDiemHen"])
+                    .AddHours(7)
+                    .ToString("dd/MM/yyyy · HH:mm");
+
+                <div class="list-row">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2" />
+                        <path d="M7 3v5m10-5v5M3 11h18" />
+                    </svg>
+                    <div>
+                        <b>@lichHen["TenSanPham"]</b>
+                        <small>@thoiDiemHen · @lichHen["HoTenLienHe"]</small>
+                    </div>
+                </div>
+            }
+        }
     </section>
 </div>
 <section style="margin-top:26px">
@@ -143,54 +153,64 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <b>DH001</b>
-                        <small>Lâm Thị Thanh Nhi</small>
-                    </td>
-                    <td>Váy cưới Élodie</td>
-                    <td>25/10 → 28/10/2026</td>
-                    <td>2.800.000₫</td>
-                    <td>
-                        <span class="status blue">Đang thuê</span>
-                    </td>
-                    <td>
-                        <a class="btn small"
-                           href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>DH002</b>
-                        <small>Lâm Thị Thanh Nhi</small>
-                    </td>
-                    <td>Vest nam Modern Fit</td>
-                    <td>30/10 → 02/11/2026</td>
-                    <td>1.600.000₫</td>
-                    <td>
-                        <span class="status amber">Chờ xác nhận</span>
-                    </td>
-                    <td>
-                        <a class="btn small"
-                           href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>DH003</b>
-                        <small>Lâm Thị Thanh Nhi</small>
-                    </td>
-                    <td>Áo dài Minh Châu</td>
-                    <td>12/10 → 15/10/2026</td>
-                    <td>1.800.000₫</td>
-                    <td>
-                        <span class="status green">Hoàn tất</span>
-                    </td>
-                    <td>
-                        <a class="btn small"
-                           href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = 1 })">Chi tiết</a>
-                    </td>
-                </tr>
+                @if (ViewBag.DashboardError != null)
+                {
+                    <tr><td colspan="6">Không tải được danh sách đơn thuê.</td></tr>
+                }
+                else if (donThueGanDay.Count == 0)
+                {
+                    <tr><td colspan="6">Chưa có đơn thuê nào.</td></tr>
+                }
+                else
+                {
+                    @foreach (var don in donThueGanDay)
+                    {
+                        var trangThai = Convert.ToString(don["TrangThai"]) ?? "";
+                        var tenTrangThai = trangThai switch
+                        {
+                            "CHO_XAC_NHAN" => "Chờ xác nhận",
+                            "DA_XAC_NHAN" => "Đã xác nhận",
+                            "DANG_THUE" => "Đang thuê",
+                            "HOAN_TAT" => "Hoàn tất",
+                            "DA_HUY" => "Đã hủy",
+                            _ => trangThai.Replace("_", " ")
+                        };
+                        var mauTrangThai = trangThai switch
+                        {
+                            "CHO_XAC_NHAN" => "amber",
+                            "DA_XAC_NHAN" or "DANG_THUE" => "blue",
+                            "HOAN_TAT" => "green",
+                            "DA_HUY" => "red",
+                            _ => "blue"
+                        };
+                        var maDon = Convert.ToInt32(don["MaDonThue"]);
+                        var ngayNhan = Convert.ToDateTime(don["NgayNhan"]);
+                        var ngayTra = Convert.ToDateTime(don["NgayTraDuKien"]);
+                        var tongTienThue = Convert.ToDecimal(don["TongTienThue"]);
+                        var soDong = Convert.ToInt32(don["SoDong"]);
+
+                        <tr>
+                            <td>
+                                <b>DH@maDon.ToString("D3")</b>
+                                <small>@don["TenNguoiNhan"]</small>
+                            </td>
+                            <td>
+                                @don["TenSanPham"]
+                                @if (soDong > 1)
+                                {
+                                    <small>+ @(soDong - 1) trang phục khác</small>
+                                }
+                            </td>
+                            <td>@ngayNhan.ToString("dd/MM") → @ngayTra.ToString("dd/MM/yyyy")</td>
+                            <td>@tongTienThue.ToString("N0", culture)₫</td>
+                            <td><span class="status @mauTrangThai">@tenTrangThai</span></td>
+                            <td>
+                                <a class="btn small"
+                                   href="@Url.Action("Details", "DonThue", new { area = "NhanVien", id = maDon })">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>
