@@ -9,6 +9,8 @@ using QLThueDoCuoi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<QLThueDoCuoi.Repositories.DiemDb>();
+builder.Services.AddScoped<QLThueDoCuoi.Repositories.DonThueDashboardRepository>();
+builder.Services.AddScoped<QLThueDoCuoi.Services.AdminHomeService>();
 builder.Services.AddScoped<QLThueDoCuoi.Repositories.BoSuuTapRepository>();
 builder.Services.AddScoped<QLThueDoCuoi.Repositories.KhuyenMaiRepository>();
 builder.Services.AddScoped<QLThueDoCuoi.Services.LichHenService>();
