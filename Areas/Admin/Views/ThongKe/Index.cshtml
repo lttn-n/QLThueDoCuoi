@@ -1,8 +1,36 @@
+@using System
+@using System.Globalization
+@using System.Collections.Generic
+@using System.Linq
+
 @{
     ViewBag.Title = "Báo cáo doanh thu"; ViewBag.PageKey = "admin_reports"; Layout =
     "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var culture = CultureInfo.GetCultureInfo("vi-VN");
+    var tongHop = ViewBag.TongHop as Dictionary<string, object?>;
+    if (tongHop == null)
+    {
+        tongHop = new Dictionary<string, object?>
+        {
+            ["DoanhThu"] = 0m,
+            ["ThuThue"] = 0m,
+            ["ThuPhuPhi"] = 0m,
+            ["HoanTien"] = 0m
+        };
+    }
+    decimal doanhThu = Convert.ToDecimal(tongHop.GetValueOrDefault("DoanhThu"));
+    decimal thuThue = Convert.ToDecimal(tongHop.GetValueOrDefault("ThuThue"));
+    decimal thuPhuPhi = Convert.ToDecimal(tongHop.GetValueOrDefault("ThuPhuPhi"));
+    decimal hoanTien = Convert.ToDecimal(tongHop.GetValueOrDefault("HoanTien"));
+    var theoThang = ViewBag.DoanhThuTheoThang as List<Dictionary<string, object?>> ??
+        new List<Dictionary<string, object?>>();
+    var doanhThuThangCaoNhat = theoThang
+        .Select(r => Convert.ToDecimal(r["DoanhThu"]))
+        .Where(r => r > 0)
+        .DefaultIfEmpty(0)
+        .Max();
 }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+@* Số liệu được lấy từ dbo.ThanhToan; giá trị cọc không tính vào doanh thu. *@
 <div class="page-head">
     <div>
         <span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
@@ -10,19 +38,23 @@
         <p>Tổng hợp các khoản thu thành công, trừ hoàn tiền; không tính tiền cọc.</p>
     </div>
 </div>
-<form class="toolbar" data-ui-only>
+<form class="toolbar" method="get" asp-action="Index">
     <div class="button-row">
         <label class="field">
             <span>Từ ngày</span>
-            <input type="date" name="TuNgay" value="2026-10-01" />
+            <input type="date" name="tuNgay" value="@ViewBag.TuNgay" required />
         </label>
         <label class="field">
             <span>Đến ngày</span>
-            <input type="date" name="DenNgay" value="2026-10-31" />
+            <input type="date" name="denNgay" value="@ViewBag.DenNgay" required />
         </label>
     </div>
-    <button type="button" class="btn primary" disabled aria-disabled="true">Xem báo cáo</button>
+    <button type="submit" class="btn primary">Xem báo cáo</button>
 </form>
+@if (ViewBag.BaoCaoError != null)
+{
+    <p class="diem-error" role="alert">@ViewBag.BaoCaoError</p>
+}
 <div class="metrics">
     <div class="metric">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
@@ -30,9 +62,9 @@
             <rect x="5" y="4" width="14" height="17" rx="2" />
             <path d="M9 3h6v4H9zm0 8h6m-6 4h6" />
         </svg>
-        <small>Đơn chờ xác nhận</small>
-        <strong>1</strong>
-        <span>Cần kiểm tra lịch trống</span>
+        <small>Doanh thu thực thu</small>
+        <strong>@doanhThu.ToString("N0", culture)₫</strong>
+        <span>Thu tiền thuê + phụ phí − hoàn tiền</span>
     </div>
     <div class="metric">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
@@ -40,9 +72,9 @@
             <rect x="3" y="5" width="18" height="16" rx="2" />
             <path d="M7 3v5m10-5v5M3 11h18" />
         </svg>
-        <small>Lịch hẹn sắp tới</small>
-        <strong>2</strong>
-        <span>Cửa hàng tiếp khách theo lịch</span>
+        <small>Thu tiền thuê</small>
+        <strong>@thuThue.ToString("N0", culture)₫</strong>
+        <span>Giao dịch THU_THUE thành công</span>
     </div>
     <div class="metric">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
@@ -51,18 +83,18 @@
             <circle cx="12" cy="12" r="3" />
             <path d="M5 9h1m12 6h1" />
         </svg>
-        <small>Tiền cọc đang giữ</small>
-        <strong>2.000.000₫</strong>
-        <span>Theo dõi riêng với doanh thu</span>
+        <small>Thu phụ phí</small>
+        <strong>@thuPhuPhi.ToString("N0", culture)₫</strong>
+        <span>Trả trễ, hư hỏng hoặc phụ phí khác</span>
     </div>
     <div class="metric">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M3 21h19M6 17V9m6 8V3m6 14v-5" />
         </svg>
-        <small>Doanh thu thực thu</small>
-        <strong>4.600.000₫</strong>
-        <span>Không bao gồm tiền cọc</span>
+        <small>Hoàn tiền</small>
+        <strong>@hoanTien.ToString("N0", culture)₫</strong>
+        <span>Hoàn tiền thuê và phụ phí</span>
     </div>
 </div>
 <div class="card">
@@ -70,36 +102,29 @@
         <h2>Doanh thu theo tháng</h2>
     </div>
     <div class="mini-bars">
-        <div class="bar-item">
-            <i style="height:35%">
-            </i>
-            <small>T4</small>
-        </div>
-        <div class="bar-item">
-            <i style="height:50%">
-            </i>
-            <small>T5</small>
-        </div>
-        <div class="bar-item">
-            <i style="height:43%">
-            </i>
-            <small>T6</small>
-        </div>
-        <div class="bar-item">
-            <i style="height:72%">
-            </i>
-            <small>T7</small>
-        </div>
-        <div class="bar-item">
-            <i style="height:61%">
-            </i>
-            <small>T8</small>
-        </div>
-        <div class="bar-item">
-            <i style="height:88%">
-            </i>
-            <small>T9</small>
-        </div>
+        @if (theoThang.Count == 0)
+        {
+            <p>Không có giao dịch doanh thu trong khoảng thời gian đã chọn.</p>
+        }
+        else
+        {
+            @foreach (var thang in theoThang)
+            {
+                var doanhThuThang = Convert.ToDecimal(thang["DoanhThu"]);
+                var chieuCao = doanhThuThangCaoNhat > 0
+                    ? Math.Max(4, (int)Math.Round(doanhThuThang / doanhThuThangCaoNhat * 100))
+                    : 4;
+                var nam = Convert.ToInt32(thang["Nam"]);
+                var soThang = Convert.ToInt32(thang["Thang"]);
+                var moTa = $"T{soThang}/{nam} · {doanhThuThang.ToString("N0", culture)} ₫";
+                <div class="bar-item">
+                    <i style="height:@(chieuCao)%"
+                       title="@moTa"
+                       aria-label="@moTa"></i>
+                    <small>T@soThang</small>
+                </div>
+            }
+        }
     </div>
 </div>
 <div class="note">

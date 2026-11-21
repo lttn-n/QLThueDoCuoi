@@ -1,8 +1,14 @@
+@model List<Dictionary<string, object?>>
+
 @{
     ViewBag.Title = "Tài khoản & vai trò"; ViewBag.PageKey = "admin_users"; Layout =
     "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    string V(Dictionary<string, object?> r, string key)
+        => Convert.ToString(r.GetValueOrDefault(key)) ?? "";
+    var ds = Model ?? new List<Dictionary<string, object?>>();
+    var maTaiKhoanDangNhap = ViewBag.MaTaiKhoanDangNhap as int? ?? 0;
 }
-@* Khung giao diện: dữ liệu mẫu tĩnh. Nhóm phụ trách thay bằng Model lấy từ SQL; chưa có xử lý ghi dữ liệu. *@
+@* Dữ liệu được lấy từ dbo.TaiKhoan; thay đổi vai trò/trạng thái qua POST và xác nhận server. *@
 <div class="page-head">
     <div>
         <span class="eyebrow">DRAGNEEL / QUẢN TRỊ</span>
@@ -10,6 +16,14 @@
         <p>Chỉ admin quản lý quyền và trạng thái tài khoản.</p>
     </div>
 </div>
+@if (TempData["DiemOk"] is not null)
+{
+    <p class="diem-ok" role="status">@TempData["DiemOk"]</p>
+}
+@if (TempData["DiemError"] is not null)
+{
+    <p class="diem-error" role="alert">@TempData["DiemError"]</p>
+}
 <div class="table-wrap">
     <table>
         <thead>
@@ -21,26 +35,68 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Khách hàng mẫu</td>
-                <td>KHACHHANG</td>
-                <td>
-                    <span class="status green">Hoạt động</span>
-                </td>
-                <td>
-                    <button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Nhân viên mẫu</td>
-                <td>NHANVIEN</td>
-                <td>
-                    <span class="status green">Hoạt động</span>
-                </td>
-                <td>
-                    <button type="button" class="btn small" disabled aria-disabled="true">Cập nhật</button>
-                </td>
-            </tr>
+            @if (ds.Count == 0)
+            {
+                <tr><td colspan="4">Không có tài khoản để hiển thị.</td></tr>
+            }
+            else
+            {
+                @foreach (var r in ds)
+                {
+                    var ma = Convert.ToInt32(r["MaTaiKhoan"]);
+                    var laTaiKhoanDangNhap = ma == maTaiKhoanDangNhap;
+                    var vaiTro = V(r, "VaiTro");
+                    var hoatDong = Convert.ToBoolean(r["TrangThai"]);
+                    var lienHe = V(r, "Email");
+                    if (string.IsNullOrWhiteSpace(lienHe))
+                    {
+                        lienHe = V(r, "SoDienThoai");
+                    }
+
+                    <tr>
+                        <td>
+                            <b>@V(r, "HoTen")</b>
+                            @if (!string.IsNullOrWhiteSpace(lienHe))
+                            {
+                                <small>@lienHe</small>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="CapNhatVaiTro" method="post" class="button-row">
+                                <input type="hidden" name="maTaiKhoan" value="@ma" />
+                                <select name="vaiTro"
+                                        aria-label="Vai trò của @V(r, "HoTen")"
+                                        disabled="@laTaiKhoanDangNhap">
+                                    <option value="ADMIN" selected="@(vaiTro == "ADMIN")">ADMIN</option>
+                                    <option value="NHANVIEN" selected="@(vaiTro == "NHANVIEN")">NHANVIEN</option>
+                                    <option value="KHACHHANG" selected="@(vaiTro == "KHACHHANG")">KHACHHANG</option>
+                                </select>
+                                <button type="submit"
+                                        class="btn small"
+                                        disabled="@laTaiKhoanDangNhap">Cập nhật</button>
+                            </form>
+                        </td>
+                        <td>
+                            <span class="status @(hoatDong ? "green" : "red")">
+                                @(hoatDong ? "Hoạt động" : "Đã khóa")
+                            </span>
+                        </td>
+                        <td>
+                            <form asp-action="@(hoatDong ? "KhoaTaiKhoan" : "MoKhoaTaiKhoan")"
+                                  method="post"
+                                  data-confirm="Bạn chắc chắn muốn @(hoatDong ? "khóa" : "mở khóa") tài khoản này?"
+                                  style="display:inline">
+                                <input type="hidden" name="maTaiKhoan" value="@ma" />
+                                <button type="submit"
+                                        class="btn small @(hoatDong ? "danger" : "")"
+                                        disabled="@laTaiKhoanDangNhap">
+                                    @(hoatDong ? "Khóa tài khoản" : "Mở khóa")
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
